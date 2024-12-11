@@ -1,0 +1,48 @@
+.nav {
+  display: grid;
+  justify-content: space-around;
+  grid-template-areas: "construct orders logo _ account";
+  grid-template-columns: 1fr 1fr 3fr 1fr 1fr;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logo {
+  grid-area: logo;
+  display: flex;
+  justify-content: center;
+}
+
+.construct {
+  grid-area: construct;
+}
+
+.orders {
+  grid-area: orders;
+}
+
+.account {
+  grid-area: account;
+}
+
+@media (max-width: 1280px) {
+  .nav {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-areas:
+      "logo logo logo"
+      "construct orders account"
+  }
+}
+
+@media (max-width: 600px) {
+  .nav {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+      "logo"
+      "construct"
+      "orders"
+      "account"
+  }
+}
