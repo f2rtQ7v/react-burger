@@ -1,4 +1,5 @@
 .nav {
+  composes: text text_type_main-default from global;
   display: grid;
   justify-content: space-around;
   grid-template-areas: "construct orders logo _ account";

@@ -10,7 +10,7 @@ const links = [
 ];
 
 export default () => (
-  <header className="text text_type_main-default p-4">
+  <header className="p-4">
     <nav className={styles.nav}>
       {links.map(({ Icon, type, text, className }) => (
         <Link className={styles[className]}>
