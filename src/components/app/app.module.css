@@ -1,0 +1,22 @@
+.main {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "burgerIngredients burgerConstructor";
+    grid-template-columns: repeat(2, 1fr);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.header {
+  composes: text text_type_main-large mb-5 mt-15 from global;
+  grid-area: header;
+}
+
+.ingredients {
+  grid-area: burgerIngredients;
+}
+
+.constructor {
+  grid-area: burgerConstructor;
+}

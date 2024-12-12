@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.header > * {
+  flex-grow: 1;
+}
+
+.ingredients {
+  max-height: 70vh;
+  overflow: auto;
+}
