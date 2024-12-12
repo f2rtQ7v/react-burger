@@ -4,16 +4,16 @@ import Link from '../link/link.tsx';
 import styles from './app-header.module.css';
 
 const links = [
-  { Icon:  BurgerIcon, type:   'primary', text:    'Конструктор', className: 'construct' },
-  { Icon:    ListIcon, type: 'secondary', text:  'Лента заказов', className:    'orders' },
-  { Icon: ProfileIcon, type: 'secondary', text: 'Личный кабинет', className:   'account' },
+  { Icon:  BurgerIcon, type:   'primary', text:    'Конструктор', id: 'burgerConstructor' },
+  { Icon:    ListIcon, type: 'secondary', text:  'Лента заказов', id:            'orders' },
+  { Icon: ProfileIcon, type: 'secondary', text: 'Личный кабинет', id:           'account' },
 ];
 
 export default () => (
-  <header className="p-4">
+  <header className={styles.header}>
     <nav className={styles.nav}>
-      {links.map(({ Icon, type, text, className }) => (
-        <Link className={styles[className]}>
+      {links.map(({ Icon, type, text, id }) => (
+        <Link key={id} className={styles[id]}>
           <Icon type={type} />
           <span>{text}</span>
         </Link>
