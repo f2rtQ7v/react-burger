@@ -3,7 +3,6 @@ import AppHeader from '../app-header/app-header.tsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.tsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.tsx';
 import styles from './app.module.css';
-import * as data from '../../utils/data.js';
 
 export default function App() {
   const [ selectedIngredients, setSelectedIngredients ] = useState([]);
@@ -30,7 +29,6 @@ export default function App() {
         className={styles.burgerIngredients}
         selectedIngredients={selectedIngredients}
         addIngredient={addIngredient}
-        {...data}
       />
       <BurgerConstructor
         className={styles.burgerConstructor}

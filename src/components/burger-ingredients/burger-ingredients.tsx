@@ -5,9 +5,10 @@ import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-
 import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.tsx';
 import { IngredientTypes, Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
+import { INGREDIENT_TYPES, INGREDIENTS } from '../../utils/data.js';
 
-function BurgerIngredients({ ingredients, ingredientTypes, selectedIngredients, addIngredient, className }) {
-  const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
+function BurgerIngredients({ selectedIngredients, addIngredient, className }) {
+  const [ activeTab, setActiveTab ] = useState(INGREDIENTS[0].type);
   const tabRefs = useRef({});
 
   const countSelectedIngredients = useMemo(() => {
@@ -18,14 +19,14 @@ function BurgerIngredients({ ingredients, ingredientTypes, selectedIngredients, 
   }, [ selectedIngredients ]);
 
   const groupedIngredients = useMemo(() => {
-    return ingredients.reduce((acc, n) => (
+    return INGREDIENTS.reduce((acc, n) => (
       (acc[n.type] ??= []).push({
         ...n,
         count: countSelectedIngredients[n._id] ?? 0,
       }),
       acc
     ), {});
-  }, [ ingredients, countSelectedIngredients ]);
+  }, [ countSelectedIngredients ]);
 
   function onTabClick(value) {
     setActiveTab(value);
@@ -38,7 +39,7 @@ function BurgerIngredients({ ingredients, ingredientTypes, selectedIngredients, 
   return (
     <section className={`${styles.container} ${className ? className : ''}`}>
       <div className={styles.header}>
-        {ingredientTypes.map(({ name, value }) => (
+        {INGREDIENT_TYPES.map(({ name, value }) => (
           <Tab
             key={value}
             value={value}
@@ -50,7 +51,7 @@ function BurgerIngredients({ ingredients, ingredientTypes, selectedIngredients, 
         ))}
       </div>
       <div className={styles.ingredients}>
-        {ingredientTypes.map(({ name, value }) => (
+        {INGREDIENT_TYPES.map(({ name, value }) => (
           <BurgerIngredientsList key={value} title={name} ref={el => tabRefs.current[value] = el}>
             {groupedIngredients[value].map(n => (
               <BurgerIngredientItem key={n._id} ingredient={n} onDoubleClick={() => addIngredient(n)} />
@@ -64,8 +65,6 @@ function BurgerIngredients({ ingredients, ingredientTypes, selectedIngredients, 
 
 BurgerIngredients.propTypes = {
   className: PropTypes.string,
-  ingredientTypes: IngredientTypes.isRequired,
-  ingredients: Ingredients.isRequired,
 };
 
 export default BurgerIngredients;
