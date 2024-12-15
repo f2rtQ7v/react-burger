@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef } from 'react';
+import { useState, useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-list.jsx';
@@ -35,6 +35,16 @@ function BurgerIngredients({ selectedIngredients, addIngredient }) {
       block: 'start',
     });
   }
+
+  useEffect(() => {
+    [
+      [ 'bun', [ 1 ] ],
+      [ 'main', [ 0, 1, 0, 2, 0 ] ],
+      [ 'sauce', [ 3, 3, 3, 3, 3 ] ],
+    ].forEach(([ k, v ]) => {
+      v.forEach(i => addIngredient(groupedIngredients[k][i]));
+    });
+  }, []);
 
   return (
     <section className={styles.container}>
