@@ -2,16 +2,17 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  min-width: 300px;
 }
 
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
 }
 
 .header > * {
-  flex-grow: 1;
+  width: 33%;
+  min-width: 33%;
 }
 
 .ingredients {

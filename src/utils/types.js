@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 
-export const IngredientType = {
+export const IngredientType = PropTypes.shape({
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-};
+});
 
-export const IngredientTypes = PropTypes.arrayOf(PropTypes.shape(IngredientType));
+export const IngredientTypes = PropTypes.arrayOf(IngredientType);
 
-export const Ingredient = {
+export const Ingredient = PropTypes.shape({
   _id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
@@ -18,6 +18,7 @@ export const Ingredient = {
   image: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
   count: PropTypes.number,
-};
+  id: PropTypes.number,
+});
 
-export const Ingredients = PropTypes.arrayOf(PropTypes.shape(Ingredient));
+export const Ingredients = PropTypes.arrayOf(Ingredient);

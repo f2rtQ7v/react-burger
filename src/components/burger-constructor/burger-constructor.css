@@ -1,0 +1,18 @@
+.emptyIngredient {
+  height: 100%;
+
+  .constructor-element__row {
+    height: 100%;
+
+    * {
+      display: none;
+    }
+
+    .constructor-element__text {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+    }
+  }
+}

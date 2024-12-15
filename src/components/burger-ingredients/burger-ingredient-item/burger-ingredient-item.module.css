@@ -1,5 +1,5 @@
 .ingredient {
-  composes: text text_type_main-small from global;
+  composes: text text_type_main-small pb-5 from global;
   display: flex;
   flex-direction: column;
   align-items: center;

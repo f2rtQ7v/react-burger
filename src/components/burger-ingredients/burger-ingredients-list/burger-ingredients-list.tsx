@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import PropTypes from 'prop-types';
-import styles from './ingredients-list.module.css';
+import styles from './burger-ingredients-list.module.css';
 
 const IngredientsList = forwardRef(({ title, children }, ref) => {
   return (
