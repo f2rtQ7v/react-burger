@@ -1,5 +1,10 @@
 .link {
+  composes: text text_type_main-default from global;
   display: inline-flex;
   align-items: center;
   gap: 10px;
+}
+
+.disabled {
+  composes: text_color_inactive from global;
 }
