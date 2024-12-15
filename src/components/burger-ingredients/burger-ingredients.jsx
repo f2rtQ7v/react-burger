@@ -64,9 +64,17 @@ function BurgerIngredients({ selectedIngredients, addIngredient }) {
       </div>
       <div className={styles.ingredients}>
         {INGREDIENT_TYPES.map(({ name, value }) => (
-          <BurgerIngredientsList key={value} title={name} ref={el => tabRefs.current[value] = el}>
+          <BurgerIngredientsList
+            key={value}
+            title={name}
+            ref={el => tabRefs.current[value] = el}
+          >
             {groupedIngredients[value].map(n => (
-              <BurgerIngredientItem key={n._id} ingredient={n} onDoubleClick={() => addIngredient(n)} />
+              <BurgerIngredientItem
+                key={n._id}
+                ingredient={n}
+                onDoubleClick={() => addIngredient(n)}
+              />
             ))}
           </BurgerIngredientsList>
         ))}
