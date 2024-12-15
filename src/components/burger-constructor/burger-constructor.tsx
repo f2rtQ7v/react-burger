@@ -6,7 +6,7 @@ import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
 import './burger-constructor.css';
 
-function BurgerConstructor({ className, ingredients, delIngredient }) {
+function BurgerConstructor({ ingredients, delIngredient }) {
   const [ [ bun ], fillings ] = useMemo(() => {
     return ingredients.reduce((acc, n) => (
       acc[+(n.type !== 'bun')].push(n),
@@ -19,7 +19,7 @@ function BurgerConstructor({ className, ingredients, delIngredient }) {
   }, [ ingredients ]);
 
   return (
-    <section className={`${styles.container} ${className ? className : ''}`}>
+    <section className={styles.container}>
 
       <ul className={styles.ingredients}>
         <li>
@@ -59,7 +59,6 @@ function BurgerConstructor({ className, ingredients, delIngredient }) {
 }
 
 BurgerConstructor.propTypes = {
-  className: PropTypes.string,
   ingredients: Ingredients.isRequired,
   delIngredient: PropTypes.func.isRequired,
 };

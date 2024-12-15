@@ -7,7 +7,7 @@ import { IngredientTypes, Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
 import { INGREDIENT_TYPES, INGREDIENTS } from '../../utils/data.js';
 
-function BurgerIngredients({ selectedIngredients, addIngredient, className }) {
+function BurgerIngredients({ selectedIngredients, addIngredient }) {
   const [ activeTab, setActiveTab ] = useState(INGREDIENTS[0].type);
   const tabRefs = useRef({});
 
@@ -37,7 +37,7 @@ function BurgerIngredients({ selectedIngredients, addIngredient, className }) {
   }
 
   return (
-    <section className={`${styles.container} ${className ? className : ''}`}>
+    <section className={styles.container}>
       <div className={styles.header}>
         {INGREDIENT_TYPES.map(({ name, value }) => (
           <Tab
@@ -64,7 +64,8 @@ function BurgerIngredients({ selectedIngredients, addIngredient, className }) {
 }
 
 BurgerIngredients.propTypes = {
-  className: PropTypes.string,
+  selectedIngredients: Ingredients.isRequired,
+  addIngredient: PropTypes.func.isRequired,
 };
 
 export default BurgerIngredients;

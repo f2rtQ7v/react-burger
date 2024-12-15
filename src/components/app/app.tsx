@@ -26,12 +26,10 @@ export default function App() {
     <main className={styles.main}>
       <h1 className={styles.header}>Соберите бургер</h1>
       <BurgerIngredients
-        className={styles.burgerIngredients}
         selectedIngredients={selectedIngredients}
         addIngredient={addIngredient}
       />
       <BurgerConstructor
-        className={styles.burgerConstructor}
         ingredients={selectedIngredients}
         delIngredient={delIngredient}
       />

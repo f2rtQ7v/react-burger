@@ -13,11 +13,3 @@
   composes: text text_type_main-large mb-5 mt-10 from global;
   grid-area: header;
 }
-
-.burgerIngredients {
-  grid-area: burgerIngredients;
-}
-
-.burgerConstructor {
-  grid-area: burgerConstructor;
-}
