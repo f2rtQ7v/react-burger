@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import AppHeader from '../app-header/app-header.tsx';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients.tsx';
-import BurgerConstructor from '../burger-constructor/burger-constructor.tsx';
+import AppHeader from '../app-header/app-header.jsx';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
+import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
 import styles from './app.module.css';
 
 export default function App() {

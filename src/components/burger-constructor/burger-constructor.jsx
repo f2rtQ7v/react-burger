@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getBunProps, getFillingProps } from './burger-constructor-item-props.ts';
+import { getBunProps, getFillingProps } from './burger-constructor-item-props.js';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
 import './burger-constructor.css';

@@ -1,8 +1,8 @@
 import { useState, useMemo, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-list.tsx';
-import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.tsx';
+import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-list.jsx';
+import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.jsx';
 import { IngredientTypes, Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
 import { INGREDIENT_TYPES, INGREDIENTS } from '../../utils/data.js';
