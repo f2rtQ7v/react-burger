@@ -3,8 +3,8 @@ import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-c
 import { Ingredient } from '../../../utils/types.js';
 import styles from './burger-ingredient-item.module.css';
 
-const IngredientItem = ({ ingredient, onDoubleClick }) => (
-  <div className={styles.ingredient} onDoubleClick={onDoubleClick}>
+const IngredientItem = ({ ingredient, ...props }) => (
+  <div className={styles.ingredient} {...props}>
     <div className={styles.image}>
       {ingredient.count ? <Counter count={ingredient.count} /> : null}
       <img src={ingredient.image} />
@@ -19,7 +19,6 @@ const IngredientItem = ({ ingredient, onDoubleClick }) => (
 
 IngredientItem.propTypes = {
   ingredient: Ingredient.isRequired,
-  onDoubleClick: PropTypes.func,
 };
 
 export default IngredientItem;

@@ -1,6 +1,7 @@
+import PropTypes from 'prop-types';
 import styles from './link.module.css';
 
-export default function Link({ children, className, disabled, ...props }) {
+function Link({ children, className, disabled, ...props }) {
   const classes = [ styles.link, disabled && styles.disabled, className ]
     .filter(Boolean)
     .join(' ');
@@ -11,3 +12,10 @@ export default function Link({ children, className, disabled, ...props }) {
     </span>
   );
 }
+
+Link.propTypes = {
+  className: PropTypes.string,
+  disabled: PropTypes.bool,
+};
+
+export default Link;
