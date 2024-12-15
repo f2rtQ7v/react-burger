@@ -1,3 +1,5 @@
+import styles from './burger-constructor.module.css';
+
 export const getBunProps = (props, type) => props
   ? ({
       type,
@@ -9,7 +11,7 @@ export const getBunProps = (props, type) => props
   : ({
       type,
       text: 'Добавьте булку',
-      extraClass: 'emptyIngredient',
+      extraClass: styles.ingredientPlaceholder,
     });
 
 export const getFillingProps = (props, delIngredient) => props
@@ -21,5 +23,5 @@ export const getFillingProps = (props, delIngredient) => props
     })
   : ({
       text: 'Добавьте начинки и соусы',
-      extraClass: 'emptyIngredient',
+      extraClass: styles.ingredientPlaceholder,
     });

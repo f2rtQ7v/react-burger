@@ -4,7 +4,6 @@ import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-de
 import { getBunProps, getFillingProps } from './burger-constructor-item-props.js';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
-import './burger-constructor.css';
 
 function BurgerConstructor({ ingredients, delIngredient }) {
   const [ [ bun ], fillings ] = useMemo(() => {
