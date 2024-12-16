@@ -1,9 +1,34 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getBunProps, getFillingProps } from './burger-constructor-item-props.js';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
+
+const getBunProps = (props, type) => props
+  ? ({
+      type,
+      text: `${props.name} (${type === 'top' ? 'Верх' : 'Низ'})`,
+      price: props.price,
+      thumbnail: props.image,
+      isLocked: true,
+    })
+  : ({
+      type,
+      text: 'Добавьте булку',
+      extraClass: styles.ingredientPlaceholder,
+    });
+
+const getFillingProps = (props, delIngredient) => props
+  ? ({
+      text: props.name,
+      price: props.price,
+      thumbnail: props.image,
+      handleClose: () => delIngredient(props.id),
+    })
+  : ({
+      text: 'Добавьте начинки и соусы',
+      extraClass: styles.ingredientPlaceholder,
+    });
 
 function BurgerConstructor({ ingredients, delIngredient }) {
   const [ [ bun ], fillings ] = useMemo(() => {
