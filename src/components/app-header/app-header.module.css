@@ -1,0 +1,36 @@
+.header {
+  composes: p-4 text text_type_main-default from global;
+  background: #1b1b20;
+  min-width: 1024px;
+  box-sizing: border-box;
+}
+
+.nav {
+  display: grid;
+  justify-content: space-around;
+  grid-template-areas: "burgerConstructor orders logo _ account";
+  grid-template-columns: 2fr 2fr 5fr 2fr 2fr;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logo {
+  grid-area: logo;
+  display: flex;
+  justify-content: center;
+}
+
+.burgerConstructor {
+  grid-area: burgerConstructor;
+  justify-content: flex-start;
+}
+
+.orders {
+  grid-area: orders;
+  justify-content: flex-start;
+}
+
+.account {
+  grid-area: account;
+  justify-content: flex-end;
+}

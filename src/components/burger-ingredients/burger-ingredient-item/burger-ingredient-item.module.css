@@ -1,0 +1,21 @@
+.ingredient {
+  composes: text text_type_main-small pb-5 from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.image {
+  position: relative;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 10px;
+}
+
+.name {
+
+}
