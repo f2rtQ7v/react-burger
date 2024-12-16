@@ -5,10 +5,10 @@ import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-
 import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.jsx';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
-import { INGREDIENT_TYPES, INGREDIENTS } from '../../utils/data.js';
+import { INGREDIENT_TYPES } from '../../utils/data.js';
 
-function BurgerIngredients({ selectedIngredients, addIngredient }) {
-  const [ activeTab, setActiveTab ] = useState(INGREDIENTS[0].type);
+function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) {
+  const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
   const tabRefs = useRef({});
 
   const countSelectedIngredients = useMemo(() => {
@@ -19,7 +19,7 @@ function BurgerIngredients({ selectedIngredients, addIngredient }) {
   }, [ selectedIngredients ]);
 
   const groupedIngredients = useMemo(() => {
-    return INGREDIENTS.reduce((acc, n) => (
+    return ingredients.reduce((acc, n) => (
       (acc[n.type] ??= []).push({
         ...n,
         count: countSelectedIngredients[n._id] ?? 0,
@@ -84,6 +84,7 @@ function BurgerIngredients({ selectedIngredients, addIngredient }) {
 }
 
 BurgerIngredients.propTypes = {
+  ingredients: Ingredients.isRequired,
   selectedIngredients: Ingredients.isRequired,
   addIngredient: PropTypes.func.isRequired,
 };
