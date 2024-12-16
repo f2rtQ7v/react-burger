@@ -2,7 +2,10 @@ import { useState, useCallback, useEffect } from 'react';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
-import { ingredientsUrl } from '../../utils/data.js';
+import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
+import ErrorScreen from '../screens/error-screen/error-screen.jsx';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ingredientsUrl } from '../../utils/api.js';
 import styles from './app.module.css';
 
 export default function App() {
@@ -26,6 +29,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
+    if (status !== 'init') {
+      return;
+    }
+
     setStatus('loading');
     setError(null);
 
@@ -42,7 +49,7 @@ export default function App() {
           setError(e);
         });
     }, 2000);
-  }, []);
+  }, [ status ]);
 
   let content = null;
 
@@ -63,9 +70,17 @@ export default function App() {
       </main>
     </>);
   } else if (status === 'loading') {
-    content = <p>loading...</p>;
+    content = <LoadingScreen />;
   } else if (status === 'error') {
-    content = <p>error: {`${error}`}</p>
+    content = (
+      <ErrorScreen>
+        <span>Ошибка при загрузке ингредиентов</span>
+        <span>{`${error}`}</span>
+        <Button htmlType="button" type="primary" size="large" onClick={() => setStatus('init')}>
+          Попробовать ещё раз
+        </Button>
+      </ErrorScreen>
+    );
   }
 
   return content;

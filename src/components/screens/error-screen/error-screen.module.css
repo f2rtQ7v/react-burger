@@ -1,0 +1,6 @@
+@import "../screen.css";
+
+.container {
+  composes: screen;
+  color: red;
+}
