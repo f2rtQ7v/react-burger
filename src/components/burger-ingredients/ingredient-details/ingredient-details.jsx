@@ -1,4 +1,4 @@
-import { Ingredient } from '../../utils/types.js';
+import { Ingredient } from '../../../utils/types.js';
 import styles from './ingredient-details.module.css';
 
 const details = [

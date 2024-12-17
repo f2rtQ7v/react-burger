@@ -1,9 +1,9 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-list.jsx';
-import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.jsx';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
+import IngredientsList from './ingredients-list/ingredients-list.jsx';
+import IngredientItem from './ingredient-item/ingredient-item.jsx';
+import IngredientDetails from './ingredient-details/ingredient-details.jsx';
 import Modal from '../modal/modal.jsx';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
@@ -68,20 +68,20 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
       </div>
       <div className={styles.ingredients}>
         {INGREDIENT_TYPES.map(({ name, value }) => (
-          <BurgerIngredientsList
+          <IngredientsList
             key={value}
             title={name}
             ref={el => tabRefs.current[value] = el}
           >
             {groupedIngredients[value].map(n => (
-              <BurgerIngredientItem
+              <IngredientItem
                 key={n._id}
                 ingredient={n}
                 onClick={() => setActiveIngredient(n)}
                 /*onDoubleClick={() => addIngredient(n)}*/
               />
             ))}
-          </BurgerIngredientsList>
+          </IngredientsList>
         ))}
       </div>
       {activeIngredient &&
