@@ -13,7 +13,7 @@
 }
 
 .body {
-  composes: p-10 from global;
+  composes: mb-10 mr-10 ml-10 from global;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

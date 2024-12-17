@@ -1,6 +1,8 @@
-import { useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from '../modal/modal.jsx';
+import OrderDetails from '../order-details/order-details.jsx';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
 
@@ -31,6 +33,8 @@ const getFillingProps = (props, delIngredient) => props
     });
 
 function BurgerConstructor({ ingredients, delIngredient }) {
+  const [ showOrder, setShowOrder ] = useState(false);
+
   const [ [ bun ], fillings ] = useMemo(() => {
     return ingredients.reduce((acc, n) => (
       acc[+(n.type !== 'bun')].push(n),
@@ -73,10 +77,16 @@ function BurgerConstructor({ ingredients, delIngredient }) {
           {total}
           <CurrencyIcon />
         </span>
-        <Button htmlType="button" type="primary" size="medium">
+        <Button htmlType="button" type="primary" size="medium" onClick={() => setShowOrder(true)}>
           Оформить заказ
         </Button>
       </div>
+
+      {showOrder &&
+        <Modal onClose={() => setShowOrder(false)}>
+          <OrderDetails orderId={Math.random() * 1e6 | 0} />
+        </Modal>
+      }
 
     </section>
   );

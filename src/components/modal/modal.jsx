@@ -7,7 +7,7 @@ import styles from './modal.module.css';
 
 function Modal({ title, onClose, children }) {
   useEffect(() => {
-    const onKeydown = e => e.key === 'Escape' && onClose();
+    const onKeydown = e => {e.key === 'Escape' && onClose();console.log(111)};
     document.addEventListener('keydown', onKeydown);
     return () => document.removeEventListener('keydown', onKeydown);
   }, [ onClose ]);
