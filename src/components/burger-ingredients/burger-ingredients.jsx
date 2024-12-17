@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientsList from './burger-ingredients-list/burger-ingredients-list.jsx';
 import BurgerIngredientItem from './burger-ingredient-item/burger-ingredient-item.jsx';
+import Modal from '../modal/modal.jsx';
 import { Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
 import { INGREDIENT_TYPES } from '../../utils/data.js';
@@ -10,6 +11,8 @@ import { INGREDIENT_TYPES } from '../../utils/data.js';
 function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) {
   const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
   const tabRefs = useRef({});
+
+  const [ activeIngredient, setActiveIngredient ] = useState(null);
 
   const countSelectedIngredients = useMemo(() => {
     return selectedIngredients.reduce((acc, n) => (
@@ -73,12 +76,22 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
               <BurgerIngredientItem
                 key={n._id}
                 ingredient={n}
-                onDoubleClick={() => addIngredient(n)}
+                onClick={() => setActiveIngredient(n)}
+                /*onDoubleClick={() => addIngredient(n)}*/
               />
             ))}
           </BurgerIngredientsList>
         ))}
       </div>
+      {activeIngredient &&
+        <Modal
+          title="Детали ингредиента"
+          onClose={() => setActiveIngredient(null)}
+        >
+          <img src={activeIngredient.image_large} />
+          <span>{activeIngredient.name}</span>
+        </Modal>
+      }
     </section>
   );
 }
