@@ -77,7 +77,13 @@ function BurgerConstructor({ ingredients, delIngredient }) {
           {total}
           <CurrencyIcon />
         </span>
-        <Button htmlType="button" type="primary" size="medium" onClick={() => setShowOrder(true)}>
+        <Button
+          htmlType="button"
+          type="primary"
+          size="medium"
+          disabled={!bun}
+          onClick={() => setShowOrder(true)}
+        >
           Оформить заказ
         </Button>
       </div>
