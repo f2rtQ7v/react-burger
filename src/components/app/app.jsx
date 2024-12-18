@@ -36,19 +36,16 @@ export default function App() {
     setStatus('loading');
     setError(null);
 
-    // имитируем задержку
-    setTimeout(() => {
-      fetch(ingredientsUrl)
-        .then(r => r.json())
-        .then(r => {
-          setIngredients(r.data);
-          setStatus('success');
-        })
-        .catch(e => {
-          setStatus('error');
-          setError(e);
-        });
-    }, 2000);
+    fetch(ingredientsUrl)
+      .then(r => r.ok ? r.json() : Promise.reject(`Ошибка ${r.status}`))
+      .then(r => {
+        setIngredients(r.data);
+        setStatus('success');
+      })
+      .catch(e => {
+        setStatus('error');
+        setError(e);
+      });
   }, [ status ]);
 
   let content = null;
@@ -74,7 +71,7 @@ export default function App() {
   } else if (status === 'error') {
     content = (
       <ErrorScreen>
-        <span>Ошибка при загрузке ингредиентов</span>
+        <span>Не удалось загрузить список ингредиентов</span>
         <span>{`${error}`}</span>
         <Button htmlType="button" type="primary" size="large" onClick={() => setStatus('init')}>
           Попробовать ещё раз
