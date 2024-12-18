@@ -1,5 +1,5 @@
 .modal {
-  background: #1b1b20;
+  background: var(--background);
   border-radius: var(--common-border-radius-s);
   border: 1px solid var(--text-inactive-color);
 }
