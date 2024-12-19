@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.name {
+  composes: mb-8 text text_type_main-medium from global;
+}
+
+.details {
+  composes: text text_type_main-default text_color_inactive from global;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailsItem {
+  composes: p-4 from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.detailsItemValue {
+  composes: text text_type_digits-default from global;
+}

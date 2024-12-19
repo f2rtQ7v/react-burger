@@ -1,8 +1,12 @@
 .ingredient {
-  composes: text text_type_main-small pb-5 from global;
+  composes: text text_type_main-small p-5 from global;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.ingredient:hover {
+  background: var(--background);
 }
 
 .image {
@@ -17,5 +21,5 @@
 }
 
 .name {
-
+  text-align: center;
 }
