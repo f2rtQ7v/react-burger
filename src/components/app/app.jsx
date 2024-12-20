@@ -4,7 +4,6 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
 import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
 import ErrorScreen from '../screens/error-screen/error-screen.jsx';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientsUrl } from '../../utils/api.js';
 import styles from './app.module.css';
 
@@ -29,24 +28,19 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (status !== 'init') {
-      return;
-    }
-
     setStatus('loading');
-    setError(null);
 
     fetch(ingredientsUrl)
       .then(r => r.ok ? r.json() : Promise.reject(`Ошибка ${r.status}`))
       .then(r => {
-        setIngredients(r.data);
         setStatus('success');
+        setIngredients(r.data);
       })
       .catch(e => {
         setStatus('error');
         setError(e);
       });
-  }, [ status ]);
+  }, []);
 
   let content = null;
 
@@ -73,9 +67,6 @@ export default function App() {
       <ErrorScreen>
         <span>Не удалось загрузить список ингредиентов</span>
         <span>{`${error}`}</span>
-        <Button htmlType="button" type="primary" size="large" onClick={() => setStatus('init')}>
-          Попробовать ещё раз
-        </Button>
       </ErrorScreen>
     );
   }
