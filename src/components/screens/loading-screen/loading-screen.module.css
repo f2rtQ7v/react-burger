@@ -1,0 +1,41 @@
+@import "../screen.css";
+
+.container {
+  composes: screen;
+}
+
+.spinner {
+  position: relative;
+  animation: spinner 2s infinite linear;
+}
+.spinner,
+.spinner::before,
+.spinner::after {
+  width: 10em;
+  height: 10em;
+  border: 1.5em solid transparent;
+  border-top-color: white;
+  border-radius: 50%;
+  box-sizing: border-box;
+}
+.spinner::before,
+.spinner::after {
+  content: "";
+  position: absolute;
+  left: -1.5em;
+  top: -1.5em;
+}
+.spinner::before {
+  transform: rotate(120deg);
+}
+.spinner::after {
+  transform: rotate(240deg);
+}
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
