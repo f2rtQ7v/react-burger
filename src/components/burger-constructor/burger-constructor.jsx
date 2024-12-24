@@ -1,9 +1,9 @@
-import { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BURGER_CONSTRUCTOR_DEL } from '../../services/actions/burger-constructor.js';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
-import { Ingredients } from '../../utils/types.js';
 import styles from './burger-constructor.module.css';
 
 const getBunProps = (props, type) => props
@@ -32,7 +32,15 @@ const getFillingProps = (props, delIngredient) => props
       extraClass: styles.ingredientPlaceholder,
     });
 
-function BurgerConstructor({ ingredients, delIngredient }) {
+function BurgerConstructor() {
+  const dispatch = useDispatch();
+
+  const ingredients = useSelector(state => state.burgerConstructor.ingredients);
+
+  const delIngredient = useCallback(id => {
+    dispatch({ type: BURGER_CONSTRUCTOR_DEL, id });
+  }, [ dispatch ]);
+
   const [ showOrder, setShowOrder ] = useState(false);
 
   const [ [ bun ], fillings ] = useMemo(() => {
@@ -97,10 +105,5 @@ function BurgerConstructor({ ingredients, delIngredient }) {
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingredients: Ingredients.isRequired,
-  delIngredient: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

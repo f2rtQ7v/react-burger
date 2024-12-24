@@ -1,3 +1,7 @@
 const baseApiUrl = 'https://norma.nomoreparties.space/api';
 
-export const ingredientsUrl = `${baseApiUrl}/ingredients`;
+const ingredientsUrl = `${baseApiUrl}/ingredients`;
+
+export function getIngredients() {
+  return fetch(ingredientsUrl).then(r => r.ok ? r.json() : Promise.reject(`Ошибка: ${r.status}`));
+}

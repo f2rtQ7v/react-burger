@@ -1,19 +1,27 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { BURGER_INGREDIENTS_SET_ACTIVE } from '../../services/actions/burger-ingredients.js';
+import { BURGER_CONSTRUCTOR_ADD } from '../../services/actions/burger-constructor.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
 import IngredientDetails from './ingredient-details/ingredient-details.jsx';
 import Modal from '../modal/modal.jsx';
-import { Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
 import { INGREDIENT_TYPES } from '../../utils/data.js';
 
-function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) {
+function BurgerIngredients() {
+  const dispatch = useDispatch();
+
+  const { ingredients, activeIngredient } = useSelector(state => state.burgerIngredients);
+  const selectedIngredients = useSelector(state => state.burgerConstructor.ingredients);
+
   const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
   const tabRefs = useRef({});
 
-  const [ activeIngredient, setActiveIngredient ] = useState(null);
+  const setActiveIngredient = useCallback(ingredient => {
+    dispatch({ type: BURGER_INGREDIENTS_SET_ACTIVE, ingredient });
+  }, [ dispatch ]);
 
   const countSelectedIngredients = useMemo(() => {
     return selectedIngredients.reduce((acc, n) => (
@@ -30,15 +38,15 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
       }),
       acc
     ), {});
-  }, [ countSelectedIngredients ]);
+  }, [ ingredients, countSelectedIngredients ]);
 
-  function onTabClick(value) {
+  const onTabClick = useCallback(value => {
     setActiveTab(value);
     tabRefs.current[value].scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
-  }
+  }, []);
 
 /*==================================================================*/
   useEffect(() => {
@@ -47,7 +55,9 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
       [ 'main', [ 0, 1, 0, 2, 0 ] ],
       [ 'sauce', [ 3, 3, 3, 3, 3 ] ],
     ].forEach(([ k, v ]) => {
-      v.forEach(i => addIngredient(groupedIngredients[k][i]));
+      v.forEach(i => {
+        dispatch({ type: BURGER_CONSTRUCTOR_ADD, ingredient: groupedIngredients[k][i] });
+      });
     });
   }, []);
 /*==================================================================*/
@@ -78,7 +88,6 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
                 key={n._id}
                 ingredient={n}
                 onClick={() => setActiveIngredient(n)}
-                /*onDoubleClick={() => addIngredient(n)}*/
               />
             ))}
           </IngredientsList>
@@ -95,11 +104,5 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: Ingredients.isRequired,
-  selectedIngredients: Ingredients.isRequired,
-  addIngredient: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;
