@@ -5,30 +5,33 @@ import {
 } from '../actions/burger-constructor.js';
 
 const initialState = {
-  ingredients: [],
+  bun: null,
+  fillings: [],
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case BURGER_CONSTRUCTOR_ADD:
-      return {
-        ...state,
-        ingredients: [
-          ...(action.ingredient.type === 'bun'
-            ? state.ingredients.filter(n => n.type !== 'bun')
-            : state.ingredients
-          ),
-          {
-            ...action.ingredient,
-            id: 1 + Math.max(0, ...state.ingredients.map(n => n.id)),
-          },
-        ],
-      };
+      return action.ingredient.type === 'bun'
+        ? {
+            ...state,
+            bun: action.ingredient,
+          }
+        : {
+            ...state,
+            fillings: [
+              ...state.fillings,
+              {
+                ...action.ingredient,
+                id: 1 + Math.max(0, ...state.fillings.map(n => n.id)),
+              },
+            ],
+          };
 
     case BURGER_CONSTRUCTOR_DEL:
       return {
         ...state,
-        ingredients: state.ingredients.filter(n => n.id !== action.id),
+        fillings: state.fillings.filter(n => n.id !== action.id),
       };
 
     case BURGER_CONSTRUCTOR_RESET:

@@ -6,7 +6,7 @@ import {
 } from '../actions/burger-ingredients.js';
 
 const initialState = {
-  ingredients: [],
+  ingredients: null,
   ingredientsLoad: false,
   ingredientsError: null,
   activeIngredient: null,
@@ -23,7 +23,10 @@ export default (state = initialState, action) => {
     case BURGER_INGREDIENTS_SUCCESS:
       return {
         ...state,
-        ingredients: action.data,
+        ingredients: action.data.reduce((acc, n) => (
+          (acc[n.type] ??= []).push(n),
+          acc
+        ), {}),
         ingredientsLoad: false,
       };
 

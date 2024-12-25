@@ -36,7 +36,7 @@ const getFillingProps = (props, delIngredient) => props
 function BurgerConstructor() {
   const dispatch = useDispatch();
 
-  const ingredients = useSelector(state => state.burgerConstructor.ingredients);
+  const { bun, fillings } = useSelector(state => state.burgerConstructor);
 
   const delIngredient = useCallback(id => {
     dispatch({ type: BURGER_CONSTRUCTOR_DEL, id });
@@ -44,16 +44,9 @@ function BurgerConstructor() {
 
   const [ showOrder, setShowOrder ] = useState(false);
 
-  const [ [ bun ], fillings ] = useMemo(() => {
-    return ingredients.reduce((acc, n) => (
-      acc[+(n.type !== 'bun')].push(n),
-      acc
-    ), [ [], [] ]);
-  }, [ ingredients ]);
-
   const total = useMemo(() => {
-    return ingredients.reduce((acc, n) => acc + n.price, 0);
-  }, [ ingredients ]);
+    return fillings.reduce((acc, n) => acc + n.price, bun?.price << 1);
+  }, [ bun, fillings ]);
 
   const [ collected, dropRef ] = useDrop(() => ({
     accept: 'ingredient',

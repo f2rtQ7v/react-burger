@@ -13,9 +13,9 @@ function BurgerIngredients() {
   const dispatch = useDispatch();
 
   const { ingredients, activeIngredient } = useSelector(state => state.burgerIngredients);
-  const selectedIngredients = useSelector(state => state.burgerConstructor.ingredients);
+  const { bun, fillings } = useSelector(state => state.burgerConstructor);
 
-  const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
+  const [ activeTab, setActiveTab ] = useState(INGREDIENT_TYPES[0].value);
   const tabRefs = useRef({});
 
   const setActiveIngredient = useCallback(ingredient => {
@@ -23,21 +23,11 @@ function BurgerIngredients() {
   }, [ dispatch ]);
 
   const countSelectedIngredients = useMemo(() => {
-    return selectedIngredients.reduce((acc, n) => (
+    return fillings.reduce((acc, n) => (
       acc[n._id] = -~acc[n._id],
       acc
-    ), {});
-  }, [ selectedIngredients ]);
-
-  const groupedIngredients = useMemo(() => {
-    return ingredients.reduce((acc, n) => (
-      (acc[n.type] ??= []).push({
-        ...n,
-        count: countSelectedIngredients[n._id] ?? 0,
-      }),
-      acc
-    ), {});
-  }, [ ingredients, countSelectedIngredients ]);
+    ), bun ? { [bun._id]: 2 } : {});
+  }, [ bun, fillings ]);
 
   const onTabClick = useCallback(value => {
     setActiveTab(value);
@@ -68,10 +58,11 @@ function BurgerIngredients() {
             title={name}
             ref={el => tabRefs.current[value] = el}
           >
-            {groupedIngredients[value].map(n => (
+            {ingredients[value].map(n => (
               <IngredientItem
                 key={n._id}
                 ingredient={n}
+                count={countSelectedIngredients[n._id] ?? 0}
                 onClick={() => setActiveIngredient(n)}
               />
             ))}

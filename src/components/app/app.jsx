@@ -25,7 +25,7 @@ export default function App() {
 
   let content = null;
 
-  if (ingredients.length) {
+  if (ingredients) {
     content = (<>
       <AppHeader />
       <main className={styles.main}>
