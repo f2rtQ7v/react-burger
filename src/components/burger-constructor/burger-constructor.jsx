@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BURGER_CONSTRUCTOR_DEL } from '../../services/actions/burger-constructor.js';
+import { useDrop } from 'react-dnd';
+import { BURGER_CONSTRUCTOR_ADD, BURGER_CONSTRUCTOR_DEL } from '../../services/actions/burger-constructor.js';
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modal/modal.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
@@ -54,8 +55,15 @@ function BurgerConstructor() {
     return ingredients.reduce((acc, n) => acc + n.price, 0);
   }, [ ingredients ]);
 
+  const [ collected, dropRef ] = useDrop(() => ({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch({ type: BURGER_CONSTRUCTOR_ADD, ingredient });
+    },
+  }));
+
   return (
-    <section className={styles.container}>
+    <section className={styles.container} ref={dropRef}>
 
       <ul className={styles.ingredients}>
         <li>

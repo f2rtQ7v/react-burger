@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { loadIngredients } from '../../services/actions/burger-ingredients.js';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
@@ -28,8 +30,10 @@ export default function App() {
       <AppHeader />
       <main className={styles.main}>
         <h1 className={styles.header}>Соберите бургер</h1>
-        <BurgerIngredients />
-        <BurgerConstructor />
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </>);
   } else if (ingredientsLoad) {

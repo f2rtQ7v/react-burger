@@ -1,7 +1,6 @@
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { useState, useMemo, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { BURGER_INGREDIENTS_SET_ACTIVE } from '../../services/actions/burger-ingredients.js';
-import { BURGER_CONSTRUCTOR_ADD } from '../../services/actions/burger-constructor.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
@@ -47,20 +46,6 @@ function BurgerIngredients() {
       block: 'start',
     });
   }, []);
-
-/*==================================================================*/
-  useEffect(() => {
-    [
-      [ 'bun', [ 1 ] ],
-      [ 'main', [ 0, 1, 0, 2, 0 ] ],
-      [ 'sauce', [ 3, 3, 3, 3, 3 ] ],
-    ].forEach(([ k, v ]) => {
-      v.forEach(i => {
-        dispatch({ type: BURGER_CONSTRUCTOR_ADD, ingredient: groupedIngredients[k][i] });
-      });
-    });
-  }, []);
-/*==================================================================*/
 
   return (
     <section className={styles.container}>
