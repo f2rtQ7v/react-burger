@@ -21,15 +21,18 @@ function BurgerConstructor() {
     return fillings.reduce((acc, n) => acc + n.price, bun?.price << 1);
   }, [ bun, fillings ]);
 
-  const [ collected, dropRef ] = useDrop(() => ({
+  const [ { canDrop }, dropRef ] = useDrop(() => ({
     accept: 'ingredient',
     drop(ingredient) {
       dispatch({ type: BURGER_CONSTRUCTOR_ADD, ingredient });
     },
+    collect: monitor => ({
+      canDrop: monitor.canDrop(),
+    }),
   }));
 
   return (
-    <section className={styles.container} ref={dropRef}>
+    <section className={`${styles.container} ${canDrop ? styles.drop : ''}`} ref={dropRef}>
 
       <IngredientsList>
         <IngredientItemBun ingredient={bun} type="top" />

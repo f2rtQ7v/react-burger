@@ -49,7 +49,7 @@ function IngredientItemFilling({ ingredient, index }) {
           }),
         })
       : ({
-          text: 'Добавьте начинки и соусы',
+          text: 'Перетащите начинки и соусы',
           extraClass: styles.ingredientPlaceholder,
         });
   }, [ ingredient, dispatch ]);

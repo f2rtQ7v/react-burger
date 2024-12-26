@@ -14,7 +14,7 @@ function IngredientItemBun({ ingredient, type }) {
           isLocked: true,
         })
       : ({
-          text: 'Добавьте булку',
+          text: 'Перетащите булку',
           extraClass: styles.ingredientPlaceholder,
         });
   }, [ ingredient, type ]);

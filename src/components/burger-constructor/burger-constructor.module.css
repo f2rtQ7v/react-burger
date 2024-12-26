@@ -4,6 +4,13 @@
   flex-direction: column;
   flex-grow: 1;
   grid-area: burgerConstructor;
+  border-radius: var(--common-border-radius-s);
+  border: 2px dashed transparent;
+}
+
+.container.drop {
+  border-color: var(--text-inactive-color);
+  background: var(--background);
 }
 
 .footer {
