@@ -6,16 +6,6 @@
   grid-area: burgerConstructor;
 }
 
-.ingredients {
-  composes: ml-1 mr-1 mt-2 mb-2 from global;
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--offset-base-size) * 4);
-  max-height: 368px;
-  overflow: auto;
-  list-style: none;
-}
-
 .footer {
   composes: ml-2 mt-4 from global;
   display: flex;
@@ -30,16 +20,4 @@
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.ingredientPlaceholder {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  :global(.constructor-element__row) {
-    *:not(:global(.constructor-element__text)) {
-      display: none;
-    }
-  }
 }

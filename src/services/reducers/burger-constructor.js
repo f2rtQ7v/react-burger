@@ -1,6 +1,7 @@
 import {
   BURGER_CONSTRUCTOR_ADD,
   BURGER_CONSTRUCTOR_DEL,
+  BURGER_CONSTRUCTOR_MOVE,
   BURGER_CONSTRUCTOR_RESET,
 } from '../actions/burger-constructor.js';
 
@@ -32,6 +33,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fillings: state.fillings.filter(n => n.id !== action.id),
+      };
+
+    case BURGER_CONSTRUCTOR_MOVE:
+      const fillings = [...state.fillings];
+      fillings.splice(action.newIndex, 0, fillings.splice(action.oldIndex, 1)[0]);
+
+      return {
+        ...state,
+        fillings,
       };
 
     case BURGER_CONSTRUCTOR_RESET:

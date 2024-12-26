@@ -1,0 +1,9 @@
+.container {
+  composes: ml-1 mr-1 mt-2 mb-2 pl-4 from global;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 4);
+  max-height: 368px;
+  overflow: auto;
+  list-style: none;
+}
