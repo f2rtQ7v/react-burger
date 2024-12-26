@@ -8,13 +8,14 @@ import { Ingredient } from '../../../utils/types.js';
 import styles from './ingredient-item.module.css';
 
 function IngredientItemFilling({ ingredient, index }) {
+  const sortable = typeof index === 'number';
   const dispatch = useDispatch();
-
   const ref = useRef();
 
   const [ { isDragging }, dragRef ] = useDrag(() => ({
     type: 'sort',
     item: { ingredient, index },
+    canDrag: () => sortable,
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -54,13 +55,12 @@ function IngredientItemFilling({ ingredient, index }) {
         });
   }, [ ingredient, dispatch ]);
 
-  const sortable = typeof index === 'number';
-  const className = styles[sortable ? 'ingredientItemSortable' : 'ingredientItem'];
-
-  dragRef(dropRef(ref));
-
   return (
-    <li className={className} ref={ref} style={{ opacity: +!isDragging }}>
+    <li
+      className={styles[sortable ? 'ingredientItemSortable' : 'ingredientItem']}
+      ref={dragRef(dropRef(ref))}
+      style={{ opacity: +!isDragging }}
+    >
       {sortable && <DragIcon type="primary" />}
       <ConstructorElement {...constructorElementProps} />
     </li>
