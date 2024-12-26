@@ -10,7 +10,7 @@ const details = [
 
 const IngredientDetails = ({ ingredient, ...props }) => (
   <div className={styles.container} {...props}>
-    <img src={ingredient.image_large} />
+    <img className={styles.image} src={ingredient.image_large} />
     <h2 className={styles.name}>{ingredient.name}</h2>
     <div className={styles.details}>
       {details.map(n => (
