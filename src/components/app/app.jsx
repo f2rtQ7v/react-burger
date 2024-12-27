@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { loadIngredients } from '../../services/actions/burger-ingredients.js';
+import { getIngredients } from '../../services/actions/burger-ingredients.js';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
@@ -15,12 +15,12 @@ export default function App() {
 
   const {
     ingredients,
-    ingredientsLoad,
+    ingredientsRequest,
     ingredientsError,
   } = useSelector(state => state.burgerIngredients);
 
   useEffect(() => {
-    dispatch(loadIngredients());
+    dispatch(getIngredients());
   }, [ dispatch ]);
 
   let content = null;
@@ -36,7 +36,7 @@ export default function App() {
         </DndProvider>
       </main>
     </>);
-  } else if (ingredientsLoad) {
+  } else if (ingredientsRequest) {
     content = <LoadingScreen />;
   } else if (ingredientsError) {
     content = (

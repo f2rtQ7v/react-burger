@@ -1,5 +1,5 @@
 import {
-  BURGER_INGREDIENTS_LOAD,
+  BURGER_INGREDIENTS_REQUEST,
   BURGER_INGREDIENTS_SUCCESS,
   BURGER_INGREDIENTS_ERROR,
   BURGER_INGREDIENTS_SET_ACTIVE,
@@ -7,17 +7,17 @@ import {
 
 const initialState = {
   ingredients: null,
-  ingredientsLoad: false,
+  ingredientsRequest: false,
   ingredientsError: null,
   activeIngredient: null,
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case BURGER_INGREDIENTS_LOAD:
+    case BURGER_INGREDIENTS_REQUEST:
       return {
         ...state,
-        ingredientsLoad: true,
+        ingredientsRequest: true,
       };
 
     case BURGER_INGREDIENTS_SUCCESS:
@@ -27,14 +27,14 @@ export default (state = initialState, action) => {
           (acc[n.type] ??= []).push(n),
           acc
         ), {}),
-        ingredientsLoad: false,
+        ingredientsRequest: false,
       };
 
     case BURGER_INGREDIENTS_ERROR:
       return {
         ...state,
-        ingredientsError: action.error || 'Неизвестная ошибка',
-        ingredientsLoad: false,
+        ingredientsError: action.error || 'Неизвестная ошибка при загрузке списка ингредиентов',
+        ingredientsRequest: false,
       };
 
     case BURGER_INGREDIENTS_SET_ACTIVE:
