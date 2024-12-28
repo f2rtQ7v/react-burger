@@ -1,6 +1,8 @@
-import { useState, useMemo, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { BURGER_INGREDIENTS_SET_ACTIVE } from '../../services/actions/burger-ingredients.js';
+import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.js';
+import { getCount } from '../../services/burger-constructor/slice.js';
+import { getActiveIngredient, setActiveIngredient } from '../../services/ingredient-details/slice.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
@@ -12,22 +14,12 @@ import { INGREDIENT_TYPES } from '../../utils/data.js';
 function BurgerIngredients() {
   const dispatch = useDispatch();
 
-  const { ingredients, activeIngredient } = useSelector(state => state.burgerIngredients);
-  const { bun, fillings } = useSelector(state => state.burgerConstructor);
+  const ingredients = useSelector(getIngredientsGroupedByType);
+  const activeIngredient = useSelector(getActiveIngredient);
+  const countSelectedIngredients = useSelector(getCount);
 
   const [ activeTab, setActiveTab ] = useState(INGREDIENT_TYPES[0].value);
   const tabRefs = useRef({});
-
-  const setActiveIngredient = useCallback(ingredient => {
-    dispatch({ type: BURGER_INGREDIENTS_SET_ACTIVE, ingredient });
-  }, [ dispatch ]);
-
-  const countSelectedIngredients = useMemo(() => {
-    return fillings.reduce((acc, n) => (
-      acc[n._id] = -~acc[n._id],
-      acc
-    ), bun ? { [bun._id]: 2 } : {});
-  }, [ bun, fillings ]);
 
   const onTabClick = useCallback(value => {
     setActiveTab(value);
@@ -63,7 +55,7 @@ function BurgerIngredients() {
                 key={n._id}
                 ingredient={n}
                 count={countSelectedIngredients[n._id] ?? 0}
-                onClick={() => setActiveIngredient(n)}
+                onClick={() => dispatch(setActiveIngredient(n))}
               />
             ))}
           </IngredientsList>
@@ -72,7 +64,7 @@ function BurgerIngredients() {
       {activeIngredient &&
         <Modal
           title="Детали ингредиента"
-          onClose={() => setActiveIngredient(null)}
+          onClose={() => dispatch(setActiveIngredient(null))}
         >
           <IngredientDetails ingredient={activeIngredient} />
         </Modal>

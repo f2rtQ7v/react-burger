@@ -18,7 +18,7 @@ export const Ingredient = PropTypes.shape({
   image: PropTypes.string.isRequired,
   image_large: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
-  id: PropTypes.number,
+  id: PropTypes.string,
 });
 
 export const Ingredients = PropTypes.arrayOf(Ingredient);

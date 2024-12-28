@@ -1,33 +1,28 @@
-import { useState, useMemo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import { BURGER_CONSTRUCTOR_ADD, BURGER_CONSTRUCTOR_RESET } from '../../services/actions/burger-constructor.js';
-import { ORDER_RESET } from '../../services/actions/order.js';
+import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.js';
+import { getOrder, resetOrder } from '../../services/order/slice.js';
+import { createOrder } from '../../services/order/actions.js';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.jsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.jsx';
 import Modal from '../modal/modal.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
-import { createOrder } from '../../services/actions/order.js';
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
 
-  const { bun, fillings } = useSelector(state => state.burgerConstructor);
-  const { order } = useSelector(state => state.order);
-
-  const [ showOrder, setShowOrder ] = useState(false);
-
-  const total = useMemo(() => {
-    return fillings.reduce((acc, n) => acc + n.price, bun?.price << 1);
-  }, [ bun, fillings ]);
+  const { bun, fillings } = useSelector(getIngredients);
+  const total = useSelector(getTotal);
+  const order = useSelector(getOrder);
 
   const [ { canDrop }, dropRef ] = useDrop(() => ({
     accept: 'ingredient',
     drop(ingredient) {
-      dispatch({ type: BURGER_CONSTRUCTOR_ADD, ingredient });
+      dispatch(addIngredient(ingredient));
     },
     collect: monitor => ({
       canDrop: monitor.canDrop(),
@@ -35,13 +30,13 @@ function BurgerConstructor() {
   }));
 
   const onCreateOrderClick = useCallback(() => {
-    dispatch(createOrder(bun, fillings));
-  }, [ bun, fillings ]);
+    dispatch(createOrder([ bun, ...fillings, bun ].map(n => n._id)));
+  }, [ dispatch, bun, fillings ]);
 
   const onCloseOrderModalClick = useCallback(() => {
-    dispatch({ type: BURGER_CONSTRUCTOR_RESET });
-    dispatch({ type: ORDER_RESET });
-  }, []);
+    dispatch(resetConstructor());
+    dispatch(resetOrder());
+  }, [ dispatch ]);
 
   return (
     <section className={`${styles.container} ${canDrop ? styles.drop : ''}`} ref={dropRef}>

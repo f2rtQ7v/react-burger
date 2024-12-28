@@ -9,13 +9,11 @@ const request = (route, options = {}) =>
 export const getIngredientsRequest = () =>
   request('ingredients');
 
-export const createOrderRequest = (bun, fillings) =>
+export const createOrderRequest = ingredients =>
   request('orders', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      ingredients: [ bun._id, ...fillings.map(n => n._id), bun._id ],
-    }),
+    body: JSON.stringify({ ingredients }),
   });

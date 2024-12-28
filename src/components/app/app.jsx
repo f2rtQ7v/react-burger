@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { getIngredients } from '../../services/actions/burger-ingredients.js';
+import { getIngredients } from '../../services/burger-ingredients/actions.js';
+import { getIngredientsState } from '../../services/burger-ingredients/slice.js';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../burger-constructor/burger-constructor.jsx';
@@ -17,7 +18,7 @@ export default function App() {
     ingredients,
     ingredientsRequest,
     ingredientsError,
-  } = useSelector(state => state.burgerIngredients);
+  } = useSelector(getIngredientsState);
 
   useEffect(() => {
     dispatch(getIngredients());
@@ -42,7 +43,7 @@ export default function App() {
     content = (
       <ErrorScreen>
         <span>Не удалось загрузить список ингредиентов</span>
-        <span>{`${ingredientsError}`}</span>
+        <span>{ingredientsError.message}</span>
       </ErrorScreen>
     );
   }
