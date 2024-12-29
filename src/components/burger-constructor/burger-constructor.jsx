@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.js';
-import { getOrder, resetOrder } from '../../services/order/slice.js';
+import { getOrderState, resetOrder } from '../../services/order/slice.js';
 import { createOrder } from '../../services/order/actions.js';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
@@ -10,6 +10,8 @@ import IngredientItemBun from './ingredient-item/ingredient-item-bun.jsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.jsx';
 import Modal from '../modal/modal.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
+import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
+import ErrorScreen from '../screens/error-screen/error-screen.jsx';
 import styles from './burger-constructor.module.css';
 
 function BurgerConstructor() {
@@ -17,7 +19,7 @@ function BurgerConstructor() {
 
   const { bun, fillings } = useSelector(getIngredients);
   const total = useSelector(getTotal);
-  const order = useSelector(getOrder);
+  const { order, orderCreateRequest, orderCreateError } = useSelector(getOrderState);
 
   const [ { canDrop }, dropRef ] = useDrop(() => ({
     accept: 'ingredient',
@@ -68,11 +70,25 @@ function BurgerConstructor() {
         </Button>
       </div>
 
-      {order &&
+      {(order || orderCreateRequest || orderCreateError) && (
         <Modal onClose={onCloseOrderModalClick}>
-          <OrderDetails orderId={order.id} />
+          <div className={styles.modalContent}>
+            {orderCreateRequest && (
+              <LoadingScreen>
+                <span>Создание заказа</span>
+                <span>Ждите</span>
+              </LoadingScreen>
+            )}
+            {orderCreateError && (
+              <ErrorScreen>
+                <span>Не удалось создать заказ</span>
+                <span>{orderCreateError}</span>
+              </ErrorScreen>
+            )}
+            {order && <OrderDetails orderId={order.id} />}
+          </div>
         </Modal>
-      }
+      )}
 
     </section>
   );

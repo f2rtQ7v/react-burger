@@ -43,7 +43,7 @@ export default function App() {
     content = (
       <ErrorScreen>
         <span>Не удалось загрузить список ингредиентов</span>
-        <span>{ingredientsError.message}</span>
+        <span>{ingredientsError}</span>
       </ErrorScreen>
     );
   }

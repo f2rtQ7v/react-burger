@@ -14,15 +14,16 @@ const slice = createSlice({
     resetOrder: () => initialState,
   },
   selectors: {
-    getOrder: state => state.order,
+    getOrderState: state => state,
   },
   extraReducers: builder => builder
     .addCase(createOrder.pending, (state) => {
       state.orderCreateRequest = true;
+      state.orderCreateError = null;
     })
     .addCase(createOrder.rejected, (state, action) => {
       state.orderCreateRequest = false;
-      state.orderCreateError = action.error;
+      state.orderCreateError = action.error?.message || 'Неизвестная ошибка при создании заказа';
     })
     .addCase(createOrder.fulfilled, (state, action) => {
       state.orderCreateRequest = false;
@@ -33,6 +34,6 @@ const slice = createSlice({
     }),
 });
 
-export const { getOrder } = slice.selectors;
+export const { getOrderState } = slice.selectors;
 export const { resetOrder } = slice.actions;
 export default slice.reducer;
