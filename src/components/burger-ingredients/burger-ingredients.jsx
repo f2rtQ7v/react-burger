@@ -9,6 +9,7 @@ import IngredientItem from './ingredient-item/ingredient-item.jsx';
 import IngredientDetails from './ingredient-details/ingredient-details.jsx';
 import Modal from '../modal/modal.jsx';
 import styles from './burger-ingredients.module.css';
+import throttle from '../../utils/throttle.js';
 import { INGREDIENT_TYPES } from '../../utils/data.js';
 
 function BurgerIngredients() {
@@ -18,37 +19,48 @@ function BurgerIngredients() {
   const activeIngredient = useSelector(getActiveIngredient);
   const countSelectedIngredients = useSelector(getCount);
 
-  const [ activeTab, setActiveTab ] = useState(INGREDIENT_TYPES[0].value);
-  const tabRefs = useRef({});
+  const [ activeTab, setActiveTab ] = useState(0);
+  const tabRefs = useRef([]);
 
-  const onTabClick = useCallback(value => {
-    setActiveTab(value);
-    tabRefs.current[value].scrollIntoView({
+  const onTabClick = useCallback(index => {
+    tabRefs.current[index].scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
   }, []);
 
+  const onScroll = useCallback(
+    throttle(({ target: t }) => {
+      const { top } = t.getBoundingClientRect();
+      const [ index ] = tabRefs.current.reduce((min, n, i) => {
+        const diff = Math.abs(n.getBoundingClientRect().top - top);
+        return diff < min[1] ? [ i, diff ] : min;
+      }, [ -1, Infinity ]);
+
+      setActiveTab(index);
+    }, 100)
+  , []);
+
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        {INGREDIENT_TYPES.map(({ name, value }) => (
+        {INGREDIENT_TYPES.map(({ name, value }, i) => (
           <Tab
             key={value}
-            value={value}
-            active={activeTab === value}
+            value={i}
+            active={activeTab === i}
             onClick={onTabClick}
           >
             {name}
           </Tab>
         ))}
       </div>
-      <div className={styles.ingredients}>
-        {INGREDIENT_TYPES.map(({ name, value }) => (
+      <div className={styles.ingredients} onScroll={onScroll}>
+        {INGREDIENT_TYPES.map(({ name, value }, i) => (
           <IngredientsList
             key={value}
             title={name}
-            ref={el => tabRefs.current[value] = el}
+            ref={el => tabRefs.current[i] = el}
           >
             {ingredients[value].map(n => (
               <IngredientItem
