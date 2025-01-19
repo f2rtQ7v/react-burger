@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.image {
+  width: 480px;
+  height: 240px;
+}
+
 .name {
   composes: mb-8 text text_type_main-medium from global;
 }

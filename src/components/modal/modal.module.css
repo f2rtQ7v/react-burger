@@ -1,7 +1,7 @@
 .modal {
   background: var(--background);
   border-radius: var(--common-border-radius-s);
-  border: 1px solid var(--text-inactive-color);
+  border: 2px solid var(--text-inactive-color);
 }
 
 .header {

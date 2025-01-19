@@ -1,76 +1,58 @@
-import { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
-import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.js';
+import { getOrderState, resetOrder } from '../../services/order/slice.js';
+import { createOrder } from '../../services/order/actions.js';
+import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import IngredientsList from './ingredients-list/ingredients-list.jsx';
+import IngredientItemBun from './ingredient-item/ingredient-item-bun.jsx';
+import IngredientItemFilling from './ingredient-item/ingredient-item-filling.jsx';
 import Modal from '../modal/modal.jsx';
 import OrderDetails from '../order-details/order-details.jsx';
-import { Ingredients } from '../../utils/types.js';
+import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
+import ErrorScreen from '../screens/error-screen/error-screen.jsx';
 import styles from './burger-constructor.module.css';
 
-const getBunProps = (props, type) => props
-  ? ({
-      type,
-      text: `${props.name} (${type === 'top' ? 'Верх' : 'Низ'})`,
-      price: props.price,
-      thumbnail: props.image,
-      isLocked: true,
-    })
-  : ({
-      type,
-      text: 'Добавьте булку',
-      extraClass: styles.ingredientPlaceholder,
-    });
+function BurgerConstructor() {
+  const dispatch = useDispatch();
 
-const getFillingProps = (props, delIngredient) => props
-  ? ({
-      text: props.name,
-      price: props.price,
-      thumbnail: props.image,
-      handleClose: () => delIngredient(props.id),
-    })
-  : ({
-      text: 'Добавьте начинки и соусы',
-      extraClass: styles.ingredientPlaceholder,
-    });
+  const { bun, fillings } = useSelector(getIngredients);
+  const total = useSelector(getTotal);
+  const { order, orderCreateRequest, orderCreateError } = useSelector(getOrderState);
 
-function BurgerConstructor({ ingredients, delIngredient }) {
-  const [ showOrder, setShowOrder ] = useState(false);
+  const [ { canDrop }, dropRef ] = useDrop(() => ({
+    accept: 'ingredient',
+    drop(ingredient) {
+      dispatch(addIngredient(ingredient));
+    },
+    collect: monitor => ({
+      canDrop: monitor.canDrop(),
+    }),
+  }));
 
-  const [ [ bun ], fillings ] = useMemo(() => {
-    return ingredients.reduce((acc, n) => (
-      acc[+(n.type !== 'bun')].push(n),
-      acc
-    ), [ [], [] ]);
-  }, [ ingredients ]);
+  const onCreateOrderClick = useCallback(() => {
+    dispatch(createOrder([ bun, ...fillings, bun ].map(n => n._id)));
+  }, [ dispatch, bun, fillings ]);
 
-  const total = useMemo(() => {
-    return ingredients.reduce((acc, n) => acc + n.price, 0);
-  }, [ ingredients ]);
+  const onCloseOrderModalClick = useCallback(() => {
+    dispatch(resetConstructor());
+    dispatch(resetOrder());
+  }, [ dispatch ]);
 
   return (
-    <section className={styles.container}>
+    <section className={`${styles.container} ${canDrop ? styles.drop : ''}`} ref={dropRef}>
 
-      <ul className={styles.ingredients}>
-        <li>
-          <ConstructorElement {...getBunProps(bun, 'top')} />
-        </li>
-      </ul>
-      <ul className={styles.ingredients}>
-        {!fillings.length && (
-          <li>
-            <ConstructorElement {...getFillingProps(null)} />
-          </li>
-        )}
-        {fillings.map(n => (
-          <li key={n.id}>
-            <ConstructorElement {...getFillingProps(n, delIngredient)} />
-          </li>
-        ))}
-      </ul>
-      <ul className={styles.ingredients}>
-        <li>
-          <ConstructorElement {...getBunProps(bun, 'bottom')} />
-        </li>
-      </ul>
+      <IngredientsList>
+        <IngredientItemBun ingredient={bun} type="top" />
+      </IngredientsList>
+      <IngredientsList>
+        {!fillings.length && <IngredientItemFilling />}
+        {fillings.map((n, i) => <IngredientItemFilling key={n.id} ingredient={n} index={i} />)}
+      </IngredientsList>
+      <IngredientsList>
+        <IngredientItemBun ingredient={bun} type="bottom" />
+      </IngredientsList>
 
       <div className={styles.footer}>
         <span className={styles.total}>
@@ -82,25 +64,34 @@ function BurgerConstructor({ ingredients, delIngredient }) {
           type="primary"
           size="medium"
           disabled={!bun}
-          onClick={() => setShowOrder(true)}
+          onClick={onCreateOrderClick}
         >
           Оформить заказ
         </Button>
       </div>
 
-      {showOrder &&
-        <Modal onClose={() => setShowOrder(false)}>
-          <OrderDetails orderId={Math.random() * 1e6 | 0} />
+      {(order || orderCreateRequest || orderCreateError) && (
+        <Modal onClose={onCloseOrderModalClick}>
+          <div className={styles.modalContent}>
+            {orderCreateRequest && (
+              <LoadingScreen>
+                <span>Создание заказа</span>
+                <span>Ждите</span>
+              </LoadingScreen>
+            )}
+            {orderCreateError && (
+              <ErrorScreen>
+                <span>Не удалось создать заказ</span>
+                <span>{orderCreateError}</span>
+              </ErrorScreen>
+            )}
+            {order && <OrderDetails orderId={order.id} />}
+          </div>
         </Modal>
-      }
+      )}
 
     </section>
   );
 }
-
-BurgerConstructor.propTypes = {
-  ingredients: Ingredients.isRequired,
-  delIngredient: PropTypes.func.isRequired,
-};
 
 export default BurgerConstructor;

@@ -4,16 +4,13 @@
   flex-direction: column;
   flex-grow: 1;
   grid-area: burgerConstructor;
+  border-radius: var(--common-border-radius-s);
+  border: 2px dashed transparent;
 }
 
-.ingredients {
-  composes: ml-1 mr-1 mt-2 mb-2 from global;
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--offset-base-size) * 4);
-  max-height: 368px;
-  overflow: auto;
-  list-style: none;
+.container.drop {
+  border-color: var(--text-inactive-color);
+  background: var(--background);
 }
 
 .footer {
@@ -32,14 +29,9 @@
   gap: 10px;
 }
 
-.ingredientPlaceholder {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-
-  :global(.constructor-element__row) {
-    *:not(:global(.constructor-element__text)) {
-      display: none;
-    }
-  }
+.modalContent {
+  position: relative;
+  min-width: 400px;
+  min-height: 400px;
+  font-size: 5px;
 }

@@ -1,0 +1,22 @@
+.ingredientItem {
+  composes: ml-6 from global;
+}
+
+.ingredientItemSortable {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  cursor: move;
+}
+
+.ingredientPlaceholder {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  :global(.constructor-element__row) {
+    *:not(:global(.constructor-element__text)) {
+      display: none;
+    }
+  }
+}

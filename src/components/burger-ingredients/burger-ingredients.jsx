@@ -1,84 +1,73 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { useState, useRef, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.js';
+import { getCount } from '../../services/burger-constructor/slice.js';
+import { getActiveIngredient, setActiveIngredient } from '../../services/ingredient-details/slice.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
 import IngredientDetails from './ingredient-details/ingredient-details.jsx';
 import Modal from '../modal/modal.jsx';
-import { Ingredients } from '../../utils/types.js';
 import styles from './burger-ingredients.module.css';
+import throttle from '../../utils/throttle.js';
 import { INGREDIENT_TYPES } from '../../utils/data.js';
 
-function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) {
-  const [ activeTab, setActiveTab ] = useState(ingredients[0].type);
-  const tabRefs = useRef({});
+function BurgerIngredients() {
+  const dispatch = useDispatch();
 
-  const [ activeIngredient, setActiveIngredient ] = useState(null);
+  const ingredients = useSelector(getIngredientsGroupedByType);
+  const activeIngredient = useSelector(getActiveIngredient);
+  const countSelectedIngredients = useSelector(getCount);
 
-  const countSelectedIngredients = useMemo(() => {
-    return selectedIngredients.reduce((acc, n) => (
-      acc[n._id] = -~acc[n._id],
-      acc
-    ), {});
-  }, [ selectedIngredients ]);
+  const [ activeTab, setActiveTab ] = useState(0);
+  const tabRefs = useRef([]);
 
-  const groupedIngredients = useMemo(() => {
-    return ingredients.reduce((acc, n) => (
-      (acc[n.type] ??= []).push({
-        ...n,
-        count: countSelectedIngredients[n._id] ?? 0,
-      }),
-      acc
-    ), {});
-  }, [ countSelectedIngredients ]);
-
-  function onTabClick(value) {
-    setActiveTab(value);
-    tabRefs.current[value].scrollIntoView({
+  const onTabClick = useCallback(index => {
+    tabRefs.current[index].scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
-  }
-
-/*==================================================================*/
-  useEffect(() => {
-    [
-      [ 'bun', [ 1 ] ],
-      [ 'main', [ 0, 1, 0, 2, 0 ] ],
-      [ 'sauce', [ 3, 3, 3, 3, 3 ] ],
-    ].forEach(([ k, v ]) => {
-      v.forEach(i => addIngredient(groupedIngredients[k][i]));
-    });
   }, []);
-/*==================================================================*/
+
+  const onScroll = useCallback(
+    throttle(({ target: t }) => {
+      const { top } = t.getBoundingClientRect();
+      const [ index ] = tabRefs.current.reduce((min, n, i) => {
+        const diff = Math.abs(n.getBoundingClientRect().top - top);
+        return diff < min[1] ? [ i, diff ] : min;
+      }, [ -1, Infinity ]);
+
+      setActiveTab(index);
+    }, 100)
+  , []);
 
   return (
     <section className={styles.container}>
       <div className={styles.header}>
-        {INGREDIENT_TYPES.map(({ name, value }) => (
+        {INGREDIENT_TYPES.map(({ name, value }, i) => (
           <Tab
             key={value}
-            value={value}
-            active={activeTab === value}
+            value={i}
+            active={activeTab === i}
             onClick={onTabClick}
           >
             {name}
           </Tab>
         ))}
       </div>
-      <div className={styles.ingredients}>
-        {INGREDIENT_TYPES.map(({ name, value }) => (
+      <div className={styles.ingredients} onScroll={onScroll}>
+        {INGREDIENT_TYPES.map(({ name, value }, i) => (
           <IngredientsList
             key={value}
             title={name}
-            ref={el => tabRefs.current[value] = el}
+            ref={el => tabRefs.current[i] = el}
           >
-            {groupedIngredients[value].map(n => (
+            {ingredients[value].map(n => (
               <IngredientItem
                 key={n._id}
                 ingredient={n}
-                onClick={() => setActiveIngredient(n)}
-                /*onDoubleClick={() => addIngredient(n)}*/
+                count={countSelectedIngredients[n._id] ?? 0}
+                onClick={() => dispatch(setActiveIngredient(n))}
               />
             ))}
           </IngredientsList>
@@ -87,7 +76,7 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
       {activeIngredient &&
         <Modal
           title="Детали ингредиента"
-          onClose={() => setActiveIngredient(null)}
+          onClose={() => dispatch(setActiveIngredient(null))}
         >
           <IngredientDetails ingredient={activeIngredient} />
         </Modal>
@@ -95,11 +84,5 @@ function BurgerIngredients({ ingredients, selectedIngredients, addIngredient }) 
     </section>
   );
 }
-
-BurgerIngredients.propTypes = {
-  ingredients: Ingredients.isRequired,
-  selectedIngredients: Ingredients.isRequired,
-  addIngredient: PropTypes.func.isRequired,
-};
 
 export default BurgerIngredients;
