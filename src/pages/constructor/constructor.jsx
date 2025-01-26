@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { getIngredients } from '../../services/burger-ingredients/actions.js';
 import { getIngredientsState } from '../../services/burger-ingredients/slice.js';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients.jsx';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor.jsx';
@@ -10,18 +8,12 @@ import LoadingScreen from '../../components/screens/loading-screen/loading-scree
 import ErrorScreen from '../../components/screens/error-screen/error-screen.jsx';
 import styles from './constructor.module.css';
 
-export default function Constructor() {
-  const dispatch = useDispatch();
-
+export default function ConstructorPage() {
   const {
     ingredients,
     ingredientsRequest,
     ingredientsError,
   } = useSelector(getIngredientsState);
-
-  useEffect(() => {
-    dispatch(getIngredients());
-  }, [ dispatch ]);
 
   let content = null;
 
