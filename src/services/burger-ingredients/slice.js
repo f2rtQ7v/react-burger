@@ -26,7 +26,7 @@ const slice = createSlice({
     })
     .addCase(getIngredients.rejected, (state, action) => {
       state.ingredientsRequest = false;
-      state.ingredientsError = action.error?.message || 'Неизвестная ошибка при загрузке списка ингредиентов';
+      state.ingredientsError = action.payload || action.error?.message || 'Неизвестная ошибка при загрузке списка ингредиентов';
     })
     .addCase(getIngredients.fulfilled, (state, action) => {
       state.ingredientsRequest = false;

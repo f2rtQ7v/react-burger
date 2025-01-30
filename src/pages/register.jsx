@@ -1,27 +1,23 @@
-import Form from '../components/form/form.jsx';
+import { AuthForm } from '../components/forms/';
 
-const formFields = [
+const fields = [
   { type:     'text', name:     'name', placeholder:    'Имя' },
-  { type:     'text', name:    'email', placeholder: 'E-mail' },
-  { type: 'password', name: 'password', placeholder: 'Пароль', icon: 'HideIcon' },
+  { type:    'email', name:    'email', placeholder: 'E-mail' },
+  { type: 'password', name: 'password', placeholder: 'Пароль' },
 ];
 
-const formLinks = [
+const links = [
   { text: 'Уже зарегистрировались?', linkText: 'Войти', to: '/login' },
 ];
 
 export default function RegisterPage() {
-  const onSubmit = formData => {
-
-  };
-
   return (
-    <Form
+    <AuthForm
+      action="createUser"
       title="Регистрация"
-      submitTitle="Зарегистрироваться"
-      fields={formFields}
-      links={formLinks}
-      onSubmit={onSubmit}
+      submitLabel="Зарегистрироваться"
+      fields={fields}
+      links={links}
     />
   );
 }

@@ -1,10 +1,21 @@
+import PropTypes from 'prop-types';
 import styles from './loading-screen.module.css';
 
-export default function LoadingScreen(props) {
+function LoadingScreen({ transparent = false, children }) {
+  const classes = [ styles.container, transparent && styles.transparent ]
+    .filter(Boolean)
+    .join(' ');
+
   return (
-    <div className={styles.container}>
+    <div className={classes}>
       <div className={styles.spinner}></div>
-      {props.children}
+      {children}
     </div>
   );
 }
+
+LoadingScreen.propTypes = {
+  transparent: PropTypes.bool,
+};
+
+export default LoadingScreen;

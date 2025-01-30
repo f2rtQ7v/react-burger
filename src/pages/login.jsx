@@ -1,27 +1,32 @@
-import Form from '../components/form/form.jsx';
+import { useNavigate } from 'react-router-dom';
+import { AuthForm } from '../components/forms/';
 
-const formFields = [
-  { type:     'text', name:    'email', placeholder: 'E-mail' },
-  { type: 'password', name: 'password', placeholder: 'Пароль', icon: 'HideIcon' },
+const fields = [
+  { type:    'email', name:    'email', placeholder: 'E-mail' },
+  { type: 'password', name: 'password', placeholder: 'Пароль' },
 ];
 
-const formLinks = [
+const links = [
   { text: 'Вы - новый пользователь?', linkText: 'Зарегистрироваться',  to: '/register' },
   { text: 'Забыли пароль?',           linkText: 'Восстановить пароль', to: '/forgot-password' },
 ];
 
 export default function LoginPage() {
-  const onSubmit = formData => {
-
+  const navigate = useNavigate();
+  const onSubmit = () => {
+    navigate('/', {
+      replace: true,
+    });
   };
 
   return (
-    <Form
+    <AuthForm
+      action="login"
       title="Вход"
-      submitTitle="Войти"
-      fields={formFields}
-      links={formLinks}
+      submitLabel="Войти"
+      fields={fields}
       onSubmit={onSubmit}
+      links={links}
     />
   );
 }

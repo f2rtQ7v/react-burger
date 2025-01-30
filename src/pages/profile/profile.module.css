@@ -1,0 +1,18 @@
+.container {
+  composes: pt-20 from global;
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  composes: pr-15 from global;
+  width: 340px;
+}
+
+.link {
+  composes: pt-4 pb-4 from global;
+}
+
+.description {
+  composes: text text_type_main-default text_color_inactive pt-20 from global;
+}

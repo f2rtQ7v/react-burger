@@ -1,25 +1,30 @@
-import Form from '../components/form/form.jsx';
+import { useNavigate } from 'react-router-dom';
+import { AuthForm } from '../components/forms/';
 
-const formFields = [
-  { type: 'text', name: 'email', placeholder: 'Укажите e-mail' },
+const fields = [
+  { type: 'email', name: 'email', placeholder: 'Укажите e-mail' },
 ];
 
-const formLinks = [
+const links = [
   { text: 'Вспомнили пароль?', linkText: 'Войти', to: '/login' },
 ];
 
 export default function ForgotPasswordPage() {
-  const onSubmit = formData => {
-
+  const navigate = useNavigate();
+  const onSubmit = () => {
+    navigate('/reset-password', {
+      replace: true,
+    });
   };
 
   return (
-    <Form
+    <AuthForm
+      action="forgotPassword"
       title="Восстановление пароля"
-      submitTitle="Восстановить"
-      fields={formFields}
-      links={formLinks}
+      submitLabel="Восстановить"
+      fields={fields}
       onSubmit={onSubmit}
+      links={links}
     />
   );
 }
