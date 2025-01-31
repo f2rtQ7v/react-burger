@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { AuthForm } from '../components/forms/';
 
 const fields = [
@@ -10,20 +9,13 @@ const links = [
 ];
 
 export default function ForgotPasswordPage() {
-  const navigate = useNavigate();
-  const onSubmit = () => {
-    navigate('/reset-password', {
-      replace: true,
-    });
-  };
-
   return (
     <AuthForm
       action="forgotPassword"
+      redirect="/reset-password"
       title="Восстановление пароля"
       submitLabel="Восстановить"
       fields={fields}
-      onSubmit={onSubmit}
       links={links}
     />
   );

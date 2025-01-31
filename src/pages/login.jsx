@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { AuthForm } from '../components/forms/';
 
 const fields = [
@@ -12,20 +11,13 @@ const links = [
 ];
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const onSubmit = () => {
-    navigate('/', {
-      replace: true,
-    });
-  };
-
   return (
     <AuthForm
       action="login"
+      redirect="/"
       title="Вход"
       submitLabel="Войти"
       fields={fields}
-      onSubmit={onSubmit}
       links={links}
     />
   );

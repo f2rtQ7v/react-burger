@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { Link } from 'react-router';
+import { useNavigate, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as actions from '../../../services/auth/actions.js';
@@ -11,25 +11,32 @@ import styles from './auth-form.module.css';
 
 function AuthForm({
   action,
+  redirect,
   title,
   submitLabel,
   links,
   fields,
-  onSubmit,
 }) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { request, error } = useSelector(state => state.auth);
   const { data, onChange } = useFormData();
-  const onSubmitInner = useCallback(data => {
+  const onSubmit = useCallback(data => {
     dispatch(actions[action](data))
       .unwrap()
-      .then(onSubmit)
+      .then(() => {
+        if (redirect) {
+          navigate(redirect, {
+            replace: true,
+          });
+        }
+      })
       .catch(() => {/*
-        всё в порядке, ошибка поймана и записана в slice,
-        а тут надо что-то делать (onSubmit) только в том случае, если ошибок не было
+        всё в порядке, ошибка поймана и записана в slice;
+        а тут надо что-то делать (редирект) только в том случае, если ошибок не было;
         пустой catch нужен для того, чтобы ошибка в консоль не падала
       */});
-  }, [ dispatch, action, onSubmit ]);
+  }, [ dispatch, action, navigate, redirect ]);
 
   useEffect(() => {
     dispatch(resetError());
@@ -42,7 +49,7 @@ function AuthForm({
         fields={fields}
         data={data}
         onChange={onChange}
-        onSubmit={onSubmitInner}
+        onSubmit={onSubmit}
         submitLabel={submitLabel}
         error={error}
       />
@@ -58,11 +65,11 @@ function AuthForm({
 
 AuthForm.propTypes = {
   action: PropTypes.string.isRequired,
+  redirect: PropTypes.string,
   title: PropTypes.string.isRequired,
   submitLabel: PropTypes.string.isRequired,
   links: PropTypes.arrayOf(PropTypes.object).isRequired,
   fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  onSubmit: PropTypes.func,
 };
 
 export default AuthForm;
