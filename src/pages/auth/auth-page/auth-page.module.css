@@ -12,6 +12,7 @@
 .link {
   composes: text text_type_main-default text_color_inactive p-2 from global;
 
+  :global(a),
   :global(a:visited) {
     color: var(--colors-interface-accent);
   }
