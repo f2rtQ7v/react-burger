@@ -1,4 +1,4 @@
-import { AuthForm } from '../components/forms/';
+import AuthPage from './auth-page/auth-page.jsx';
 
 const fields = [
   { type:     'text', name:     'name', placeholder:    'Имя' },
@@ -12,7 +12,7 @@ const links = [
 
 export default function RegisterPage() {
   return (
-    <AuthForm
+    <AuthPage
       action="createUser"
       title="Регистрация"
       submitLabel="Зарегистрироваться"

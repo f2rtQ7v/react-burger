@@ -10,8 +10,8 @@ import styles from './profile.module.css';
 export default function ProfilePage() {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { request, error } = useSelector(state => state.auth);
-  const onCloseModal = () => dispatch(resetError());
+  const { request, error } = useSelector(state => state.auth.logout);
+  const onCloseModal = () => dispatch(resetError('logout'));
 
   const links = [
     {

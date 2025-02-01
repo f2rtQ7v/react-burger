@@ -1,4 +1,4 @@
-import { AuthForm } from '../components/forms/';
+import AuthPage from './auth-page/auth-page.jsx';
 
 const fields = [
   { type: 'email', name: 'email', placeholder: 'Укажите e-mail' },
@@ -10,7 +10,7 @@ const links = [
 
 export default function ForgotPasswordPage() {
   return (
-    <AuthForm
+    <AuthPage
       action="forgotPassword"
       redirect="/reset-password"
       title="Восстановление пароля"

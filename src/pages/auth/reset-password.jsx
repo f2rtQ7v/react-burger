@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { AuthForm } from '../components/forms/';
+import AuthPage from './auth-page/auth-page.jsx';
 
 const fields = [
   { type: 'password', name: 'password', placeholder:  'Введите новый пароль' },
@@ -12,14 +12,14 @@ const links = [
 ];
 
 export default function ResetPasswordPage() {
-  const { forgotPassword } = useSelector(state => state.auth);
+  const { forgotPassword } = useSelector(state => state.auth.resetPassword);
 
   if (!forgotPassword) {
     return <Navigate to="/forgot-password" replace />;
   }
 
   return (
-    <AuthForm
+    <AuthPage
       action="resetPassword"
       redirect="/login"
       title="Восстановление пароля"

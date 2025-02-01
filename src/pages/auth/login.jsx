@@ -1,4 +1,4 @@
-import { AuthForm } from '../components/forms/';
+import AuthPage from './auth-page/auth-page.jsx';
 
 const fields = [
   { type:    'email', name:    'email', placeholder: 'E-mail' },
@@ -12,7 +12,7 @@ const links = [
 
 export default function LoginPage() {
   return (
-    <AuthForm
+    <AuthPage
       action="login"
       redirect="/"
       title="Вход"
