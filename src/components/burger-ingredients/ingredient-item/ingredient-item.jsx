@@ -17,8 +17,9 @@ function IngredientItem({ ingredient, count, ...props }) {
     <Link
       to={`/ingredient/${ingredient._id}`}
       state={{ background: location }}
+      ref={dragRef}
     >
-      <div className={styles.ingredient} {...props} ref={dragRef}>
+      <div className={styles.ingredient} {...props}>
         <div className={styles.image}>
           {count ? <Counter count={count} /> : null}
           <img src={ingredient.image} />
