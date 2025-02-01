@@ -9,6 +9,11 @@
   width: 340px;
 }
 
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
 .link {
   composes: pt-4 pb-4 from global;
 }
