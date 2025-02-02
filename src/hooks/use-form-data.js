@@ -1,14 +1,17 @@
 import { useState, useCallback } from 'react';
 
-export default function useFormData(initialState = {}) {
-  const [ data, setData ] = useState(initialState);
+export default function useFormData({
+  initialData = {},
+  valueGetter = e => e.target.value,
+} = {}) {
+  const [ data, setData ] = useState(initialData);
 
-  const onChange = useCallback(({ target: t }) => {
+  const onChange = useCallback(e => {
     setData(data => ({
       ...data,
-      [t.name]: t.value,
+      [e.target.name]: valueGetter(e),
     }));
-  }, []);
+  }, [ valueGetter ]);
 
-  return { data, setData, onChange };
+  return [ data, setData, onChange ];
 }

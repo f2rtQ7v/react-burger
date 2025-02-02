@@ -13,6 +13,11 @@
 
 .formItem {
   composes: pt-3 pb-3 from global;
+  width: 480px;
+
+  :global(.input__error) {
+    margin: 2px 26px 0 26px;
+  }
 }
 
 .buttons {

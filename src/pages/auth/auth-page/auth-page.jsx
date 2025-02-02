@@ -13,7 +13,7 @@ function AuthPage({
   fields,
 }) {
   const navigate = useNavigate();
-  const { data, onChange } = useFormData();
+  const [ data, , onChange ] = useFormData();
   const onSubmit = () => {
     if (redirect) {
       navigate(redirect, {
