@@ -1,8 +1,22 @@
 const baseApiUrl = 'https://norma.nomoreparties.space/api';
 
+const errors = {
+  'email, password and name are required fields': 'Имя, e-mail и пароль являются обязательными полями',
+  'user already exists': 'Пользователь с указанным e-mail уже существует',
+  'user with such email already exists': 'Пользователь с указанным e-mail уже существует',
+  'email or password are incorrect': 'Неправильно введён e-mail или пароль',
+  'invalid credentials provided': 'Указаны недействительные учетные данные',
+  'incorrect reset token': 'Указан неправильный код восстановления пароля',
+  'ingredient ids must be provided': 'Не переданы идентификаторы ингредиентов',
+  'token required': 'Токен авторизации не указан или некорректен',
+  'invalid signature': 'Некорректный токен авторизации',
+};
+
 const checkResponse = res => res.ok
   ? res.json()
-  : res.json().then(err => Promise.reject(err));
+  : res.json().then(err => {
+      return Promise.reject(errors[err.message.toLowerCase()] ?? err);
+    });
 
 const request = (route, options = {}) =>
   fetch(baseApiUrl + route, options)
