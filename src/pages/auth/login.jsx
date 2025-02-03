@@ -14,7 +14,6 @@ export default function LoginPage() {
   return (
     <AuthPage
       action="login"
-      redirect="/"
       title="Вход"
       submitLabel="Войти"
       fields={fields}

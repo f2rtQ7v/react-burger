@@ -1,4 +1,4 @@
-import { useNavigate, Link } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from '../../../components/form/form.jsx';
 import useFormData from '../../../hooks/use-form-data.js';
@@ -12,10 +12,11 @@ function AuthPage({
   links,
   fields,
 }) {
+  const location = useLocation();
   const navigate = useNavigate();
   const [ data, , onChange ] = useFormData();
   const onSubmit = () => {
-    if (redirect) {
+    if (redirect && !location.state?.from) {
       navigate(redirect, {
         replace: true,
       });
