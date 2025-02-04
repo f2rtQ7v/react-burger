@@ -5,6 +5,7 @@ import styles from './app-header.module.css';
 const links = [
   { Icon:  BurgerIcon, to:        '/', text:    'Конструктор', id: 'burgerConstructor' },
   { Icon:    ListIcon, to:    '/feed', text:  'Лента заказов', id:              'feed' },
+  { Icon:        Logo, to:        '/',                         id:              'logo' },
   { Icon: ProfileIcon, to: '/profile', text: 'Личный кабинет', id:           'profile', nested: true },
 ];
 
@@ -17,9 +18,6 @@ export default function AppHeader() {
             {text}
           </Link>
         ))}
-        <div className={styles.logo}>
-          <Logo />
-        </div>
       </nav>
     </header>
   );
