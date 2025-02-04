@@ -1,7 +1,9 @@
 const validateEmpty = val => !val && 'Заполните поле';
 
-export const validations = {
-  text: [ validateEmpty ],
+const validations = {
+  text: [
+    validateEmpty,
+  ],
   email: [
     validateEmpty,
     val => !/.@./.test(val) && 'Адрес электронной почты должен состоять из двух частей, разделённых символом "@"',
