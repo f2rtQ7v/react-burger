@@ -25,6 +25,7 @@ export default function App() {
   const location = useLocation();
   const background = location.state?.background;
 
+  const { isAuthChecked } = useSelector(state => state.auth);
   const {
     ingredients,
     ingredientsRequest,
@@ -36,7 +37,7 @@ export default function App() {
     dispatch(getIngredients());
   }, [ dispatch ]);
 
-  if (ingredientsRequest) {
+  if (ingredientsRequest || !isAuthChecked) {
     return <LoadingScreen />;
   }
 
