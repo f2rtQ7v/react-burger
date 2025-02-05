@@ -30,3 +30,10 @@
 .detailsItemValue {
   composes: text text_type_digits-default from global;
 }
+
+@media (max-width: 599px) {
+  .details {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

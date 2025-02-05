@@ -8,8 +8,14 @@ import styles from './modal.module.css';
 function Modal({ title, onClose, children }) {
   useEffect(() => {
     const onKeydown = e => e.key === 'Escape' && onClose();
+
     document.addEventListener('keydown', onKeydown);
-    return () => document.removeEventListener('keydown', onKeydown);
+    document.body.classList.add(styles.noScroll);
+
+    return () => {
+      document.removeEventListener('keydown', onKeydown);
+      document.body.classList.remove(styles.noScroll);
+    };
   }, [ onClose ]);
 
   return createPortal(
