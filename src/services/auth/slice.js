@@ -112,7 +112,7 @@ const slice = createSlice({
       state.logout.error = action.payload || action.error?.message || 'Неизвестная ошибка при выходе';
     })
     .addCase(logout.fulfilled, (state, action) => {
-      state.user = action.payload.user;
+      state.user = null;
       state.logout.request = false;
     })
 
