@@ -1,14 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useFormData from '../../hooks/use-form-data.js';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import * as inputs from './inputs.jsx';
+import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import * as actions from '../../services/auth/actions.js';
 import { validate, validateAll } from './validations.js';
 import { resetError } from '../../services/auth/slice.js';
 import { LoadingScreen } from '../screens/';
 import PropTypes from 'prop-types';
 import styles from './form.module.css';
+
+const inputs = {
+  text: Input,
+  password: PasswordInput,
+};
 
 function Form({
   action,
@@ -76,14 +80,14 @@ function Form({
         onReset={onResetInner}
         noValidate
       >
-        {fields.map(n => {
-          const Component = inputs[n.type] ?? inputs.text;
+        {fields.map(({ type, ...n }) => {
+          const Component = inputs[type] ?? inputs.text;
           const error = inputErrors[n.name];
           return (
             <div key={n.name} className={styles.formItem}>
               <Component
                 {...n}
-                data-type={n.type}
+                data-type={type}
                 value={data[n.name] || ''}
                 onChange={onChangeInner}
                 error={showErrors && !!error}
