@@ -18,12 +18,16 @@ const checkResponse = res => res.ok
       return Promise.reject(errors[err.message.toLowerCase()] ?? err);
     });
 
-const request = (route, options = {}) =>
-  fetch(baseApiUrl + route, options)
+function request(route, options = {}) {
+  if (options.body) {
+    (options.headers ??= {})['Content-Type'] = 'application/json';
+    options.body = JSON.stringify(options.body);
+  }
+
+  return fetch(baseApiUrl + route, options)
     .then(checkResponse)
-    .then(r => {
-      return r.success ? r : Promise.reject(r.message);
-    });
+    .then(r => r.success ? r : Promise.reject(r.message));
+}
 
 const updateTokens = response => {
   localStorage.setItem('refreshToken', response.refreshToken); 
@@ -44,10 +48,7 @@ export const getIngredientsRequest = () =>
 export const createOrderRequest = ingredients =>
   fetchWithRefresh('/orders', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ ingredients }),
+    body: { ingredients },
   });
 
 
@@ -55,12 +56,9 @@ export const createOrderRequest = ingredients =>
 export const refreshToken = () => {
   return request('/auth/token', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
+    body: {
       token: localStorage.getItem('refreshToken'),
-    }),
+    },
   }).then(response => {
     return response.success
       ? updateTokens(response)
@@ -84,13 +82,10 @@ export const fetchWithRefresh = async (url, options) => {
 
 
 export const auth = {
-  createUser(data) {
+  createUser(body) {
     return request('/auth/register', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body,
     }).then(updateTokens);
   },
   async getUser() {
@@ -110,14 +105,13 @@ export const auth = {
         }).catch(err => Promise.reject(deleteTokens(err)))
       : { user: null };
   },
-  updateUser(data) {
+  updateUser(body) {
     return fetchWithRefresh('/auth/user', {
       method: 'PATCH',
       headers: {
-        'Content-Type': 'application/json',
         Authorization: localStorage.getItem('accessToken'),
       },
-      body: JSON.stringify(data),
+      body,
     });
   },
   deleteUser() {
@@ -128,40 +122,30 @@ export const auth = {
       },
     }).then(deleteTokens);
   },
-  login(data) {
+  login(body) {
     return request('/auth/login', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body,
     }).then(updateTokens);
   },
   logout() {
     return request('/auth/logout', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+      body: {
+        token: localStorage.getItem('refreshToken'),
       },
-      body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
     }).then(deleteTokens);
   },
-  forgotPassword(data) {
+  forgotPassword(body) {
     return request('/password-reset', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body,
     });
   },
-  resetPassword(data) {
+  resetPassword(body) {
     return request('/password-reset/reset', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      body,
     });
   },
 };
