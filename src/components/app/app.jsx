@@ -14,6 +14,7 @@ import ResetPasswordPage from '../../pages/auth/reset-password.jsx';
 import ProfilePage from '../../pages/profile/profile.jsx';
 import SettingsPage from '../../pages/settings.jsx';
 import OrdersPage from '../../pages/orders/orders.jsx';
+import LogoutPage from '../../pages/logout.jsx';
 import IngredientPage from '../../pages/ingredient.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.jsx';
 import Page404 from '../../pages/404/404.jsx';
@@ -69,6 +70,7 @@ export default function App() {
           <Route path="/profile" element={<OnlyAuth element={<ProfilePage />}/>}>
             <Route index element={<SettingsPage />} />
             <Route path="orders" element={<OrdersPage />} />
+            <Route path="logout" element={<LogoutPage />} />
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />
           <Route path="*" element={<Page404 />} />

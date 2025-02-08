@@ -12,12 +12,17 @@ const Protected = ({ onlyUnAuth = false, element }) => {
   }
 
   if (onlyUnAuth && user) {
-    const { from } = location.state || { from: { pathname: '/' } };
+    const from = location.state?.from ?? { pathname: '/' };
     return <Navigate replace to={from} />;
   }
 
   if (!onlyUnAuth && !user) {
-    return <Navigate replace to="/login" state={{ from: location }} />;
+    const from = location.state?.from ?? location;
+    if (from.pathname === '/profile/logout') {
+      from.pathname = '/';
+    }
+
+    return <Navigate replace to="/login" state={{ from }} />;
   }
 
   return element;
