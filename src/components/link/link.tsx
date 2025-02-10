@@ -1,8 +1,24 @@
+import { ReactNode } from 'react';
 import { Link as BaseLink, useLocation, matchPath } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { TIconProps } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils';
 import styles from './link.module.css';
 
-function Link({ Icon, to, className, nested = false, children, ...props }) {
+interface LinkProps {
+  Icon?: ({ type }: TIconProps) => ReactNode,
+  to: string,
+  className: string,
+  nested?: boolean,
+  children: ReactNode,
+}
+
+export default function Link({
+  Icon,
+  to,
+  className = '',
+  nested = false,
+  children,
+  ...props
+}: LinkProps) {
   const location = useLocation();
 
   const match = matchPath({
@@ -21,12 +37,3 @@ function Link({ Icon, to, className, nested = false, children, ...props }) {
     </BaseLink>
   );
 }
-
-Link.propTypes = {
-  Icon: PropTypes.elementType,
-  to: PropTypes.string.isRequired,
-  className: PropTypes.string,
-  nested: PropTypes.bool,
-};
-
-export default Link;
