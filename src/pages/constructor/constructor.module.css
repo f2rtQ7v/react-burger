@@ -1,0 +1,16 @@
+.main {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "burgerIngredients burgerConstructor";
+    grid-template-columns: 1fr minmax(640px, 1fr);
+  max-width: 1280px;
+  min-width: 1024px;
+  margin: 0 auto;
+  gap: 10px;
+}
+
+.header {
+  composes: text text_type_main-large mb-5 mt-10 from global;
+  grid-area: header;
+}

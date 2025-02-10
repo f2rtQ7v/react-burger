@@ -1,22 +1,21 @@
-import { useState, useRef, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useState, useRef, useCallback, useMemo } from 'react';
+import { useSelector } from 'react-redux';
 import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.js';
 import { getCount } from '../../services/burger-constructor/slice.js';
-import { getActiveIngredient, setActiveIngredient } from '../../services/ingredient-details/slice.js';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
-import IngredientDetails from './ingredient-details/ingredient-details.jsx';
-import Modal from '../modal/modal.jsx';
 import styles from './burger-ingredients.module.css';
 import throttle from '../../utils/throttle.js';
-import { INGREDIENT_TYPES } from '../../utils/data.js';
 
-function BurgerIngredients() {
-  const dispatch = useDispatch();
+const INGREDIENT_TYPES = [
+  { name:   'Булки', value:   'bun' },
+  { name: 'Начинки', value:  'main' },
+  { name:   'Соусы', value: 'sauce' },
+];
 
+export default function BurgerIngredients() {
   const ingredients = useSelector(getIngredientsGroupedByType);
-  const activeIngredient = useSelector(getActiveIngredient);
   const countSelectedIngredients = useSelector(getCount);
 
   const [ activeTab, setActiveTab ] = useState(0);
@@ -29,8 +28,8 @@ function BurgerIngredients() {
     });
   }, []);
 
-  const onScroll = useCallback(
-    throttle(({ target: t }) => {
+  const onScroll = useMemo(() => {
+    return throttle(({ target: t }) => {
       const { top } = t.getBoundingClientRect();
       const [ index ] = tabRefs.current.reduce((min, n, i) => {
         const diff = Math.abs(n.getBoundingClientRect().top - top);
@@ -38,8 +37,8 @@ function BurgerIngredients() {
       }, [ -1, Infinity ]);
 
       setActiveTab(index);
-    }, 100)
-  , []);
+    }, 100);
+  }, []);
 
   return (
     <section className={styles.container}>
@@ -67,22 +66,11 @@ function BurgerIngredients() {
                 key={n._id}
                 ingredient={n}
                 count={countSelectedIngredients[n._id] ?? 0}
-                onClick={() => dispatch(setActiveIngredient(n))}
               />
             ))}
           </IngredientsList>
         ))}
       </div>
-      {activeIngredient &&
-        <Modal
-          title="Детали ингредиента"
-          onClose={() => dispatch(setActiveIngredient(null))}
-        >
-          <IngredientDetails ingredient={activeIngredient} />
-        </Modal>
-      }
     </section>
   );
 }
-
-export default BurgerIngredients;

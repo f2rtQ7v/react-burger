@@ -1,5 +1,4 @@
 .container {
-  composes: p-5 from global;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

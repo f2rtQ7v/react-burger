@@ -8,7 +8,7 @@
 .nav {
   display: grid;
   justify-content: space-around;
-  grid-template-areas: "burgerConstructor orders logo _ account";
+  grid-template-areas: "burgerConstructor feed logo _ profile";
   grid-template-columns: 2fr 2fr 5fr 2fr 2fr;
   max-width: 1280px;
   margin: 0 auto;
@@ -25,12 +25,12 @@
   justify-content: flex-start;
 }
 
-.orders {
-  grid-area: orders;
+.feed {
+  grid-area: feed;
   justify-content: flex-start;
 }
 
-.account {
-  grid-area: account;
+.profile {
+  grid-area: profile;
   justify-content: flex-end;
 }

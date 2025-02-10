@@ -1,0 +1,24 @@
+.container {
+  composes: pt-20 from global;
+  display: flex;
+  width: 100%;
+}
+
+.sidebar {
+  composes: pr-15 from global;
+  width: 340px;
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  composes: text text_type_main-medium pt-5 pb-5 from global;
+}
+
+.description {
+  composes: text text_type_main-default pt-20 from global;
+  color: #446;
+}

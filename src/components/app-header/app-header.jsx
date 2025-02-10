@@ -3,24 +3,21 @@ import Link from '../link/link.jsx';
 import styles from './app-header.module.css';
 
 const links = [
-  { Icon:  BurgerIcon, text:    'Конструктор', id: 'burgerConstructor' },
-  { Icon:    ListIcon, text:  'Лента заказов', id:            'orders', disabled: true },
-  { Icon: ProfileIcon, text: 'Личный кабинет', id:           'account', disabled: true },
+  { Icon:  BurgerIcon, to:        '/', text:    'Конструктор', id: 'burgerConstructor' },
+  { Icon:    ListIcon, to:    '/feed', text:  'Лента заказов', id:              'feed' },
+  { Icon:        Logo, to:        '/',                         id:              'logo' },
+  { Icon: ProfileIcon, to: '/profile', text: 'Личный кабинет', id:           'profile', nested: true },
 ];
 
 export default function AppHeader() {
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
-        {links.map(({ Icon, text, id, disabled = false }) => (
-          <Link key={id} className={styles[id]} disabled={disabled}>
-            <Icon type={disabled ? 'secondary' : 'primary'} />
-            <span>{text}</span>
+        {links.map(({ text, id, ...props }) => (
+          <Link key={id} className={styles[id]} {...props}>
+            {text}
           </Link>
         ))}
-        <div className={styles.logo}>
-          <Logo />
-        </div>
       </nav>
     </header>
   );
