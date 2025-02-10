@@ -12,8 +12,10 @@
 }
 
 .header > * {
-  width: 33%;
-  min-width: 33%;
+  flex-grow: 1;
+  min-width: unset;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .ingredients {

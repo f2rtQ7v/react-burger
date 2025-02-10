@@ -27,6 +27,10 @@
   flex-grow: 1;
 }
 
+.close {
+  cursor: pointer;
+}
+
 .noScroll {
   overflow: hidden;
 }
