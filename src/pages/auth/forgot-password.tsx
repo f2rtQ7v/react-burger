@@ -1,4 +1,4 @@
-import AuthPage from './auth-page/auth-page.jsx';
+import AuthPage from './auth-page/auth-page.tsx';
 
 const fields = [
   { type: 'email', name: 'email', placeholder: 'Укажите e-mail' },

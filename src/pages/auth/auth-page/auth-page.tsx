@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Form from '../../../components/form/form.jsx';
-import useFormData from '../../../hooks/use-form-data.js';
+import Form from '../../../components/form/form.tsx';
+import useFormData from '../../../hooks/use-form-data.ts';
 import styles from './auth-page.module.css';
 
 function AuthPage({

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import Modal from '../components/modal/modal.jsx';
-import IngredientDetails from '../components/ingredient-details/ingredient-details.jsx';
+import Modal from '../components/modal/modal.tsx';
+import IngredientDetails from '../components/ingredient-details/ingredient-details.tsx';
 
 export default function IngredientPage() {
   const navigate = useNavigate();

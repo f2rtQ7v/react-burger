@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../../../utils/types.js';
+import { Ingredient } from '../../../utils/types.ts';
 import styles from './ingredient-item.module.css';
 
 function IngredientItemBun({ ingredient, type }) {

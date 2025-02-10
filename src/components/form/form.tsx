@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import useFormData from '../../hooks/use-form-data.js';
+import useFormData from '../../hooks/use-form-data.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import * as actions from '../../services/auth/actions.js';
-import { validate, validateAll } from './validations.js';
-import { resetError } from '../../services/auth/slice.js';
+import * as actions from '../../services/auth/actions.ts';
+import { validate, validateAll } from './validations.ts';
+import { resetError } from '../../services/auth/slice.ts';
 import { LoadingScreen } from '../screens/';
 import PropTypes from 'prop-types';
 import styles from './form.module.css';

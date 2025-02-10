@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import useFormData from '../hooks/use-form-data.js';
-import Form from '../components/form/form.jsx';
+import useFormData from '../hooks/use-form-data.ts';
+import Form from '../components/form/form.tsx';
 
 const fields = [
   { type:     'text', name:     'name', placeholder:    'Имя' },

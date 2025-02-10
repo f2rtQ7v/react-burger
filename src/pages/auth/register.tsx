@@ -1,4 +1,4 @@
-import AuthPage from './auth-page/auth-page.jsx';
+import AuthPage from './auth-page/auth-page.tsx';
 
 const fields = [
   { type:     'text', name:     'name', placeholder:    'Имя' },

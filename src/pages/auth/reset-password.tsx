@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import AuthPage from './auth-page/auth-page.jsx';
+import AuthPage from './auth-page/auth-page.tsx';
 
 const fields = [
   { type: 'password', name: 'password', placeholder:  'Введите новый пароль' },

@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { auth } from '../../utils/api.js';
+import { auth } from '../../utils/api.ts';
 
 export const createUser = createAsyncThunk('auth/register', data => auth.createUser(data));
 export const getUser = createAsyncThunk('auth/getUser', () => auth.getUser());

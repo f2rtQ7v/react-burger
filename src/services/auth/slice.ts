@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } from './actions.js';
+import { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } from './actions.ts';
 
 const createState = () => ({
   request: false,

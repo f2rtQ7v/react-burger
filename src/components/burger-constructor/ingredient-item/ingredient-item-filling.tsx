@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { delIngredient, moveIngredient } from '../../../services/burger-constructor/slice.js';
-import { Ingredient } from '../../../utils/types.js';
+import { delIngredient, moveIngredient } from '../../../services/burger-constructor/slice.ts';
+import { Ingredient } from '../../../utils/types.ts';
 import styles from './ingredient-item.module.css';
 
 function IngredientItemFilling({ ingredient, index }) {

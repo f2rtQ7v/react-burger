@@ -1,12 +1,12 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.js';
-import { getCount } from '../../services/burger-constructor/slice.js';
+import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.ts';
+import { getCount } from '../../services/burger-constructor/slice.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import IngredientsList from './ingredients-list/ingredients-list.jsx';
-import IngredientItem from './ingredient-item/ingredient-item.jsx';
+import IngredientsList from './ingredients-list/ingredients-list.tsx';
+import IngredientItem from './ingredient-item/ingredient-item.tsx';
 import styles from './burger-ingredients.module.css';
-import throttle from '../../utils/throttle.js';
+import throttle from '../../utils/throttle.ts';
 
 const INGREDIENT_TYPES = [
   { name:   'Булки', value:   'bun' },
