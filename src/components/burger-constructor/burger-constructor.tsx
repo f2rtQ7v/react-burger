@@ -70,7 +70,7 @@ function BurgerConstructor() {
       <div className={styles.footer}>
         <span className={styles.total}>
           {total}
-          <CurrencyIcon />
+          <CurrencyIcon type="primary" />
         </span>
         <Button
           htmlType="button"
