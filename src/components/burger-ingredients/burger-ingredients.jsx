@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.js';
 import { getCount } from '../../services/burger-constructor/slice.js';
@@ -28,8 +28,8 @@ export default function BurgerIngredients() {
     });
   }, []);
 
-  const onScroll = useCallback(
-    throttle(({ target: t }) => {
+  const onScroll = useMemo(() => {
+    return throttle(({ target: t }) => {
       const { top } = t.getBoundingClientRect();
       const [ index ] = tabRefs.current.reduce((min, n, i) => {
         const diff = Math.abs(n.getBoundingClientRect().top - top);
@@ -37,8 +37,8 @@ export default function BurgerIngredients() {
       }, [ -1, Infinity ]);
 
       setActiveTab(index);
-    }, 100)
-  , []);
+    }, 100);
+  }, []);
 
   return (
     <section className={styles.container}>
