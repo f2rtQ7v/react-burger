@@ -1,16 +1,14 @@
-import PropTypes from 'prop-types';
+import { ReactNode, HTMLAttributes } from 'react';
 import styles from './modal-overlay.module.css';
 
-function ModalOverlay({ children, ...props }) {
+interface ModalOverlayProps extends HTMLAttributes<HTMLDivElement> {
+  children: ReactNode,
+}
+
+export default function ModalOverlay({ children, ...props }: ModalOverlayProps) {
   return (
     <div className={styles.overlay} {...props}>
       {children}
     </div>
   );
 }
-
-ModalOverlay.propTypes = {
-  children: PropTypes.node,
-};
-
-export default ModalOverlay;
