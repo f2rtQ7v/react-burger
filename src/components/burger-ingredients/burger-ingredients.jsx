@@ -7,9 +7,14 @@ import IngredientsList from './ingredients-list/ingredients-list.jsx';
 import IngredientItem from './ingredient-item/ingredient-item.jsx';
 import styles from './burger-ingredients.module.css';
 import throttle from '../../utils/throttle.js';
-import { INGREDIENT_TYPES } from '../../utils/data.js';
 
-function BurgerIngredients() {
+const INGREDIENT_TYPES = [
+  { name:   'Булки', value:   'bun' },
+  { name: 'Начинки', value:  'main' },
+  { name:   'Соусы', value: 'sauce' },
+];
+
+export default function BurgerIngredients() {
   const ingredients = useSelector(getIngredientsGroupedByType);
   const countSelectedIngredients = useSelector(getCount);
 
@@ -69,5 +74,3 @@ function BurgerIngredients() {
     </section>
   );
 }
-
-export default BurgerIngredients;
