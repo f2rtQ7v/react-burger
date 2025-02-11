@@ -6,15 +6,27 @@ import * as actions from '../../services/auth/actions.ts';
 import { validate, validateAll } from './validations.ts';
 import { resetError } from '../../services/auth/slice.ts';
 import { LoadingScreen } from '../screens/';
-import PropTypes from 'prop-types';
 import styles from './form.module.css';
 
-const inputs = {
+interface IFormProps {
+  action: string;
+  fields: IFormItem[];
+  data: IFormData;
+  onChange?: (e: TInputEvent) => void;
+  onSubmit?: (e: TFormEvent) => void;
+  onReset?: (e: TFormEvent) => void;
+  showButtons?: boolean;
+  submitLabel: string;
+}
+
+const inputs: {
+  [key: string]: typeof Input | typeof PasswordInput,
+} = {
   text: Input,
   password: PasswordInput,
 };
 
-function Form({
+export default function Form({
   action,
   fields,
   data,
@@ -23,7 +35,7 @@ function Form({
   onReset,
   showButtons = true,
   submitLabel,
-}) {
+}: IFormProps) {
   const dispatch = useDispatch();
 
   const { request, error: submitError } = useSelector(state => state.auth[action]);
@@ -31,15 +43,15 @@ function Form({
   const [ showErrors, setShowErrors ] = useState(false);
   const [ inputErrors, setInputErrors, onChangeInputErrors ] = useFormData({
     initialData: () => validateAll(fields, data),
-    valueGetter: ({ target: t }) => validate(t.dataset.type, t.value),
+    valueGetter: ({ target: t }) => validate(t.dataset.type ?? '', t.value),
   });
 
-  const onChangeInner = useCallback(e => {
+  const onChangeInner = useCallback((e: TInputEvent) => {
     onChangeInputErrors(e);
     onChange?.(e);
   }, [ onChangeInputErrors, onChange ]);
 
-  const onSubmitInner = useCallback(e => {
+  const onSubmitInner = useCallback((e: TFormEvent) => {
     e.preventDefault();
 
     const errors = validateAll(fields, data);
@@ -64,10 +76,10 @@ function Form({
     dispatch(resetError(action));
   }, [ dispatch, action ]);
 
-  const onResetInner = useCallback(() => {
+  const onResetInner = useCallback((e: TFormEvent) => {
     setShowErrors(false);
     hideSubmitError();
-    onReset?.();
+    onReset?.(e);
   }, [ onReset, hideSubmitError ]);
 
   useEffect(hideSubmitError, [ hideSubmitError ]);
@@ -118,16 +130,3 @@ function Form({
     </div>
   );
 }
-
-Form.propTypes = {
-  action: PropTypes.string.isRequired,
-  submitLabel: PropTypes.string.isRequired,
-  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-  data: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
-  onSubmit: PropTypes.func,
-  onReset: PropTypes.func,
-  showButtons: PropTypes.bool,
-};
-
-export default Form;

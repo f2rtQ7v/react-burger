@@ -1,17 +1,31 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Form from '../../../components/form/form.tsx';
 import useFormData from '../../../hooks/use-form-data.ts';
 import styles from './auth-page.module.css';
 
-function AuthPage({
+interface IAuthPageLink {
+  text: string;
+  linkText: string;
+  to: string;
+}
+
+interface IAuthPageProps {
+  action: string;
+  redirect?: string;
+  title: string;
+  submitLabel: string;
+  links: IAuthPageLink[];
+  fields: IFormItem[];
+}
+
+export default function AuthPage({
   action,
   redirect,
   title,
   submitLabel,
   links,
   fields,
-}) {
+}: IAuthPageProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const [ data, , onChange ] = useFormData();
@@ -42,14 +56,3 @@ function AuthPage({
     </div>
   );
 }
-
-AuthPage.propTypes = {
-  action: PropTypes.string.isRequired,
-  redirect: PropTypes.string,
-  title: PropTypes.string.isRequired,
-  submitLabel: PropTypes.string.isRequired,
-  links: PropTypes.arrayOf(PropTypes.object).isRequired,
-  fields: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
-export default AuthPage;
