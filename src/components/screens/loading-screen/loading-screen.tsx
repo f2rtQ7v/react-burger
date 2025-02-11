@@ -1,21 +1,11 @@
-import PropTypes from 'prop-types';
+import BaseScreen, { ScreenProps } from '../base-screen/base-screen.tsx';
 import styles from './loading-screen.module.css';
 
-function LoadingScreen({ transparent = false, children }) {
-  const classes = [ styles.container, transparent && styles.transparent ]
-    .filter(Boolean)
-    .join(' ');
-
+export default function LoadingScreen({ children, ...props }: ScreenProps) {
   return (
-    <div className={classes}>
+    <BaseScreen {...props}>
       <div className={styles.spinner}></div>
       {children}
-    </div>
+    </BaseScreen>
   );
 }
-
-LoadingScreen.propTypes = {
-  transparent: PropTypes.bool,
-};
-
-export default LoadingScreen;

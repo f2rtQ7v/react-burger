@@ -1,9 +1,3 @@
-@import "../screen.css";
-
-.container {
-  composes: screen;
-}
-
 .spinner {
   position: relative;
   animation: spinner 2s infinite linear;
