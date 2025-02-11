@@ -13,7 +13,7 @@ export default function LogoutPage() {
   const { request, error } = useSelector(state => state.auth.logout);
   const onCloseModal = () => {
     dispatch(resetError('logout'));
-    navigate(location.state?.from ? -1 : '/profile');
+    navigate(location.state?.from?.pathname ?? '/profile');
   };
 
   useEffect(() => {
