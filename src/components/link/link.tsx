@@ -3,7 +3,7 @@ import { Link as BaseLink, useLocation, matchPath } from 'react-router-dom';
 import { TIconProps } from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons/utils';
 import styles from './link.module.css';
 
-interface LinkProps {
+interface ILinkProps {
   Icon?: ({ type }: TIconProps) => ReactNode;
   to: string;
   className: string;
@@ -18,7 +18,7 @@ export default function Link({
   nested = false,
   children,
   ...props
-}: LinkProps) {
+}: ILinkProps) {
   const location = useLocation();
 
   const match = matchPath({

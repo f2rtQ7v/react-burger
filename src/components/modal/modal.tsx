@@ -4,13 +4,13 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './modal-overlay/modal-overlay.tsx';
 import styles from './modal.module.css';
 
-interface ModalProps {
+interface IModalProps {
   title?: string;
   onClose: () => void;
   children: ReactNode;
 }
 
-export default function Modal({ title = '', onClose, children }: ModalProps) {
+export default function Modal({ title = '', onClose, children }: IModalProps) {
   useEffect(() => {
     const onKeydown = (e: KeyboardEvent) => e.key === 'Escape' && onClose();
 
