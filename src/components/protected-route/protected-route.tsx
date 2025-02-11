@@ -1,10 +1,14 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getAuthData } from '../../services/auth/slice.ts';
-import PropTypes from 'prop-types';
 import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
 
-const Protected = ({ onlyUnAuth = false, element }) => {
+interface IProtected {
+  onlyUnAuth?: boolean;
+  element: JSX.Element;
+}
+
+const Protected = ({ onlyUnAuth = false, element }: IProtected) => {
   const { isAuthChecked, user } = useSelector(getAuthData);
   const location = useLocation();
 
@@ -30,15 +34,6 @@ const Protected = ({ onlyUnAuth = false, element }) => {
 };
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({ element }) => (
+export const OnlyUnAuth = ({ element }: IProtected) => (
   <Protected onlyUnAuth={true} element={element} />
 );
-
-OnlyAuth.propTypes = {
-  element: PropTypes.node.isRequired,
-  onlyUnAuth: PropTypes.bool,
-};
-
-OnlyUnAuth.propTypes = {
-  element: PropTypes.node.isRequired,
-};
