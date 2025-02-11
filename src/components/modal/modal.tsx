@@ -5,9 +5,9 @@ import ModalOverlay from './modal-overlay/modal-overlay.tsx';
 import styles from './modal.module.css';
 
 interface ModalProps {
-  title?: string,
-  onClose: () => void,
-  children: ReactNode,
+  title?: string;
+  onClose: () => void;
+  children: ReactNode;
 }
 
 export default function Modal({ title = '', onClose, children }: ModalProps) {

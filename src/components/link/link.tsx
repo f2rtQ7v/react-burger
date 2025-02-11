@@ -4,11 +4,11 @@ import { TIconProps } from '@ya.praktikum/react-developer-burger-ui-components/d
 import styles from './link.module.css';
 
 interface LinkProps {
-  Icon?: ({ type }: TIconProps) => ReactNode,
-  to: string,
-  className: string,
-  nested?: boolean,
-  children: ReactNode,
+  Icon?: ({ type }: TIconProps) => ReactNode;
+  to: string;
+  className: string;
+  nested?: boolean;
+  children: ReactNode;
 }
 
 export default function Link({
