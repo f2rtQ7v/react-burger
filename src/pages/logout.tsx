@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../services/auth/actions.ts';
-import { resetError } from '../services/auth/slice.ts';
+import { getAuthData, resetError } from '../services/auth/slice.ts';
 import Modal from '../components/modal/modal.tsx';
 import { LoadingScreen, ErrorScreen } from '../components/screens/';
 
@@ -10,7 +10,7 @@ export default function LogoutPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { request, error } = useSelector(state => state.auth.logout);
+  const { logout: { request, error } } = useSelector(getAuthData);
   const onCloseModal = () => {
     dispatch(resetError('logout'));
     navigate(location.state?.from?.pathname ?? '/profile');

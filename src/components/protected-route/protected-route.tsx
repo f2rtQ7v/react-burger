@@ -1,10 +1,11 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { getAuthData } from '../../services/auth/slice.ts';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
 
 const Protected = ({ onlyUnAuth = false, element }) => {
-  const { isAuthChecked, user } = useSelector(state => state.auth);
+  const { isAuthChecked, user } = useSelector(getAuthData);
   const location = useLocation();
 
   if (!isAuthChecked) {

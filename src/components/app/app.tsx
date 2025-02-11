@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../services/auth/actions.ts';
+import { getAuthData } from '../../services/auth/slice.ts';
 import { getIngredients } from '../../services/burger-ingredients/actions.ts';
 import { getIngredientsState } from '../../services/burger-ingredients/slice.ts';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route.tsx';
@@ -26,7 +27,7 @@ export default function App() {
   const location = useLocation();
   const background = location.state?.background;
 
-  const { isAuthChecked } = useSelector(state => state.auth);
+  const { isAuthChecked } = useSelector(getAuthData);
   const {
     ingredients,
     ingredientsRequest,

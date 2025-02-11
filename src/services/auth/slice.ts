@@ -28,6 +28,7 @@ const slice = createSlice({
   name: 'auth',
   initialState,
   selectors: {
+    getAuthData: state => state,
     checkAuth: state => !!state.user,
   },
   reducers: {
@@ -143,6 +144,6 @@ const slice = createSlice({
     })
 });
 
-export const { checkAuth } = slice.selectors;
+export const { getAuthData, checkAuth } = slice.selectors;
 export const { resetError } = slice.actions;
 export default slice.reducer;
