@@ -1,23 +1,30 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../../../utils/types.ts';
 import styles from './ingredient-item.module.css';
 
-function IngredientItemBun({ ingredient, type }) {
-  const constructorElementProps = useMemo(() => {
-    return ingredient
-      ? ({
-          text: `${ingredient.name} (${type === 'top' ? 'Верх' : 'Низ'})`,
-          price: ingredient.price,
-          thumbnail: ingredient.image,
-          isLocked: true,
-        })
-      : ({
-          text: 'Перетащите булку',
-          extraClass: styles.ingredientPlaceholder,
-        });
-  }, [ ingredient, type ]);
+interface IIngredientItemBun {
+  ingredient: IIngredient | null;
+  type: 'top' | 'bottom';
+}
+
+export default function IngredientItemBun({
+  ingredient,
+  type,
+}: IIngredientItemBun) {
+  const constructorElementProps = useMemo(() => ingredient
+    ? ({
+        text: `${ingredient.name} (${type === 'top' ? 'Верх' : 'Низ'})`,
+        price: ingredient.price,
+        thumbnail: ingredient.image,
+        isLocked: true,
+      })
+    : ({
+        text: 'Перетащите булку',
+        price: 0,
+        thumbnail: '',
+        extraClass: styles.ingredientPlaceholder,
+      })
+  , [ ingredient, type ]);
 
   return (
     <li className={styles.ingredientItem}>
@@ -25,10 +32,3 @@ function IngredientItemBun({ ingredient, type }) {
     </li>
   );
 }
-
-IngredientItemBun.propTypes = {
-  ingredient: Ingredient,
-  type: PropTypes.string,
-};
-
-export default IngredientItemBun;

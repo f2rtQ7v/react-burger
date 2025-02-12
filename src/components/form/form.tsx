@@ -2,14 +2,14 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import useFormData from '../../hooks/use-form-data.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import * as actions from '../../services/auth/actions.ts';
+import { actions, TAuthAction } from '../../services/auth/actions.ts';
 import { validate, validateAll } from './validations.ts';
-import { resetError } from '../../services/auth/slice.ts';
+import { getAuthState, resetError } from '../../services/auth/slice.ts';
 import { LoadingScreen } from '../screens/';
 import styles from './form.module.css';
 
 interface IFormProps {
-  action: string;
+  action: TAuthAction;
   fields: IFormItem[];
   data: IFormData;
   onChange?: (e: TInputEvent) => void;
@@ -38,7 +38,7 @@ export default function Form({
 }: IFormProps) {
   const dispatch = useDispatch();
 
-  const { request, error: submitError } = useSelector(state => state.auth[action]);
+  const { [action]: { request, error: submitError } } = useSelector(getAuthState);
 
   const [ showErrors, setShowErrors ] = useState(false);
   const [ inputErrors, setInputErrors, onChangeInputErrors ] = useFormData({

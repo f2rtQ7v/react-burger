@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getAuthData } from '../services/auth/slice.ts';
+import { getAuthState } from '../services/auth/slice.ts';
 import useFormData from '../hooks/use-form-data.ts';
 import Form from '../components/form/form.tsx';
 
@@ -11,7 +11,7 @@ const fields = [
 ];
 
 export default function SettingsPage() {
-  const { user } = useSelector(getAuthData);
+  const { user } = useSelector(getAuthState);
   const [ data, setData, onChange ] = useFormData({ initialData: user! });
   const reset = useCallback(() => setData(user!), [ user, setData ]);
 

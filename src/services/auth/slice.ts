@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } from './actions.ts';
+import { actions } from './actions.ts';
+
+const { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } = actions;
 
 const createState = () => ({
   request: false,
@@ -28,7 +30,7 @@ const slice = createSlice({
   name: 'auth',
   initialState,
   selectors: {
-    getAuthData: state => state,
+    getAuthState: state => state,
     checkAuth: state => !!state.user,
   },
   reducers: {
@@ -144,6 +146,6 @@ const slice = createSlice({
     })
 });
 
-export const { getAuthData, checkAuth } = slice.selectors;
+export const { getAuthState, checkAuth } = slice.selectors;
 export const { resetError } = slice.actions;
 export default slice.reducer;

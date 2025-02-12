@@ -16,7 +16,7 @@ const validations: {
     validateEmpty,
     val => {
       const min = 3;
-      return val.length < min ? '' : `Пароль должен быть длиннее, минимальное количество символов - ${min}`;
+      return val.length >= min ? '' : `Пароль должен быть длиннее, минимальное количество символов - ${min}`;
     },
   ],
 };

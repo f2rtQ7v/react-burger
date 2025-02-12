@@ -1,14 +1,10 @@
-import PropTypes from 'prop-types';
+import { ReactNode } from 'react';
 import styles from './ingredients-list.module.css';
 
-const IngredientsList = ({ children }) => (
-  <ul className={styles.container}>
-    {children}
-  </ul>
-);
-
-IngredientsList.propTypes = {
-  children: PropTypes.node,
-};
-
-export default IngredientsList;
+export default function IngredientsList(props: { children: ReactNode }) {
+  return (
+    <ul className={styles.container}>
+      {props.children}
+    </ul>
+  );
+}

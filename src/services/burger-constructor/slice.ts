@@ -1,11 +1,16 @@
 import { createSlice, createSelector, nanoid } from '@reduxjs/toolkit';
 
-const initialState = {
+interface IBurgerConstructorState {
+  bun: IIngredient | null;
+  fillings: IIngredient[];
+}
+
+const initialState: IBurgerConstructorState = {
   bun: null,
   fillings: [],
 };
 
-const getState = state => state;
+const getState = (state: IBurgerConstructorState): IBurgerConstructorState => state;
 
 const slice = createSlice({
   name: 'burgerConstructor',
@@ -15,7 +20,7 @@ const slice = createSlice({
     getTotal: createSelector(
       getState,
       ({ bun, fillings }) =>
-        fillings.reduce((acc, n) => acc + n.price, bun?.price << 1)
+        fillings.reduce((acc, n) => acc + n.price, bun ? bun.price * 2 : 0)
     ),
     getCount: createSelector(
       getState,

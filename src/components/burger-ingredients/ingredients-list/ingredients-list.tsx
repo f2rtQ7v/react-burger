@@ -1,20 +1,20 @@
-import { forwardRef } from 'react';
-import PropTypes from 'prop-types';
+import { forwardRef, ReactNode } from 'react';
 import styles from './ingredients-list.module.css';
 
-const IngredientsList = forwardRef(({ title, children }, ref) => {
-  return (
+interface IIngredientsList {
+  title: string;
+  children: ReactNode;
+}
+
+const IngredientsList = forwardRef<HTMLDivElement, IIngredientsList>(
+  ({ title, children }, ref) => (
     <div className={styles.container} ref={ref}>
       <h2 className={styles.title}>{title}</h2>
       <div className={styles.list}>
         {children}
       </div>
     </div>
-  );
-})
-
-IngredientsList.propTypes = {
-  title: PropTypes.string.isRequired,
-};
+  )
+);
 
 export default IngredientsList;

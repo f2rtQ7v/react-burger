@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo, UIEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { getIngredientsGroupedByType } from '../../services/burger-ingredients/slice.ts';
 import { getCount } from '../../services/burger-constructor/slice.ts';
@@ -15,21 +15,21 @@ const INGREDIENT_TYPES = [
 ];
 
 export default function BurgerIngredients() {
-  const ingredients = useSelector(getIngredientsGroupedByType);
+  const ingredients: IGroupedIngredients = useSelector(getIngredientsGroupedByType);
   const countSelectedIngredients = useSelector(getCount);
 
   const [ activeTab, setActiveTab ] = useState(0);
-  const tabRefs = useRef([]);
+  const tabRefs = useRef<HTMLDivElement[]>([]);
 
-  const onTabClick = useCallback(index => {
-    tabRefs.current[index].scrollIntoView({
+  const onTabClick = useCallback((index: string) => {
+    tabRefs.current[+index].scrollIntoView({
       behavior: 'smooth',
       block: 'start',
     });
   }, []);
 
   const onScroll = useMemo(() => {
-    return throttle(({ target: t }) => {
+    return throttle(({ currentTarget: t }: UIEvent<HTMLDivElement>) => {
       const { top } = t.getBoundingClientRect();
       const [ index ] = tabRefs.current.reduce((min, n, i) => {
         const diff = Math.abs(n.getBoundingClientRect().top - top);
@@ -46,7 +46,7 @@ export default function BurgerIngredients() {
         {INGREDIENT_TYPES.map(({ name, value }, i) => (
           <Tab
             key={value}
-            value={i}
+            value={`${i}`}
             active={activeTab === i}
             onClick={onTabClick}
           >
@@ -59,9 +59,9 @@ export default function BurgerIngredients() {
           <IngredientsList
             key={value}
             title={name}
-            ref={el => tabRefs.current[i] = el}
+            ref={(el: HTMLDivElement) => tabRefs.current[i] = el}
           >
-            {ingredients[value].map(n => (
+            {ingredients[value].map((n: IIngredient) => (
               <IngredientItem
                 key={n._id}
                 ingredient={n}

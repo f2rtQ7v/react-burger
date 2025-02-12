@@ -15,7 +15,7 @@ import OrderDetails from '../order-details/order-details.tsx';
 import { LoadingScreen, ErrorScreen } from '../screens/';
 import styles from './burger-constructor.module.css';
 
-function BurgerConstructor() {
+export default function BurgerConstructor() {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ function BurgerConstructor() {
 
   const onCreateOrderClick = useCallback(() => {
     if (isAuth) {
-      dispatch(createOrder([ bun, ...fillings, bun ].map(n => n._id)));
+      dispatch(createOrder([ bun!, ...fillings, bun! ].map(n => n._id)));
     } else {
       navigate('/login', {
         replace: true,
@@ -61,7 +61,7 @@ function BurgerConstructor() {
       </IngredientsList>
       <IngredientsList>
         {!fillings.length && <IngredientItemFilling />}
-        {fillings.map((n, i) => <IngredientItemFilling key={n.id} ingredient={n} index={i} />)}
+        {fillings.map((n: IIngredient, i: number) => <IngredientItemFilling key={n.id} ingredient={n} index={i} />)}
       </IngredientsList>
       <IngredientsList>
         <IngredientItemBun ingredient={bun} type="bottom" />
@@ -104,5 +104,3 @@ function BurgerConstructor() {
     </section>
   );
 }
-
-export default BurgerConstructor;

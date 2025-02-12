@@ -1,7 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from './actions.ts';
 
-const initialState = {
+interface IOrderState {
+  order: IOrder | null;
+  orderCreateRequest: boolean;
+  orderCreateError: string | null;
+}
+
+const initialState: IOrderState = {
   order: null,
   orderCreateRequest: false,
   orderCreateError: null,

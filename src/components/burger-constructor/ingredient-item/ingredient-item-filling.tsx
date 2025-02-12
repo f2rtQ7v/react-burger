@@ -1,16 +1,22 @@
 import { useMemo, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
-import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { delIngredient, moveIngredient } from '../../../services/burger-constructor/slice.ts';
-import { Ingredient } from '../../../utils/types.ts';
 import styles from './ingredient-item.module.css';
 
-function IngredientItemFilling({ ingredient, index }) {
+interface IIngredientItemFilling {
+  ingredient?: IIngredient;
+  index?: number;
+}
+
+export default function IngredientItemFilling({
+  ingredient,
+  index,
+}: IIngredientItemFilling) {
   const sortable = typeof index === 'number';
   const dispatch = useDispatch();
-  const ref = useRef();
+  const ref = useRef<HTMLLIElement>(null);
 
   const [ { isDragging }, dragRef ] = useDrag(() => ({
     type: 'sort',
@@ -23,7 +29,7 @@ function IngredientItemFilling({ ingredient, index }) {
 
   const [ , dropRef ] = useDrop({
     accept: 'sort',
-    hover(item) {
+    hover(item: IIngredientItemFilling) {
       if (item.index === index) {
         return;
       }
@@ -37,24 +43,27 @@ function IngredientItemFilling({ ingredient, index }) {
     },
   }, [ index ]);
 
-  const constructorElementProps = useMemo(() => {
-    return ingredient
-      ? ({
-          text: ingredient.name,
-          price: ingredient.price,
-          thumbnail: ingredient.image,
-          handleClose: () => dispatch(delIngredient(ingredient.id)),
-        })
-      : ({
-          text: 'Перетащите начинки и соусы',
-          extraClass: styles.ingredientPlaceholder,
-        });
-  }, [ ingredient, dispatch ]);
+  const constructorElementProps = useMemo(() => ingredient
+    ? ({
+        text: ingredient.name,
+        price: ingredient.price,
+        thumbnail: ingredient.image,
+        handleClose: () => dispatch(delIngredient(ingredient.id)),
+      })
+    : ({
+        text: 'Перетащите начинки и соусы',
+        price: 0,
+        thumbnail: '',
+        extraClass: styles.ingredientPlaceholder,
+      })
+  , [ ingredient, dispatch ]);
+
+  dragRef(dropRef(ref));
 
   return (
     <li
       className={styles[sortable ? 'ingredientItemSortable' : 'ingredientItem']}
-      ref={dragRef(dropRef(ref))}
+      ref={ref}
       style={{ opacity: +!isDragging }}
     >
       {sortable && <DragIcon type="primary" />}
@@ -62,10 +71,3 @@ function IngredientItemFilling({ ingredient, index }) {
     </li>
   );
 }
-
-IngredientItemFilling.propTypes = {
-  ingredient: Ingredient,
-  index: PropTypes.number,
-};
-
-export default IngredientItemFilling;

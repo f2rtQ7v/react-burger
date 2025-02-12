@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { getAuthData } from '../../services/auth/slice.ts';
+import { getAuthState } from '../../services/auth/slice.ts';
 import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
 
 interface IProtected {
@@ -9,7 +9,7 @@ interface IProtected {
 }
 
 const Protected = ({ onlyUnAuth = false, element }: IProtected) => {
-  const { isAuthChecked, user } = useSelector(getAuthData);
+  const { isAuthChecked, user } = useSelector(getAuthState);
   const location = useLocation();
 
   if (!isAuthChecked) {

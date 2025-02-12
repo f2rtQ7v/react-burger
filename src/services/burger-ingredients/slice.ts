@@ -1,7 +1,13 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from './actions.ts';
 
-const initialState = {
+interface IBurgerIngredientsState {
+  ingredients: IIngredient[] | null;
+  ingredientsRequest: boolean;
+  ingredientsError: string | null;
+}
+
+const initialState: IBurgerIngredientsState = {
   ingredients: null,
   ingredientsRequest: false,
   ingredientsError: null,
@@ -11,10 +17,10 @@ const slice = createSlice({
   name: 'burgerIngredients',
   initialState,
   selectors: {
-    getIngredientsState: state => state,
+    getIngredientsState: (state: IBurgerIngredientsState): IBurgerIngredientsState => state,
     getIngredientsGroupedByType: createSelector(
       state => state.ingredients,
-      ingredients => ingredients.reduce((acc, n) => (
+      ingredients => ingredients.reduce((acc: IGroupedIngredients, n: IIngredient) => (
         (acc[n.type] ??= []).push(n),
         acc
       ), {})
@@ -23,6 +29,7 @@ const slice = createSlice({
   extraReducers: builder => builder
     .addCase(getIngredients.pending, (state) => {
       state.ingredientsRequest = true;
+      state.ingredientsError = null;
     })
     .addCase(getIngredients.rejected, (state, action) => {
       state.ingredientsRequest = false;

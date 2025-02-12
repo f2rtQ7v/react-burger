@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getAuthData } from '../../services/auth/slice.ts';
+import { getAuthState } from '../../services/auth/slice.ts';
 import AuthPage from './auth-page/auth-page.tsx';
 
 const fields = [
@@ -13,7 +13,7 @@ const links = [
 ];
 
 export default function ResetPasswordPage() {
-  const { resetPassword: { forgotPassword } } = useSelector(getAuthData);
+  const { resetPassword: { forgotPassword } } = useSelector(getAuthState);
 
   if (!forgotPassword) {
     return <Navigate to="/forgot-password" replace />;

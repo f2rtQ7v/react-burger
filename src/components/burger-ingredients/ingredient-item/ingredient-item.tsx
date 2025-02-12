@@ -1,11 +1,19 @@
+import { HTMLAttributes } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../../../utils/types.ts';
 import styles from './ingredient-item.module.css';
 
-function IngredientItem({ ingredient, count, ...props }) {
+interface IIngredientItemProps extends HTMLAttributes<HTMLDivElement> {
+  ingredient: IIngredient;
+  count: number;
+}
+
+export default function IngredientItem({
+  ingredient,
+  count,
+  ...props
+}: IIngredientItemProps) {
   const location = useLocation();
 
   const [ , dragRef ] = useDrag(() => ({
@@ -33,10 +41,3 @@ function IngredientItem({ ingredient, count, ...props }) {
     </Link>
   );
 }
-
-IngredientItem.propTypes = {
-  ingredient: Ingredient.isRequired,
-  count: PropTypes.number.isRequired,
-};
-
-export default IngredientItem;

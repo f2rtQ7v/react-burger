@@ -1,8 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { getIngredientsState } from '../../services/burger-ingredients/slice.ts';
 import styles from './ingredient-details.module.css';
 
-const details = [
+interface IIngredientDetail {
+  key: keyof IIngredient;
+  name: string;
+  unit: string;
+}
+
+const details: IIngredientDetail[] = [
   { key:      'calories', name:  'Калории', unit: 'ккал' },
   { key:      'proteins', name:    'Белки', unit:    'г' },
   { key:           'fat', name:     'Жиры', unit:    'г' },
@@ -11,7 +18,12 @@ const details = [
 
 export default function IngredientDetails() {
   const { id } = useParams();
-  const ingredient = useSelector(state => state.burgerIngredients.ingredients?.find(n => n._id === id) ?? {});
+  const { ingredients } = useSelector(getIngredientsState);
+  const ingredient = ingredients?.find(n => n._id === id);
+
+  if (!ingredient) {
+    return null;
+  }
 
   return (
     <div className={styles.container}>
