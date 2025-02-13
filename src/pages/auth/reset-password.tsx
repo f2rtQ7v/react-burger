@@ -13,9 +13,9 @@ const links = [
 ];
 
 export default function ResetPasswordPage() {
-  const { resetPassword: { forgotPassword } } = useSelector(getAuthState);
+  const { passwordResetRequired } = useSelector(getAuthState);
 
-  if (!forgotPassword) {
+  if (!passwordResetRequired) {
     return <Navigate to="/forgot-password" replace />;
   }
 

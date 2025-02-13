@@ -1,29 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { actions } from './actions.ts';
+import { actions, TAuthAction } from './actions.ts';
 
 const { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } = actions;
 
-const createState = () => ({
+const createState = (): IRequestState => ({
   request: false,
   error: null,
 });
 
-const initialState = {
+type TAuthState = {
+  isAuthChecked: boolean;
+  user: IUserData | null;
+  passwordResetRequired: boolean;
+} & {
+  [k in TAuthAction]: IRequestState;
+};
+
+const initialState: TAuthState = {
   isAuthChecked: false,
   user: null,
+  passwordResetRequired: false,
 
   createUser: createState(),
   getUser: createState(),
   updateUser: createState(),
   deleteUser: createState(),
-  register: createState(),
   login: createState(),
   logout: createState(),
   forgotPassword: createState(),
-  resetPassword: {
-    forgotPassword: false,
-    ...createState(),
-  },
+  resetPassword: createState(),
 };
 
 const slice = createSlice({
@@ -34,7 +39,7 @@ const slice = createSlice({
     checkAuth: state => !!state.user,
   },
   reducers: {
-    resetError: (state, action) => {
+    resetError: (state, action: { payload: TAuthAction }) => {
       state[action.payload].error = null;
     },
   },
@@ -45,7 +50,7 @@ const slice = createSlice({
     })
     .addCase(createUser.rejected, (state, action) => {
       state.createUser.request = false;
-      state.createUser.error = action.payload || action.error?.message || 'Неизвестная ошибка при регистрации пользователя';
+      state.createUser.error = action.error?.message || 'Неизвестная ошибка при регистрации пользователя';
     })
     .addCase(createUser.fulfilled, (state, action) => {
       state.createUser.request = false;
@@ -59,7 +64,7 @@ const slice = createSlice({
     .addCase(getUser.rejected, (state, action) => {
       state.isAuthChecked = true;
       state.getUser.request = false;
-      state.getUser.error = action.payload || action.error?.message || 'Неизвестная ошибка при получении данных пользователя';
+      state.getUser.error = action.error?.message || 'Неизвестная ошибка при получении данных пользователя';
     })
     .addCase(getUser.fulfilled, (state, action) => {
       state.isAuthChecked = true;
@@ -73,7 +78,7 @@ const slice = createSlice({
     })
     .addCase(updateUser.rejected, (state, action) => {
       state.updateUser.request = false;
-      state.updateUser.error = action.payload || action.error?.message || 'Неизвестная ошибка при обновлении данных пользователя';
+      state.updateUser.error = action.error?.message || 'Неизвестная ошибка при обновлении данных пользователя';
     })
     .addCase(updateUser.fulfilled, (state, action) => {
       state.user = action.payload.user;
@@ -86,7 +91,7 @@ const slice = createSlice({
     })
     .addCase(deleteUser.rejected, (state, action) => {
       state.deleteUser.request = false;
-      state.deleteUser.error = action.payload || action.error?.message || 'Неизвестная ошибка при удалении пользователя';
+      state.deleteUser.error = action.error?.message || 'Неизвестная ошибка при удалении пользователя';
     })
     .addCase(deleteUser.fulfilled, (state) => {
       state.user = null;
@@ -99,7 +104,7 @@ const slice = createSlice({
     })
     .addCase(login.rejected, (state, action) => {
       state.login.request = false;
-      state.login.error = action.payload || action.error?.message || 'Неизвестная ошибка при логине';
+      state.login.error = action.error?.message || 'Неизвестная ошибка при логине';
     })
     .addCase(login.fulfilled, (state, action) => {
       state.user = action.payload.user;
@@ -112,7 +117,7 @@ const slice = createSlice({
     })
     .addCase(logout.rejected, (state, action) => {
       state.logout.request = false;
-      state.logout.error = action.payload || action.error?.message || 'Неизвестная ошибка при выходе';
+      state.logout.error = action.error?.message || 'Неизвестная ошибка при выходе';
     })
     .addCase(logout.fulfilled, (state) => {
       state.user = null;
@@ -125,10 +130,10 @@ const slice = createSlice({
     })
     .addCase(forgotPassword.rejected, (state, action) => {
       state.forgotPassword.request = false;
-      state.forgotPassword.error = action.payload || action.error?.message || 'Неизвестная ошибка при восстановлении пароля';
+      state.forgotPassword.error = action.error?.message || 'Неизвестная ошибка при восстановлении пароля';
     })
     .addCase(forgotPassword.fulfilled, (state) => {
-      state.resetPassword.forgotPassword = true;
+      state.passwordResetRequired = true;
       state.forgotPassword.request = false;
     })
 
@@ -138,10 +143,10 @@ const slice = createSlice({
     })
     .addCase(resetPassword.rejected, (state, action) => {
       state.resetPassword.request = false;
-      state.resetPassword.error = action.payload || action.error?.message || 'Неизвестная ошибка при восстановлении пароля';
+      state.resetPassword.error = action.error?.message || 'Неизвестная ошибка при восстановлении пароля';
     })
     .addCase(resetPassword.fulfilled, (state) => {
-      state.resetPassword.forgotPassword = false;
+      state.passwordResetRequired = false;
       state.resetPassword.request = false;
     })
 });

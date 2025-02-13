@@ -1,6 +1,8 @@
 const baseApiUrl = 'https://norma.nomoreparties.space/api';
 
-const errors = {
+const errors: {
+  [key: string]: string;
+} = {
   'email, password and name are required fields': 'Имя, e-mail и пароль являются обязательными полями',
   'user already exists': 'Пользователь с указанным e-mail уже существует',
   'user with such email already exists': 'Пользователь с указанным e-mail уже существует',
@@ -12,16 +14,17 @@ const errors = {
   'invalid signature': 'Некорректный токен авторизации',
 };
 
-const checkResponse = res => res.ok
+
+const checkResponse = (res: Response) => res.ok
   ? res.json()
   : res.json().then(err => {
       return Promise.reject(errors[err.message.toLowerCase()] ?? err);
     });
 
-function request(route, options = {}) {
-  if (options.body) {
+function request(route: string, { body, ...options }: IRequestOptions = {}) {
+  if (body && typeof body !== 'string') {
     (options.headers ??= {})['Content-Type'] = 'application/json';
-    options.body = JSON.stringify(options.body);
+    (options as IRequestOptions).body = JSON.stringify(body);
   }
 
   return fetch(baseApiUrl + route, options)
@@ -29,51 +32,41 @@ function request(route, options = {}) {
     .then(r => r.success ? r : Promise.reject(r.message));
 }
 
-const updateTokens = response => {
-  localStorage.setItem('refreshToken', response.refreshToken); 
-  localStorage.setItem('accessToken', response.accessToken);
-  return response;
+const token = {
+  update(response: ITokenData) {
+    localStorage.setItem('refreshToken', response.refreshToken); 
+    localStorage.setItem('accessToken', response.accessToken);
+  },
+  delete() {
+    localStorage.removeItem('refreshToken'); 
+    localStorage.removeItem('accessToken');
+  },
+  refresh() {
+    return request('/auth/token', {
+      method: 'POST',
+      body: {
+        token: localStorage.getItem('refreshToken') ?? '',
+      },
+    }).then(response => {
+      if (!response.success) {
+        return Promise.reject(response);
+      }
+
+      token.update(response);
+      return response;
+    });
+  },
 };
 
-const deleteTokens = response => {
-  localStorage.removeItem('refreshToken'); 
-  localStorage.removeItem('accessToken');
-  return response;
-};
-
-
-export const getIngredientsRequest = () =>
-  request('/ingredients');
-
-export const createOrderRequest = ingredients =>
-  fetchWithRefresh('/orders', {
-    method: 'POST',
-    body: { ingredients },
-  });
-
-
-
-export const refreshToken = () => {
-  return request('/auth/token', {
-    method: 'POST',
-    body: {
-      token: localStorage.getItem('refreshToken'),
-    },
-  }).then(response => {
-    return response.success
-      ? updateTokens(response)
-      : Promise.reject(response);
-  });
-};
-
-export const fetchWithRefresh = async (url, options) => {
+const requestWithRefresh = async (route: string, options: IRequestOptions = {}) => {
   try {
-    return await request(url, options);
+    return await request(route, options);
   } catch (err) {
-    if (err.message === 'jwt expired') {
-      const refreshData = await refreshToken();
-      options.headers.Authorization = refreshData.accessToken;
-      return await request(url, options);
+    const message = err instanceof Error ? err.message : `${err}`;
+    if (message === 'jwt expired') {
+      const { accessToken } = await token.refresh();
+      (options.headers ??= {}).Authorization = accessToken;
+      return await request(route, options);
     } else {
       return Promise.reject(err);
     }
@@ -81,68 +74,91 @@ export const fetchWithRefresh = async (url, options) => {
 };
 
 
+export const getIngredientsRequest = () =>
+  request('/ingredients');
+
+export const createOrderRequest = (ingredients: TOrderIngredients) =>
+  requestWithRefresh('/orders', {
+    method: 'POST',
+    body: { ingredients },
+  });
+
 export const auth = {
-  createUser(body) {
+  createUser(body: IUserData) {
     return request('/auth/register', {
       method: 'POST',
       body,
-    }).then(updateTokens);
+    }).then((r: IUserWithToken) => {
+      token.update(r);
+      return r;
+    });
   },
   async getUser() {
     if (localStorage.getItem('accessToken')) {
       try {
-        await refreshToken();
+        await token.refresh();
       } catch (err) {}
     }
 
-    const token = localStorage.getItem('accessToken');
-    return token
+    const accessToken = localStorage.getItem('accessToken');
+    return accessToken
       ? request('/auth/user', {
-          method: 'GET',
           headers: {
-            Authorization: token,
+            Authorization: accessToken,
           },
-        }).catch(err => Promise.reject(deleteTokens(err)))
+        }).catch(err => {
+          token.delete();
+          Promise.reject(err);
+        })
       : { user: null };
   },
-  updateUser(body) {
-    return fetchWithRefresh('/auth/user', {
+  updateUser(body: IUserData) {
+    return requestWithRefresh('/auth/user', {
       method: 'PATCH',
       headers: {
-        Authorization: localStorage.getItem('accessToken'),
+        Authorization: localStorage.getItem('accessToken') ?? '',
       },
       body,
     });
   },
   deleteUser() {
-    return fetchWithRefresh('/auth/user', {
+    return requestWithRefresh('/auth/user', {
       method: 'DELETE',
       headers: {
-        Authorization: localStorage.getItem('accessToken'),
+        Authorization: localStorage.getItem('accessToken') ?? '',
       },
-    }).then(deleteTokens);
+    }).then(r => {
+      token.delete();
+      return r;
+    });
   },
-  login(body) {
+  login(body: IUserData) {
     return request('/auth/login', {
       method: 'POST',
       body,
-    }).then(updateTokens);
+    }).then((r: IUserWithToken) => {
+      token.update(r);
+      return r;
+    });
   },
   logout() {
     return request('/auth/logout', {
       method: 'POST',
       body: {
-        token: localStorage.getItem('refreshToken'),
+        token: localStorage.getItem('refreshToken') ?? '',
       },
-    }).then(deleteTokens);
+    }).then(r => {
+      token.delete();
+      return r;
+    });
   },
-  forgotPassword(body) {
+  forgotPassword(body: IUserData) {
     return request('/password-reset', {
       method: 'POST',
       body,
     });
   },
-  resetPassword(body) {
+  resetPassword(body: IUserData) {
     return request('/password-reset/reset', {
       method: 'POST',
       body,

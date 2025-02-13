@@ -32,7 +32,7 @@ export function validate(type: string, value: string) {
   return '';
 }
 
-export function validateAll(fields: IFormItem[], values: IFormData) {
+export function validateAll(fields: TFormItem[], values: TFormData) {
   return Object.fromEntries(fields.map(n => [
     n.name,
     validate(n.type, values[n.name] || ''),

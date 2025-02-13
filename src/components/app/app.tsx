@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import useDispatch from '../../hooks/use-app-dispatch.ts';
 import { actions } from '../../services/auth/actions.ts';
 import { getAuthState } from '../../services/auth/slice.ts';
 import { getIngredients } from '../../services/burger-ingredients/actions.ts';
@@ -30,8 +31,8 @@ export default function App() {
   const { isAuthChecked } = useSelector(getAuthState);
   const {
     ingredients,
-    ingredientsRequest,
-    ingredientsError,
+    request: ingredientsRequest,
+    error: ingredientsError,
   } = useSelector(getIngredientsState);
 
   useEffect(() => {

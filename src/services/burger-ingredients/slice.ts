@@ -1,16 +1,14 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from './actions.ts';
 
-interface IBurgerIngredientsState {
+interface IBurgerIngredientsState extends IRequestState {
   ingredients: IIngredient[] | null;
-  ingredientsRequest: boolean;
-  ingredientsError: string | null;
 }
 
 const initialState: IBurgerIngredientsState = {
   ingredients: null,
-  ingredientsRequest: false,
-  ingredientsError: null,
+  request: false,
+  error: null,
 };
 
 const slice = createSlice({
@@ -26,17 +24,18 @@ const slice = createSlice({
       ), {})
     ),
   },
+  reducers: {},
   extraReducers: builder => builder
     .addCase(getIngredients.pending, (state) => {
-      state.ingredientsRequest = true;
-      state.ingredientsError = null;
+      state.request = true;
+      state.error = null;
     })
     .addCase(getIngredients.rejected, (state, action) => {
-      state.ingredientsRequest = false;
-      state.ingredientsError = action.payload || action.error?.message || 'Неизвестная ошибка при загрузке списка ингредиентов';
+      state.request = false;
+      state.error = action.error?.message || 'Неизвестная ошибка при загрузке списка ингредиентов';
     })
     .addCase(getIngredients.fulfilled, (state, action) => {
-      state.ingredientsRequest = false;
+      state.request = false;
       state.ingredients = action.payload.data;
     }),
 });

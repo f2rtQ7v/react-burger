@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import useDispatch from '../hooks/use-app-dispatch.ts';
 import { actions } from '../services/auth/actions.ts';
 import { getAuthState, resetError } from '../services/auth/slice.ts';
 import Modal from '../components/modal/modal.tsx';

@@ -1,3 +1,33 @@
+interface IRequestOptions {
+  method?: 'GET' | 'POST' | 'PATCH' | 'DELETE';
+  headers?: {
+    'Content-Type'?: string;
+    Authorization?: string;
+  };
+  body?: string | object;
+}
+
+interface IRequestState {
+  request: boolean;
+  error: string | null;
+}
+
+interface ITokenData {
+  refreshToken: string;
+  accessToken: string;
+}
+
+type IUserData = {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
+interface IUserWithToken extends ITokenData {
+  user: IUserData | null;
+}
+
+
 interface IIngredient {
   _id: string;
   name: string;
@@ -16,20 +46,24 @@ interface IGroupedIngredients {
   [key: string]: IIngredient[];
 }
 
+
 interface IOrder {
   id: number;
   name: string;
 }
 
-interface IFormItem {
+type TOrderIngredients = string[];
+
+
+type TFormItem = {
   type: string;
   name: string;
   placeholder: string;
-}
+};
 
-interface IFormData {
+type TFormData = {
   [key: string]: string;
-}
+};
 
 type TInputEvent = Event<HTMLInputElement>;
 type TFormEvent = Event<HTMLFormElement>;

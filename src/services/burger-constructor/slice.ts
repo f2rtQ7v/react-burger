@@ -33,13 +33,13 @@ const slice = createSlice({
   },
   reducers: {
     addIngredient: {
-      prepare: ingredient => ({
+      prepare: (ingredient: IIngredient) => ({
         payload: {
           id: nanoid(),
           ...ingredient,
         },
       }),
-      reducer(state, { payload: ingredient }) {
+      reducer(state, { payload: ingredient }: { payload: IIngredient }) {
         if (ingredient.type === 'bun') {
           state.bun = ingredient;
         } else {

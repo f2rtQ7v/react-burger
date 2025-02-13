@@ -1,17 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import useDispatch from '../../hooks/use-app-dispatch.ts';
 import useFormData from '../../hooks/use-form-data.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { actions, TAuthAction } from '../../services/auth/actions.ts';
+import { formActions, TAuthFormAction } from '../../services/auth/actions.ts';
 import { validate, validateAll } from './validations.ts';
 import { getAuthState, resetError } from '../../services/auth/slice.ts';
 import { LoadingScreen } from '../screens/';
 import styles from './form.module.css';
 
 interface IFormProps {
-  action: TAuthAction;
-  fields: IFormItem[];
-  data: IFormData;
+  action: TAuthFormAction;
+  fields: TFormItem[];
+  data: TFormData;
   onChange?: (e: TInputEvent) => void;
   onSubmit?: (e: TFormEvent) => void;
   onReset?: (e: TFormEvent) => void;
@@ -19,12 +20,12 @@ interface IFormProps {
   submitLabel: string;
 }
 
-const inputs: {
-  [key: string]: typeof Input | typeof PasswordInput,
-} = {
+const inputs = {
   text: Input,
   password: PasswordInput,
 };
+
+type TInput = keyof typeof inputs;
 
 export default function Form({
   action,
@@ -62,7 +63,7 @@ export default function Form({
       return;
     }
 
-    dispatch(actions[action](data))
+    dispatch(formActions[action](data))
       .unwrap()
       .then(onSubmit)
       .catch(() => {/*
@@ -93,7 +94,7 @@ export default function Form({
         noValidate
       >
         {fields.map(({ type, ...n }) => {
-          const Component = inputs[type] ?? inputs.text;
+          const Component = inputs[type as TInput] ?? inputs.text;
           const error = inputErrors[n.name];
           return (
             <div key={n.name} className={styles.formItem}>

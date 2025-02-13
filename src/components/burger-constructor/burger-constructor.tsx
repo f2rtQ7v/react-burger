@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
+import useDispatch from '../../hooks/use-app-dispatch.ts';
 import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.ts';
 import { getOrderState, resetOrder } from '../../services/order/slice.ts';
 import { checkAuth } from '../../services/auth/slice.ts';
@@ -22,12 +23,16 @@ export default function BurgerConstructor() {
 
   const { bun, fillings } = useSelector(getIngredients);
   const total = useSelector(getTotal);
-  const { order, orderCreateRequest, orderCreateError } = useSelector(getOrderState);
+  const {
+    order,
+    request: orderCreateRequest,
+    error: orderCreateError,
+  } = useSelector(getOrderState);
   const isAuth = useSelector(checkAuth);
 
   const [ { canDrop }, dropRef ] = useDrop(() => ({
     accept: 'ingredient',
-    drop(ingredient) {
+    drop(ingredient: IIngredient) {
       dispatch(addIngredient(ingredient));
     },
     collect: monitor => ({

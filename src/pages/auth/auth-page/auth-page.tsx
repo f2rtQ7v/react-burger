@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import Form from '../../../components/form/form.tsx';
 import useFormData from '../../../hooks/use-form-data.ts';
-import { TAuthAction } from '../../../services/auth/actions.ts';
+import { TAuthFormAction } from '../../../services/auth/actions.ts';
 import styles from './auth-page.module.css';
 
 interface IAuthPageLink {
@@ -11,12 +11,12 @@ interface IAuthPageLink {
 }
 
 interface IAuthPageProps {
-  action: TAuthAction;
+  action: TAuthFormAction;
   redirect?: string;
   title: string;
   submitLabel: string;
   links: IAuthPageLink[];
-  fields: IFormItem[];
+  fields: TFormItem[];
 }
 
 export default function AuthPage({

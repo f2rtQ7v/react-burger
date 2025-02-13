@@ -4,11 +4,11 @@ export default function useFormData({
   initialData = {},
   valueGetter = (e: TInputEvent) => e.target.value,
 } = {}): [
-  IFormData,
-  Dispatch<IFormData>,
+  TFormData,
+  Dispatch<TFormData>,
   (e: TInputEvent) => void,
 ] {
-  const [ data, setData ] = useState<IFormData>(initialData);
+  const [ data, setData ] = useState<TFormData>(initialData);
 
   const onChange = useCallback((e: TInputEvent) => {
     setData(data => ({
