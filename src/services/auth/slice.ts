@@ -1,12 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { actions, TAuthAction } from './actions.ts';
+import createRequestState from '../../utils/create-request-state.ts';
 
 const { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } = actions;
-
-const createState = (): IRequestState => ({
-  request: false,
-  error: null,
-});
 
 type TAuthState = {
   isAuthChecked: boolean;
@@ -21,14 +17,14 @@ const initialState: TAuthState = {
   user: null,
   passwordResetRequired: false,
 
-  createUser: createState(),
-  getUser: createState(),
-  updateUser: createState(),
-  deleteUser: createState(),
-  login: createState(),
-  logout: createState(),
-  forgotPassword: createState(),
-  resetPassword: createState(),
+  createUser: createRequestState(),
+  getUser: createRequestState(),
+  updateUser: createRequestState(),
+  deleteUser: createRequestState(),
+  login: createRequestState(),
+  logout: createRequestState(),
+  forgotPassword: createRequestState(),
+  resetPassword: createRequestState(),
 };
 
 const slice = createSlice({

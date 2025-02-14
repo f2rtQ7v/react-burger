@@ -1,15 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from './actions.ts';
+import createRequestState from '../../utils/create-request-state.ts';
 
 interface IOrderState extends IRequestState {
   order: IOrder | null;
 }
 
-const initialState: IOrderState = {
-  order: null,
-  request: false,
-  error: null,
-};
+const initialState = createRequestState<IOrderState>({ order: null });
 
 const slice = createSlice({
   name: 'order',

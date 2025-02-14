@@ -1,15 +1,12 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from './actions.ts';
+import createRequestState from '../../utils/create-request-state.ts';
 
 interface IBurgerIngredientsState extends IRequestState {
   ingredients: IIngredient[] | null;
 }
 
-const initialState: IBurgerIngredientsState = {
-  ingredients: null,
-  request: false,
-  error: null,
-};
+const initialState = createRequestState<IBurgerIngredientsState>({ ingredients: null });
 
 const slice = createSlice({
   name: 'burgerIngredients',
