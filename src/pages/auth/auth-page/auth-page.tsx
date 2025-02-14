@@ -14,18 +14,16 @@ interface IAuthPageProps {
   action: TAuthFormAction;
   redirect?: string;
   title: string;
-  submitLabel: string;
+  submitLabel?: string;
   links: IAuthPageLink[];
   fields: TFormItem[];
 }
 
 export default function AuthPage({
-  action,
   redirect,
   title,
-  submitLabel,
   links,
-  fields,
+  ...props
 }: IAuthPageProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -42,12 +40,10 @@ export default function AuthPage({
     <div className={styles.container}>
       <div className={styles.title}>{title}</div>
       <Form
-        action={action}
-        fields={fields}
         data={data}
         onChange={onChange}
         onSubmit={onSubmit}
-        submitLabel={submitLabel}
+        {...props}
       />
       {links.map(n => (
         <div key={n.to} className={styles.link}>

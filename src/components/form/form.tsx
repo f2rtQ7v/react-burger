@@ -17,7 +17,7 @@ interface IFormProps {
   onSubmit?: (e: TFormEvent) => void;
   onReset?: (e: TFormEvent) => void;
   showButtons?: boolean;
-  submitLabel: string;
+  submitLabel?: string;
 }
 
 const inputs = {
@@ -35,7 +35,7 @@ export default function Form({
   onSubmit,
   onReset,
   showButtons = true,
-  submitLabel,
+  submitLabel = 'Отправить',
 }: IFormProps) {
   const dispatch = useDispatch();
 
