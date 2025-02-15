@@ -17,15 +17,17 @@ interface ITokenData {
   accessToken: string;
 }
 
-type IUserData = {
+type TUserData = {
   name?: string;
   email?: string;
   password?: string;
 }
 
-interface IUserWithToken extends ITokenData {
-  user: IUserData | null;
+type TWithUser = {
+  user: TUserData | null;
 }
+
+type TUserWithToken = ITokenData & TWithUser;
 
 
 interface IIngredient {

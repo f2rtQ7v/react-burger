@@ -4,9 +4,8 @@ import createRequestState from '../../utils/create-request-state.ts';
 
 const { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } = actions;
 
-type TAuthState = {
+type TAuthState = TWithUser & {
   isAuthChecked: boolean;
-  user: IUserData | null;
   passwordResetRequired: boolean;
 } & {
   [k in TAuthAction]: IRequestState;

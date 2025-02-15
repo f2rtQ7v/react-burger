@@ -84,11 +84,11 @@ export const createOrderRequest = (ingredients: TOrderIngredients) =>
   });
 
 export const auth = {
-  createUser(body: IUserData) {
+  createUser(body: TUserData) {
     return request('/auth/register', {
       method: 'POST',
       body,
-    }).then((r: IUserWithToken) => {
+    }).then((r: TUserWithToken) => {
       token.update(r);
       return r;
     });
@@ -112,7 +112,7 @@ export const auth = {
         })
       : { user: null };
   },
-  updateUser(body: IUserData) {
+  updateUser(body: TUserData) {
     return requestWithRefresh('/auth/user', {
       method: 'PATCH',
       headers: {
@@ -132,11 +132,11 @@ export const auth = {
       return r;
     });
   },
-  login(body: IUserData) {
+  login(body: TUserData) {
     return request('/auth/login', {
       method: 'POST',
       body,
-    }).then((r: IUserWithToken) => {
+    }).then((r: TUserWithToken) => {
       token.update(r);
       return r;
     });
@@ -152,13 +152,13 @@ export const auth = {
       return r;
     });
   },
-  forgotPassword(body: IUserData) {
+  forgotPassword(body: TUserData) {
     return request('/password-reset', {
       method: 'POST',
       body,
     });
   },
-  resetPassword(body: IUserData) {
+  resetPassword(body: TUserData) {
     return request('/password-reset/reset', {
       method: 'POST',
       body,
