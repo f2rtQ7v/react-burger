@@ -4,26 +4,23 @@ import createRequestState from '../../utils/create-request-state.ts';
 
 const { createUser, getUser, updateUser, deleteUser, login, logout, forgotPassword, resetPassword } = actions;
 
-type TAuthState = TWithUser & {
+type TAuthRequestStates = {
+  [k in TAuthAction]: IRequestState;
+};
+
+type TAuthState = TWithUser & TAuthRequestStates & {
   isAuthChecked: boolean;
   passwordResetRequired: boolean;
-} & {
-  [k in TAuthAction]: IRequestState;
 };
 
 const initialState: TAuthState = {
   isAuthChecked: false,
   user: null,
   passwordResetRequired: false,
-
-  createUser: createRequestState(),
-  getUser: createRequestState(),
-  updateUser: createRequestState(),
-  deleteUser: createRequestState(),
-  login: createRequestState(),
-  logout: createRequestState(),
-  forgotPassword: createRequestState(),
-  resetPassword: createRequestState(),
+  ...Object.fromEntries(Object
+    .keys(actions)
+    .map(n => [ n, createRequestState() ])
+  ) as TAuthRequestStates,
 };
 
 const slice = createSlice({
