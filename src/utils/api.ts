@@ -15,62 +15,62 @@ const errors: {
 };
 
 
-const checkResponse = (res: Response) => res.ok
-  ? res.json()
-  : res.json().then(err => {
-      return Promise.reject(errors[err.message.toLowerCase()] ?? err);
-    });
-
 function request(route: string, { body, ...options }: IRequestOptions = {}) {
   if (body && typeof body !== 'string') {
     (options.headers ??= {})['Content-Type'] = 'application/json';
     (options as IRequestOptions).body = JSON.stringify(body);
   }
 
-  return fetch(baseApiUrl + route, options)
-    .then(checkResponse)
-    .then(r => r.success ? r : Promise.reject(r.message));
+  return fetch(baseApiUrl + route, options).then((response: Response) => {
+    return response.json().then(result => {
+      return response.ok && result.success
+        ? result
+        : Promise.reject(new Error(errors[result.message.toLowerCase()] ?? result.message));
+    });
+  });
 }
 
-const token = {
-  update(response: ITokenData) {
-    localStorage.setItem('refreshToken', response.refreshToken); 
-    localStorage.setItem('accessToken', response.accessToken);
-  },
-  delete() {
-    localStorage.removeItem('refreshToken'); 
-    localStorage.removeItem('accessToken');
-  },
-  refresh() {
-    return request('/auth/token', {
-      method: 'POST',
-      body: {
-        token: localStorage.getItem('refreshToken') ?? '',
-      },
-    }).then(response => {
-      if (!response.success) {
-        return Promise.reject(response);
-      }
+function requestWithRefresh(route: string) {
+  return request(route, {
+    method: 'POST',
+    body: {
+      token: localStorage.getItem('refreshToken') ?? '',
+    },
+  });
+}
 
-      token.update(response);
-      return response;
-    });
-  },
-};
-
-const requestWithRefresh = async (route: string, options: IRequestOptions = {}) => {
+async function requestWithAccess(route: string, options: IRequestOptions = {}) {
+  token.addAccess(options);
   try {
     return await request(route, options);
   } catch (err) {
     const message = err instanceof Error ? err.message : `${err}`;
     if (message === 'jwt expired') {
-      const { accessToken } = await token.refresh();
-      (options.headers ??= {}).Authorization = accessToken;
+      await requestWithRefresh('/auth/token').then(token.update);
+      token.addAccess(options);
       return await request(route, options);
     } else {
       return Promise.reject(err);
     }
   }
+}
+
+
+const token = {
+  addAccess(options: IRequestOptions) {
+    (options.headers ??= {}).Authorization = localStorage.getItem('accessToken') ?? '';
+  },
+  update(response: ITokenData & TWithUser) {
+    localStorage.setItem('refreshToken', response.refreshToken);
+    localStorage.setItem('accessToken', response.accessToken);
+    return response;
+  },
+  // eslint-disable-next-line
+  delete(response: any) {
+    localStorage.removeItem('refreshToken'); 
+    localStorage.removeItem('accessToken');
+    return response instanceof Error ? Promise.reject(response) : response;
+  },
 };
 
 
@@ -78,7 +78,7 @@ export const getIngredientsRequest = () =>
   request('/ingredients');
 
 export const createOrderRequest = (ingredients: TOrderIngredients) =>
-  requestWithRefresh('/orders', {
+  requestWithAccess('/orders', {
     method: 'POST',
     body: { ingredients },
   });
@@ -88,69 +88,32 @@ export const auth = {
     return request('/auth/register', {
       method: 'POST',
       body,
-    }).then((r: TUserWithToken) => {
-      token.update(r);
-      return r;
-    });
+    }).then(token.update);
   },
   async getUser() {
-    if (localStorage.getItem('accessToken')) {
-      try {
-        await token.refresh();
-      } catch (err) {}
-    }
-
-    const accessToken = localStorage.getItem('accessToken');
-    return accessToken
-      ? request('/auth/user', {
-          headers: {
-            Authorization: accessToken,
-          },
-        }).catch(err => {
-          token.delete();
-          Promise.reject(err);
-        })
+    return localStorage.getItem('accessToken')
+      ? requestWithAccess('/auth/user').catch(token.delete)
       : { user: null };
   },
   updateUser(body: TUserData) {
-    return requestWithRefresh('/auth/user', {
+    return requestWithAccess('/auth/user', {
       method: 'PATCH',
-      headers: {
-        Authorization: localStorage.getItem('accessToken') ?? '',
-      },
       body,
     });
   },
   deleteUser() {
-    return requestWithRefresh('/auth/user', {
+    return requestWithAccess('/auth/user', {
       method: 'DELETE',
-      headers: {
-        Authorization: localStorage.getItem('accessToken') ?? '',
-      },
-    }).then(r => {
-      token.delete();
-      return r;
-    });
+    }).then(token.delete);
   },
   login(body: TUserData) {
     return request('/auth/login', {
       method: 'POST',
       body,
-    }).then((r: TUserWithToken) => {
-      token.update(r);
-      return r;
-    });
+    }).then(token.update);
   },
   logout() {
-    return request('/auth/logout', {
-      method: 'POST',
-      body: {
-        token: localStorage.getItem('refreshToken') ?? '',
-      },
-    }).then(r => {
-      token.delete();
-      return r;
-    });
+    return requestWithRefresh('/auth/logout').then(token.delete);
   },
   forgotPassword(body: TUserData) {
     return request('/password-reset', {

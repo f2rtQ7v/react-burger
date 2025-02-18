@@ -27,8 +27,6 @@ type TWithUser = {
   user: TUserData | null;
 }
 
-type TUserWithToken = ITokenData & TWithUser;
-
 
 interface IIngredient {
   _id: string;
