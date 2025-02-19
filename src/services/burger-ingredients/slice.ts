@@ -12,10 +12,10 @@ const slice = createSlice({
   name: 'burgerIngredients',
   initialState,
   selectors: {
-    getIngredientsState: (state: IBurgerIngredientsState): IBurgerIngredientsState => state,
+    getIngredientsState: state => state,
     getIngredientsGroupedByType: createSelector(
       state => state.ingredients,
-      ingredients => ingredients.reduce((acc: IGroupedIngredients, n: IIngredient) => (
+      ingredients => ingredients.reduce((acc: { [key: string]: IIngredient[] }, n: IIngredient) => (
         (acc[n.type] ??= []).push(n),
         acc
       ), {})

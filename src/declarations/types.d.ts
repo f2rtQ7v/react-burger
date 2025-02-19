@@ -42,10 +42,6 @@ interface IIngredient {
   id?: string;
 }
 
-interface IGroupedIngredients {
-  [key: string]: IIngredient[];
-}
-
 
 interface IOrder {
   id: number;

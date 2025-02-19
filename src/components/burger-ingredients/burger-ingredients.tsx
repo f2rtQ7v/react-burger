@@ -15,7 +15,7 @@ const INGREDIENT_TYPES = [
 ];
 
 export default function BurgerIngredients() {
-  const ingredients: IGroupedIngredients = useSelector(getIngredientsGroupedByType);
+  const ingredients = useSelector(getIngredientsGroupedByType);
   const countSelectedIngredients = useSelector(getCount);
 
   const [ activeTab, setActiveTab ] = useState(0);

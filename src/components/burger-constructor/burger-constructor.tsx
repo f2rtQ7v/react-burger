@@ -66,7 +66,7 @@ export default function BurgerConstructor() {
       </IngredientsList>
       <IngredientsList>
         {!fillings.length && <IngredientItemFilling />}
-        {fillings.map((n: IIngredient, i: number) => <IngredientItemFilling key={n.id} ingredient={n} index={i} />)}
+        {fillings.map((n, i) => <IngredientItemFilling key={n.id} ingredient={n} index={i} />)}
       </IngredientsList>
       <IngredientsList>
         <IngredientItemBun ingredient={bun} type="bottom" />

@@ -10,7 +10,7 @@ const initialState: IBurgerConstructorState = {
   fillings: [],
 };
 
-const getState = (state: IBurgerConstructorState): IBurgerConstructorState => state;
+const getState = (state: IBurgerConstructorState) => state;
 
 const slice = createSlice({
   name: 'burgerConstructor',
