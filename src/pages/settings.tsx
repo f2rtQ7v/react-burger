@@ -12,7 +12,7 @@ const fields = [
 
 export default function SettingsPage() {
   const { user } = useSelector(getAuthState);
-  const [ data, setData, onChange ] = useFormData({ initialData: user! });
+  const { data, setData, onChange, errors } = useFormData({ initialData: user!, fields });
   const reset = useCallback(() => setData(user!), [ user, setData ]);
 
   useEffect(reset, [ reset ]);
@@ -23,6 +23,7 @@ export default function SettingsPage() {
       submitLabel="Сохранить"
       fields={fields}
       data={data}
+      errors={errors}
       onChange={onChange}
       onReset={reset}
       showButtons={data !== user}

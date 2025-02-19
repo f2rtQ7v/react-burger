@@ -27,7 +27,7 @@ export default function AuthPage({
 }: IAuthPageProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [ data, , onChange ] = useFormData();
+  const { data, onChange, errors } = useFormData({ fields: props.fields });
   const onSubmit = () => {
     if (redirect && !location.state?.from) {
       navigate(redirect, {
@@ -41,6 +41,7 @@ export default function AuthPage({
       <div className={styles.title}>{title}</div>
       <Form
         data={data}
+        errors={errors}
         onChange={onChange}
         onSubmit={onSubmit}
         {...props}

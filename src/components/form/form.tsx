@@ -1,10 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import useDispatch from '../../hooks/use-app-dispatch.ts';
-import useFormData from '../../hooks/use-form-data.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formActions, TAuthFormAction } from '../../services/auth/actions.ts';
-import { validate, validateAll } from './validations.ts';
 import { getAuthState, resetError } from '../../services/auth/slice.ts';
 import { LoadingScreen } from '../screens/';
 import styles from './form.module.css';
@@ -13,7 +11,8 @@ interface IFormProps {
   action: TAuthFormAction;
   fields: TFormItem[];
   data: TFormData;
-  onChange?: (e: TInputEvent) => void;
+  errors: TFormData;
+  onChange: (e: TInputEvent) => void;
   onSubmit?: (e: TFormEvent) => void;
   onReset?: (e: TFormEvent) => void;
   showButtons?: boolean;
@@ -31,6 +30,7 @@ export default function Form({
   action,
   fields,
   data,
+  errors,
   onChange,
   onSubmit,
   onReset,
@@ -42,22 +42,11 @@ export default function Form({
   const { [action]: { request, error: submitError } } = useSelector(getAuthState);
 
   const [ showErrors, setShowErrors ] = useState(false);
-  const [ inputErrors, setInputErrors, onChangeInputErrors ] = useFormData({
-    initialData: () => validateAll(fields, data),
-    valueGetter: ({ target: t }) => validate(t.dataset.type ?? '', t.value),
-  });
-
-  const onChangeInner = useCallback((e: TInputEvent) => {
-    onChangeInputErrors(e);
-    onChange?.(e);
-  }, [ onChangeInputErrors, onChange ]);
 
   const onSubmitInner = useCallback((e: TFormEvent) => {
     e.preventDefault();
 
-    const errors = validateAll(fields, data);
     const isErrors = fields.some(n => errors[n.name]);
-    setInputErrors(errors);
     setShowErrors(isErrors);
     if (isErrors) {
       return;
@@ -71,7 +60,7 @@ export default function Form({
         а тут надо что-то делать (onSubmit) только в том случае, если ошибок не было;
         пустой catch нужен для того, чтобы ошибка в консоль не падала
       */});
-  }, [ dispatch, action, fields, data, setInputErrors, onSubmit ]);
+  }, [ dispatch, action, fields, data, errors, onSubmit ]);
 
   const hideSubmitError = useCallback(() => {
     dispatch(resetError(action));
@@ -95,14 +84,13 @@ export default function Form({
       >
         {fields.map(({ type, ...n }) => {
           const Component = inputs[type as TInput] ?? inputs.text;
-          const error = inputErrors[n.name];
+          const error = errors[n.name];
           return (
             <div key={n.name} className={styles.formItem}>
               <Component
                 {...n}
-                data-type={type}
                 value={data[n.name] || ''}
-                onChange={onChangeInner}
+                onChange={onChange}
                 error={showErrors && !!error}
                 errorText={showErrors ? error : ''}
               />
