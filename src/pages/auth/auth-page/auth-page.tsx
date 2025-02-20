@@ -10,7 +10,7 @@ interface IAuthPageLink {
   to: string;
 }
 
-interface IAuthPageProps {
+export interface IAuthPageProps {
   action: TAuthFormAction;
   redirect?: string;
   title: string;
