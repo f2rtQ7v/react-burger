@@ -4,7 +4,7 @@ import useDispatch from '../../hooks/use-app-dispatch.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { formActions, TAuthFormAction } from '../../services/auth/actions.ts';
 import { getAuthState, resetError } from '../../services/auth/slice.ts';
-import { LoadingScreen } from '../screens/';
+import { LoadingScreen } from '../screens/screens.tsx';
 import styles from './form.module.css';
 
 interface IFormProps {

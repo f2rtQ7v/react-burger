@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getAuthState } from '../../services/auth/slice.ts';
-import LoadingScreen from '../screens/loading-screen/loading-screen.jsx';
+import { LoadingScreen } from '../screens/screens.jsx';
 
 interface IProtected {
   onlyUnAuth?: boolean;

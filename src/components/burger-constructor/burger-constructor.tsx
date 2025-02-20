@@ -13,7 +13,7 @@ import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.tsx';
 import Modal from '../modal/modal.tsx';
 import OrderDetails from '../order-details/order-details.tsx';
-import { LoadingScreen, ErrorScreen } from '../screens/';
+import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor() {
@@ -91,7 +91,7 @@ export default function BurgerConstructor() {
       {(order || orderCreateError) && (
         <Modal onClose={onCloseOrderModalClick}>
           {orderCreateError && (
-            <ErrorScreen transparent>
+            <ErrorScreen>
               <span>Не удалось создать заказ</span>
               <span>{orderCreateError}</span>
             </ErrorScreen>

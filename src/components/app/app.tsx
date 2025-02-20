@@ -20,7 +20,7 @@ import LogoutPage from '../../pages/logout.tsx';
 import IngredientPage from '../../pages/ingredient.tsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.tsx';
 import Page404 from '../../pages/404/404.tsx';
-import { LoadingScreen, ErrorScreen } from '../../components/screens/';
+import { LoadingScreen, ErrorScreen } from '../../components/screens/screens.tsx';
 import styles from './app.module.css';
 
 export default function App() {

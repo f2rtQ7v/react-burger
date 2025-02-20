@@ -5,7 +5,7 @@ import useDispatch from '../hooks/use-app-dispatch.ts';
 import { actions } from '../services/auth/actions.ts';
 import { getAuthState, resetError } from '../services/auth/slice.ts';
 import Modal from '../components/modal/modal.tsx';
-import { LoadingScreen, ErrorScreen } from '../components/screens/';
+import { LoadingScreen, ErrorScreen } from '../components/screens/screens.tsx';
 
 export default function LogoutPage() {
   const dispatch = useDispatch();
@@ -25,12 +25,11 @@ export default function LogoutPage() {
     {request && <LoadingScreen />}
     {error && (
       <Modal onClose={onCloseModal}>
-        <ErrorScreen transparent>
+        <ErrorScreen>
           <span>Ошибка при выходе</span>
           <span>{error}</span>
         </ErrorScreen>
       </Modal>
     )}
-    </>
-  );
+  </>);
 }
