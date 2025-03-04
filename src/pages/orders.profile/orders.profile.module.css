@@ -1,0 +1,3 @@
+.container {
+  composes: text text_type_main-large from global;
+}

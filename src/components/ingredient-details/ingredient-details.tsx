@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getIngredientsState } from '../../services/burger-ingredients/slice.ts';
+import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
 import styles from './ingredient-details.module.css';
 
 interface IIngredientDetail {

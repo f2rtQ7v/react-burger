@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { getAuthState } from '../../services/auth/slice.ts';
+import { getAuthState } from '../../services/features/auth/slice.ts';
 import AuthPage, { IAuthPageProps } from './auth-page/auth-page.tsx';
 
 const props: IAuthPageProps = {

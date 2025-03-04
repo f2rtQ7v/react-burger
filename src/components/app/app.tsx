@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import useDispatch from '../../hooks/use-app-dispatch.ts';
-import { actions } from '../../services/auth/actions.ts';
-import { getAuthState } from '../../services/auth/slice.ts';
-import { getIngredients } from '../../services/burger-ingredients/actions.ts';
-import { getIngredientsState } from '../../services/burger-ingredients/slice.ts';
+import { actions } from '../../services/features/auth/actions.ts';
+import { getAuthState } from '../../services/features/auth/slice.ts';
+import { getIngredients } from '../../services/features/burger-ingredients/actions.ts';
+import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
 import { OnlyAuth, OnlyUnAuth } from '../protected-route/protected-route.tsx';
 import AppHeader from '../app-header/app-header.tsx';
 import ConstructorPage from '../../pages/constructor/constructor.tsx';
@@ -15,7 +15,8 @@ import ForgotPasswordPage from '../../pages/auth/forgot-password.tsx';
 import ResetPasswordPage from '../../pages/auth/reset-password.tsx';
 import ProfilePage from '../../pages/profile/profile.tsx';
 import SettingsPage from '../../pages/settings.tsx';
-import OrdersPage from '../../pages/orders/orders.tsx';
+import OrdersAllPage from '../../pages/orders.all/orders.all.tsx';
+import OrdersProfilePage from '../../pages/orders.profile/orders.profile.tsx';
 import LogoutPage from '../../pages/logout.tsx';
 import IngredientPage from '../../pages/ingredient.tsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.tsx';
@@ -65,13 +66,14 @@ export default function App() {
 
         <Routes location={background ?? location}>
           <Route path="/" element={<ConstructorPage />} />
+          <Route path="/feed" element={<OrdersAllPage />} />
           <Route path="/register" element={<OnlyUnAuth element={<RegisterPage />}/>} />
           <Route path="/login" element={<OnlyUnAuth element={<LoginPage />}/>} />
           <Route path="/forgot-password" element={<OnlyUnAuth element={<ForgotPasswordPage />}/>} />
           <Route path="/reset-password" element={<OnlyUnAuth element={<ResetPasswordPage />}/>} />
           <Route path="/profile" element={<OnlyAuth element={<ProfilePage />}/>}>
             <Route index element={<SettingsPage />} />
-            <Route path="orders" element={<OrdersPage />} />
+            <Route path="orders" element={<OrdersProfilePage />} />
             <Route path="logout" element={<LogoutPage />} />
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />

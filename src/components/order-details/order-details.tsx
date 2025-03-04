@@ -1,10 +1,10 @@
 import styles from './order-details.module.css';
 import checkMarkImage from '../../images/check-mark.png';
 
-export default function OrderDetails({ orderId }: { orderId: number }) {
+export default function OrderDetails({ orderNumber }: { orderNumber: number }) {
   return (
     <div className={styles.container}>
-      <div className="text text_type_digits-large">{orderId}</div>
+      <div className="text text_type_digits-large">{orderNumber}</div>
       <div className="m-5 text text_type_main-medium">идентификатор заказа</div>
       <div className="m-10">
         <img src={checkMarkImage} />

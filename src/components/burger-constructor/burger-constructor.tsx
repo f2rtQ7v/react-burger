@@ -3,10 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import useDispatch from '../../hooks/use-app-dispatch.ts';
-import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.ts';
-import { getOrderState, resetOrder } from '../../services/order/slice.ts';
-import { checkAuth } from '../../services/auth/slice.ts';
-import { createOrder } from '../../services/order/actions.ts';
+import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/features/burger-constructor/slice.ts';
+import { getOrderState, resetOrder } from '../../services/features/order/slice.ts';
+import { checkAuth } from '../../services/features/auth/slice.ts';
+import { createOrder } from '../../services/features/order/actions.ts';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientsList from './ingredients-list/ingredients-list.tsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
@@ -96,7 +96,7 @@ export default function BurgerConstructor() {
               <span>{orderCreateError}</span>
             </ErrorScreen>
           )}
-          {order && <OrderDetails orderId={order.id} />}
+          {order && <OrderDetails orderNumber={order.number} />}
         </Modal>
       )}
       {orderCreateRequest && (

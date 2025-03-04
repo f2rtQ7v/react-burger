@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { auth } from '../../utils/api.ts';
+import { auth } from '../../../utils/api.ts';
 
 export const formActions = {
   createUser: createAsyncThunk('auth/register', (data: TUserData) => auth.createUser(data)),

@@ -2,7 +2,7 @@ import { useMemo, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { delIngredient, moveIngredient } from '../../../services/burger-constructor/slice.ts';
+import { delIngredient, moveIngredient } from '../../../services/features/burger-constructor/slice.ts';
 import styles from './ingredient-item.module.css';
 
 interface IIngredientItemFilling {

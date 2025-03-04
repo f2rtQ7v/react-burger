@@ -43,12 +43,17 @@ interface IIngredient {
 }
 
 
-interface IOrder {
-  id: number;
-  name: string;
-}
-
 type TOrderIngredients = string[];
+
+interface IOrder {
+  _id?: string;
+  name: string;
+  number: number;
+  createdAt?: string;
+  updatedAt?: string;
+  status?: 'created' | 'pending' | 'done';
+  ingredients?: TOrderIngredients;
+}
 
 
 type TFormItem = {
