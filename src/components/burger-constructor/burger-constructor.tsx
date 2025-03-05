@@ -1,8 +1,7 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import useDispatch from '../../hooks/use-app-dispatch.ts';
+import { useSelector, useDispatch } from '../../services/store.ts';
 import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/features/burger-constructor/slice.ts';
 import { getOrderState, resetOrder } from '../../services/features/order/slice.ts';
 import { checkAuth } from '../../services/features/auth/slice.ts';

@@ -39,20 +39,26 @@ interface IIngredient {
   price: number;
   image: string;
   image_large: string;
+  image_mobile: string;
   id?: string;
 }
 
 
 type TOrderIngredients = string[];
 
-interface IOrder {
-  _id?: string;
+type TOrderStatus = 'created' | 'pending' | 'done';
+
+interface INewOrder {
   name: string;
   number: number;
-  createdAt?: string;
-  updatedAt?: string;
-  status?: 'created' | 'pending' | 'done';
-  ingredients?: TOrderIngredients;
+}
+
+interface IOrder extends INewOrder {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  status: TOrderStatus;
+  ingredients: TOrderIngredients;
 }
 
 

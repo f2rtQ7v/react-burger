@@ -5,13 +5,19 @@
 .content {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: calc(var(--offset-base-size)  * 15);
+  gap: calc(var(--offset-base-size) * 15);
+}
+
+.ordersWrapper {
+  composes: pr-2 from global;
+  max-height: 80vh;
+  overflow-y: scroll;
 }
 
 .orderIds {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: calc(var(--offset-base-size)  * 9);
+  gap: calc(var(--offset-base-size) * 9);
 }
 
 .title {
@@ -32,10 +38,6 @@
 
 .orderIdsListItem {
   composes: pb-2 from global;
-}
-
-.done {
-  color: var(--colors-interface-success);
 }
 
 .total {

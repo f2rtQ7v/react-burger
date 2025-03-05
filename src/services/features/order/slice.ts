@@ -3,7 +3,7 @@ import { createOrder } from './actions.ts';
 import createRequestState from '../../../utils/create-request-state.ts';
 
 interface IOrderState extends IRequestState {
-  order: IOrder | null;
+  order: INewOrder | null;
 }
 
 const initialState = createRequestState<IOrderState>({ order: null });

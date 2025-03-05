@@ -6,7 +6,7 @@ export const ordersAllUrl = () =>
   `${baseWsUrl}/orders/all`;
 
 export const ordersProfileUrl = () =>
-  `${baseWsUrl}/orders?token=${localStorage.getItem('accessToken').replace('Bearer ', '')}`;
+  `${baseWsUrl}/orders?token=${localStorage.getItem('accessToken')?.replace('Bearer ', '')}`;
 
 export enum WebsocketStatus {
   CONNECTING = 'CONNECTING',
@@ -16,39 +16,45 @@ export enum WebsocketStatus {
 
 export type TWebsocketOrders = {
   success: boolean;
-  orders: TOrder[];
+  orders: IOrder[];
   total: number;
   totalToday: number;
 };
 
 export type TOrdersState = {
   status: WebsocketStatus;
-  orders: TOrder[] | null;
+  orders: IOrder[] | null;
   total: number;
   totalToday: number;
   error: string | null;
 };
 
-export function createOrdersActions(key) {
+export function createOrdersActions(key: string) {
+  const CONNECT = `${key}_CONNECT`;
+  const ON_MESSAGE = `${key}_ON_MESSAGE`;
+  const ON_ERROR = `${key}_ON_ERROR`;
+
   return {
-    connect: createAction<string, `${key}_CONNECT`>(`${key}_CONNECT`),
+    connect: createAction<string, typeof CONNECT>(CONNECT),
     disconnect: createAction(`${key}_DISCONNECT`),
     onConnecting: createAction(`${key}_CONNECTING`),
     onOpen: createAction(`${key}_ON_OPEN`),
     onClose: createAction(`${key}_ON_CLOSE`),
-    onMessage: createAction<TWebsocketOrders, `${key}_ON_MESSAGE`>(`${key}_ON_MESSAGE`),
-    onError: createAction<string, `${key}_ON_ERROR`>(`${key}_ON_ERROR`),
+    onMessage: createAction<TWebsocketOrders, typeof ON_MESSAGE>(ON_MESSAGE),
+    onError: createAction<string, typeof ON_ERROR>(ON_ERROR),
   };
 }
 
-export function createOrdersReducer(actions) {
-  return createReducer({
+export function createOrdersReducer(actions: ReturnType<typeof createOrdersActions>) {
+  const initialState: TOrdersState = {
     status: WebsocketStatus.OFFLINE,
     orders: null,
     total: 0,
     totalToday: 0,
     error: null,
-  }, builder => builder
+  };
+
+  return createReducer(initialState, builder => builder
     .addCase(actions.onConnecting, (state) => {
       state.status = WebsocketStatus.CONNECTING;
     })

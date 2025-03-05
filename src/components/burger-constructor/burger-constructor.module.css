@@ -2,7 +2,6 @@
   composes: p-4 from global;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   grid-area: burgerConstructor;
   border-radius: var(--common-border-radius-s);
   border: 2px dashed transparent;

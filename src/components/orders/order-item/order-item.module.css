@@ -1,0 +1,79 @@
+.container {
+  composes: mb-4 p-6 from global;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: var(--background);
+  border-radius: var(--common-border-radius-s);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.number {
+  composes: text text_type_digits-default from global;
+}
+
+.createdAt {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.name {
+  composes: text text_type_main-medium pt-6 from global;
+}
+
+.status {
+  composes: text text_type_main-default pt-2 from global;
+}
+
+.footer {
+  composes: pt-6 from global;
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingredients {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 48px);
+}
+
+.ingredient {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  padding: 2px;
+  background: linear-gradient(60deg, #801ab2, #4c4cff);
+  border-radius: 50%;
+}
+
+.ingredientImage {
+  width: 60px;
+  height: 60px;
+  background: #131316;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.moreIngredients {
+  composes: text text_type_digits-default from global;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 2px;
+  top: 2px;
+  width: 60px;
+  height: 60px;
+  background: rgba(1, 1, 1, 0.6);
+  border-radius: 50%;
+}
+
+.price {
+  composes: text text_type_digits-default from global;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--offset-base-size) * 2);
+}

@@ -1,10 +1,9 @@
-.link {
-  composes: text text_type_main-default text_color_inactive from global;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
+.ordersList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.active {
-  color: var(--text-primary-color);
+.ordersListItem {
+
 }
