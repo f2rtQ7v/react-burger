@@ -14,13 +14,6 @@
   position: relative;
 }
 
-.price {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
-}
-
 .name {
   text-align: center;
 }

@@ -20,10 +20,3 @@
   gap: 30px;
   max-width: 572px;
 }
-
-.total {
-  composes: text text_type_digits-medium from global;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}

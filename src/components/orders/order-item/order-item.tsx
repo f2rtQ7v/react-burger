@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { getIngredientsState } from '../../../services/features/burger-ingredients/slice.ts';
-import { FormattedDate, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from '../../../components/price/price.tsx';
 import styles from './order-item.module.css';
 
 interface IOrderItemProps {
@@ -55,10 +56,7 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
             </div>
           ))}
         </div>
-        <div className={styles.price}>
-          <span>{price}</span>
-          <CurrencyIcon type="primary" />
-        </div>
+        <Price value={price} />
       </div>
     </div>
   );

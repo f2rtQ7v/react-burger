@@ -6,7 +6,8 @@ import { getIngredients, getTotal, addIngredient, resetConstructor } from '../..
 import { getOrderState, resetOrder } from '../../services/features/order/slice.ts';
 import { checkAuth } from '../../services/features/auth/slice.ts';
 import { createOrder } from '../../services/features/order/actions.ts';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from '../../components/price/price.tsx';
 import IngredientsList from './ingredients-list/ingredients-list.tsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.tsx';
@@ -72,10 +73,7 @@ export default function BurgerConstructor() {
       </IngredientsList>
 
       <div className={styles.footer}>
-        <span className={styles.total}>
-          {total}
-          <CurrencyIcon type="primary" />
-        </span>
+        <Price value={total} size="medium" />
         <Button
           htmlType="button"
           type="primary"
