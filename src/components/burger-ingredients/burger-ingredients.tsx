@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback, useMemo, UIEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store.ts';
 import { getIngredientsGroupedByType } from '../../services/features/burger-ingredients/slice.ts';
 import { getCount } from '../../services/features/burger-constructor/slice.ts';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';

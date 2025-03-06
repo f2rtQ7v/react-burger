@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store.ts';
 import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
 import styles from './ingredient-details.module.css';
 

@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/store.ts';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getAuthState } from '../../services/features/auth/slice.ts';
 import { LoadingScreen } from '../screens/screens.jsx';

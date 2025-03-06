@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/store.ts';
 import { getIngredientsState } from '../../../services/features/burger-ingredients/slice.ts';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import Price from '../../../components/price/price.tsx';
