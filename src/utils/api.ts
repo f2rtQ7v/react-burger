@@ -86,6 +86,11 @@ export const createOrderRequest = (ingredients: TOrderIngredients) =>
     body: { ingredients },
   });
 
+export const getOrderRequest = (orderNumber: number) =>
+  requestWithAccess(`/orders/${orderNumber}`, {
+    method: 'GET',
+  });
+
 export const auth = {
   createUser(body: TUserData) {
     return request('/auth/register', {

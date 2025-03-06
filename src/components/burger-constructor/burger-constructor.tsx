@@ -12,7 +12,7 @@ import IngredientsList from './ingredients-list/ingredients-list.tsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.tsx';
 import Modal from '../modal/modal.tsx';
-import OrderDetails from '../order-details/order-details.tsx';
+import NewOrderDetails from './new-order-details/new-order-details.tsx';
 import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
 import styles from './burger-constructor.module.css';
 
@@ -93,7 +93,7 @@ export default function BurgerConstructor() {
               <span>{orderCreateError}</span>
             </ErrorScreen>
           )}
-          {order && <OrderDetails orderNumber={order.number} />}
+          {order && <NewOrderDetails orderNumber={order.number} />}
         </Modal>
       )}
       {orderCreateRequest && (

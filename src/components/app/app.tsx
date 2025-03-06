@@ -16,6 +16,8 @@ import ProfilePage from '../../pages/profile/profile.tsx';
 import SettingsPage from '../../pages/settings.tsx';
 import OrdersAllPage from '../../pages/orders.all/orders.all.tsx';
 import OrdersProfilePage from '../../pages/orders.profile/orders.profile.tsx';
+import OrderPage from '../../pages/order.tsx';
+import OrderDetails from '../order-details/order-details.tsx';
 import LogoutPage from '../../pages/logout.tsx';
 import IngredientPage from '../../pages/ingredient.tsx';
 import IngredientDetails from '../ingredient-details/ingredient-details.tsx';
@@ -60,6 +62,8 @@ export default function App() {
         {background && (
           <Routes>
             <Route path="/ingredient/:id" element={<IngredientPage />} />
+            <Route path="/feed/:number" element={<OrderPage />} />
+            <Route path="/profile/orders/:number" element={<OrderPage showStatus />} />
           </Routes>
         )}
 
@@ -76,6 +80,8 @@ export default function App() {
             <Route path="logout" element={<LogoutPage />} />
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />
+          <Route path="/feed/:number" element={<OrderDetails showHeader />} />
+          <Route path="/profile/orders/:number" element={<OrderDetails showHeader showStatus />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </div>

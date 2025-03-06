@@ -4,6 +4,7 @@ import burgerIngredients from './features/burger-ingredients/slice.ts';
 import burgerConstructor from './features/burger-constructor/slice.ts';
 import auth from './features/auth/slice.ts';
 import order from './features/order/slice.ts';
+import ordersByNumber from './features/orders.by-number/slice.ts';
 import ordersAllActions from './features/orders.all/actions.ts';
 import ordersAll from './features/orders.all/slice.ts';
 import ordersProfileActions from './features/orders.profile/actions.ts';
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   burgerConstructor,
   auth,
   order,
+  ordersByNumber,
   ordersAll,
   ordersProfile,
 });

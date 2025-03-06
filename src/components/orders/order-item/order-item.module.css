@@ -1,10 +1,14 @@
 .container {
-  composes: mb-4 p-6 from global;
+  composes: text_color_primary mb-4 p-6 from global;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   background: var(--background);
   border-radius: var(--common-border-radius-s);
+}
+
+.container:hover {
+  background: #2c2c32;
 }
 
 .header {
@@ -13,7 +17,7 @@
 }
 
 .number {
-  composes: text text_type_digits-default from global;
+  composes: text text_type_digits-default text_color_primary from global;
 }
 
 .createdAt {
@@ -21,11 +25,7 @@
 }
 
 .name {
-  composes: text text_type_main-medium pt-6 from global;
-}
-
-.status {
-  composes: text text_type_main-default pt-2 from global;
+  composes: text text_type_main-medium text_color_primary pt-6 from global;
 }
 
 .footer {
@@ -58,7 +58,7 @@
 }
 
 .moreIngredients {
-  composes: text text_type_digits-default from global;
+  composes: text text_type_digits-default text_color_primary from global;
   position: absolute;
   display: flex;
   justify-content: center;

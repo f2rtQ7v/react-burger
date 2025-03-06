@@ -1,0 +1,16 @@
+.ingredient {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  padding: 2px;
+  background: linear-gradient(60deg, #801ab2, #4c4cff);
+  border-radius: 50%;
+}
+
+.ingredientImage {
+  width: 60px;
+  height: 60px;
+  background: #131316;
+  border-radius: 50%;
+  object-fit: cover;
+}
