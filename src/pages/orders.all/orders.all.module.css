@@ -25,19 +25,24 @@
 }
 
 .orderIdsListWrapper {
+  composes: text text_type_digits-default from global;
   display: flex;
   overflow-x: auto;
-  composes: text text_type_digits-default from global;
   width: 200px;
 }
 
 .orderIdsList {
+  composes: mt-6 mb-1 from global;
   list-style: none;
   padding: 0;
 }
 
 .orderIdsListItem {
   composes: pb-2 from global;
+}
+
+.orderIdsListItemLink {
+  composes: text text_type_digits-default text_color_primary from global;
 }
 
 .total {

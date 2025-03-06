@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from '../../services/store.ts';
+import { useLocation, Link } from 'react-router-dom';
 import actions from '../../services/features/orders.all/actions.ts';
 import Orders from '../../components/orders/orders.tsx'
 import { LoadingScreen } from '../../components/screens/screens.tsx';
@@ -13,6 +14,7 @@ type TOrdersGroup = [
 ];
 
 export default function OrdersPage() {
+  const location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,10 +57,20 @@ export default function OrdersPage() {
                 <div className={styles.title}>{title}</div>
                 <div className={styles.orderIdsListWrapper}>
                   <ul
-                    className={styles.orderIdsList + ' ' + extraClass}
+                    className={styles.orderIdsList}
                     style={{ columns: Math.ceil(ids.length / 5) }}
                   >
-                    {ids.map(n => <li className={styles.orderIdsListItem}>{n.number}</li>)}
+                    {ids.map(n => (
+                      <li className={styles.orderIdsListItem}>
+                        <Link
+                          to={`${location.pathname}/${n.number}`}
+                          state={{ background: location }}
+                          className={styles.orderIdsListItemLink + ' ' + extraClass}
+                        >
+                          {n.number}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </div>
               </div>
