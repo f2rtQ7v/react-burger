@@ -37,9 +37,9 @@
 }
 
 .ingredientPrice {
+  composes: pl-10 from global;
   white-space: nowrap;
   margin-left: auto;
-  padding-left: 16px;
 }
 
 .footer {

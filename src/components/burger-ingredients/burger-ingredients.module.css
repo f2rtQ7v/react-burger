@@ -6,6 +6,7 @@
 }
 
 .header {
+  composes: mb-6 from global;
   display: flex;
   flex-direction: row;
 }
