@@ -8,7 +8,7 @@ export default function OrderPage({ showStatus = false }: { showStatus?: boolean
 
   return (
     <Modal
-      title={`#${number}`}
+      title={<span className="text text_type_digits-default">#{number}</span>}
       onClose={() => navigate(-1)}
     >
       <OrderDetails showStatus={showStatus} />
