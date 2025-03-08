@@ -9,15 +9,7 @@ import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
 import { getOrder } from '../../services/features/orders.by-number/actions.ts';
 import styles from './order-details.module.css';
 
-interface IOrderDetails {
-  showHeader?: boolean;
-  showStatus?: boolean;
-}
-
-export default function OrderDetails({
-  showHeader = false,
-  showStatus = false,
-}: IOrderDetails) {
+export default function OrderDetails({ showHeader = false }: { showHeader?: boolean }) {
   const dispatch = useDispatch();
   const { number = -1 } = useParams();
   const { orders: ordersAll } = useSelector(state => state.ordersAll);
@@ -57,7 +49,7 @@ export default function OrderDetails({
     <div className={styles.container}>
       {showHeader && <OrderHeader number={order.number} />}
       <OrderName name={order.name} className="pt-10" />
-      {showStatus && <OrderStatus status={order.status} />}
+      <OrderStatus status={order.status} />
       <div className={styles.ingredientsHeader}>Состав:</div>
       <div className={styles.ingredients}>
         {Array.from(count).map(([ ingredient, count ]) => (

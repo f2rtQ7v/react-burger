@@ -63,7 +63,7 @@ export default function App() {
           <Routes>
             <Route path="/ingredient/:id" element={<IngredientPage />} />
             <Route path="/feed/:number" element={<OrderPage />} />
-            <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderPage showStatus />}/>} />
+            <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderPage />}/>} />
           </Routes>
         )}
 
@@ -81,7 +81,7 @@ export default function App() {
           </Route>
           <Route path="/ingredient/:id" element={<IngredientDetails />} />
           <Route path="/feed/:number" element={<OrderDetails showHeader />} />
-          <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderDetails showHeader showStatus />}/>} />
+          <Route path="/profile/orders/:number" element={<OnlyAuth element={<OrderDetails showHeader />}/>} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </div>
