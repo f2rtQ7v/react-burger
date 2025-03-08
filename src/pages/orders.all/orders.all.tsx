@@ -37,7 +37,7 @@ export default function OrdersPage() {
         <div className={styles.statistics}>
           <div className={styles.orderIds}>
             <OrdersIds title="Готовы:" ids={ordersIds[0]} extraClass="done" />
-            <OrdersIds title="В работе" ids={ordersIds[1]} />
+            <OrdersIds title="В работе:" ids={ordersIds[1]} />
           </div>
           <OrdersTotal title="Выполнено за всё время:" value={total} />
           <OrdersTotal title="Выполнено за сегодня:" value={totalToday} />
