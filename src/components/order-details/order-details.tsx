@@ -2,10 +2,9 @@ import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../services/store.ts';
 import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import IngredientImage from '../ingredient-image/ingredient-image.tsx';
-import OrderStatus from '../order-status/order-status.tsx';
 import Price from '../price/price.tsx';
+import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '../order-elements/order-elements.tsx';
 import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
 import { getOrder } from '../../services/features/orders.by-number/actions.ts';
 import styles from './order-details.module.css';
@@ -56,8 +55,8 @@ export default function OrderDetails({
 
   return (
     <div className={styles.container}>
-      {showHeader && <div className={styles.header}>#{order.number}</div>}
-      <div className={styles.name}>{order.name}</div>
+      {showHeader && <OrderHeader number={order.number} />}
+      <OrderName name={order.name} className="pt-10" />
       {showStatus && <OrderStatus status={order.status} />}
       <div className={styles.ingredientsHeader}>Состав:</div>
       <div className={styles.ingredients}>
@@ -69,10 +68,9 @@ export default function OrderDetails({
           </div>
         ))}
       </div>
-      <div className={styles.footer}>
-        <FormattedDate date={new Date(order.createdAt)} className={styles.createdAt} />
-        <Price value={price} />
-      </div>
+      <OrderFooter price={price}>
+        <OrderDate date={order.createdAt} />
+      </OrderFooter>
     </div>
   );
 }

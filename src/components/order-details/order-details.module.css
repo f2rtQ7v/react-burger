@@ -5,16 +5,6 @@
   justify-content: center;
 }
 
-.header {
-  composes: text text_type_digits-default from global;
-  display: flex;
-  justify-content: center;
-}
-
-.name {
-  composes: text text_type_main-medium pt-10 from global;
-}
-
 .ingredientsHeader {
   composes: text text_type_main-medium pt-15 pb-6 from global;
 }
@@ -40,14 +30,4 @@
   composes: pl-10 from global;
   white-space: nowrap;
   margin-left: auto;
-}
-
-.footer {
-  composes: pt-6 from global;
-  display: flex;
-  justify-content: space-between;
-}
-
-.createdAt {
-  composes: text text_type_main-default text_color_inactive from global;
 }

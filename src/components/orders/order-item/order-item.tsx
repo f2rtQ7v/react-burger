@@ -1,9 +1,7 @@
 import { useSelector } from '../../../services/store.ts';
 import { getIngredientsState } from '../../../services/features/burger-ingredients/slice.ts';
-import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import Price from '../../../components/price/price.tsx';
-import OrderStatus from '../../../components/order-status/order-status.tsx';
-import IngredientImage from '../../../components/ingredient-image/ingredient-image.tsx';
+import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '../../order-elements/order-elements.tsx';
+import IngredientImage from '../../ingredient-image/ingredient-image.tsx';
 import styles from './order-item.module.css';
 
 interface IOrderItemProps {
@@ -26,13 +24,12 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <span className={styles.number}>#{order.number}</span>
-        <FormattedDate date={new Date(order.createdAt)} className={styles.createdAt} />
-      </div>
-      <div className={styles.name}>{order.name}</div>
+      <OrderHeader number={order.number}>
+        <OrderDate date={order.createdAt} />
+      </OrderHeader>
+      <OrderName name={order.name} className="pt-6" />
       {showStatus && <OrderStatus status={order.status} />}
-      <div className={styles.footer}>
+      <OrderFooter price={price}>
         <div className={styles.ingredients}>
           {uniqueIngredients.slice(0, SHOW_INGREDIENTS).map((n, i) => (
             <IngredientImage image={n!.image_mobile} style={{ zIndex: 10 - i }}>
@@ -44,8 +41,7 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
             </IngredientImage>
           ))}
         </div>
-        <Price value={price} />
-      </div>
+      </OrderFooter>
     </div>
   );
 }

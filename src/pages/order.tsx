@@ -1,14 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from '../components/modal/modal.tsx';
 import OrderDetails from '../components/order-details/order-details.tsx';
+import { OrderNumber } from '../components/order-elements/order-elements.tsx';
 
 export default function OrderPage({ showStatus = false }: { showStatus?: boolean }) {
   const navigate = useNavigate();
-  const { number } = useParams();
+  const { number = -1 } = useParams();
 
   return (
     <Modal
-      title={<span className="text text_type_digits-default">#{number}</span>}
+      title={<OrderNumber number={+number} />}
       onClose={() => navigate(-1)}
     >
       <OrderDetails showStatus={showStatus} />
