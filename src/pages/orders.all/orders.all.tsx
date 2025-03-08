@@ -2,7 +2,8 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from '../../services/store.ts';
 import { useLocation, Link } from 'react-router-dom';
 import actions from '../../services/features/orders.all/actions.ts';
-import Orders from '../../components/orders/orders.tsx'
+import Orders from '../../components/orders/orders.tsx';
+import OrdersTotal from '../../components/orders-total/orders-total.tsx';
 import { LoadingScreen } from '../../components/screens/screens.tsx';
 import { ordersAllUrl } from '../../utils/orders.ts';
 import styles from './orders.all.module.css';
@@ -38,11 +39,6 @@ export default function OrdersPage() {
     [ [], 'В работе:',     '' ],
   ]);
 
-  const totals = [
-    [ 'Выполнено за всё время:', total ],
-    [ 'Выполнено за сегодня:', totalToday ],
-  ];
-
   return (
     <div className={styles.container}>
       <h1 className={styles.header}>Лента заказов</h1>
@@ -77,12 +73,8 @@ export default function OrdersPage() {
             ))}
           </div>
 
-          {totals.map(([ title, value ]) => (
-            <div className={styles.total}>
-              <div className={styles.title}>{title}</div>
-              <div className={styles.totalValue}>{value.toLocaleString('ru')}</div>
-            </div>
-          ))}
+          <OrdersTotal title="Выполнено за всё время:" value={total} />
+          <OrdersTotal title="Выполнено за сегодня:" value={totalToday} />
         </div>
       </div>
     </div>
