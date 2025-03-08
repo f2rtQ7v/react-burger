@@ -12,9 +12,9 @@ interface IOrderItemProps {
 const SHOW_INGREDIENTS = 6;
 
 export default function OrderItem({ order, showStatus }: IOrderItemProps) {
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredientsMap } = useSelector(getIngredientsState);
 
-  const orderIngredients = order.ingredients.map(n => ingredients!.find(m => n === m._id));
+  const orderIngredients = order.ingredients.map(n => ingredientsMap[n]);
   if (orderIngredients.some(n => !n)) {
     return null;
   }

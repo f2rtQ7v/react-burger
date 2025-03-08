@@ -15,7 +15,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
   const { orders: ordersAll } = useSelector(state => state.ordersAll);
   const { orders: ordersProfile } = useSelector(state => state.ordersProfile);
   const { orders: ordersByNumber, error } = useSelector(state => state.ordersByNumber);
-  const { ingredients } = useSelector(getIngredientsState);
+  const { ingredientsMap } = useSelector(getIngredientsState);
 
   const order =
     ordersAll?.find(n => n.number === +number) ??
@@ -34,7 +34,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
       : <LoadingScreen />;
   }
 
-  const orderIngredients = order.ingredients.map(n => ingredients!.find(m => n === m._id));
+  const orderIngredients = order.ingredients.map(n => ingredientsMap[n]);
   if (orderIngredients.some(n => !n)) {
     return null;
   }

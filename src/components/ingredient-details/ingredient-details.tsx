@@ -17,9 +17,9 @@ const details: IIngredientDetail[] = [
 ];
 
 export default function IngredientDetails() {
-  const { id } = useParams();
-  const { ingredients } = useSelector(getIngredientsState);
-  const ingredient = ingredients?.find(n => n._id === id);
+  const { id = '' } = useParams();
+  const { ingredientsMap } = useSelector(getIngredientsState);
+  const ingredient = ingredientsMap[id];
 
   if (!ingredient) {
     return null;
