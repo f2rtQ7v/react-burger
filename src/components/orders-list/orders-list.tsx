@@ -1,13 +1,13 @@
 import { Link, useLocation } from 'react-router-dom';
 import OrderItem from './order-item/order-item.tsx';
-import styles from './orders.module.css';
+import styles from './orders-list.module.css';
 
-interface IOrderProps {
+interface IOrdersListProps {
   orders: IOrder[];
   showStatus?: boolean;
 }
 
-export default function Orders({ orders, showStatus = false }: IOrderProps) {
+export default function OrdersList({ orders, showStatus = false }: IOrdersListProps) {
   const location = useLocation();
 
   return (

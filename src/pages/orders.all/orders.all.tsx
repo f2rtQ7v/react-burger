@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from '../../services/store.ts';
 import actions from '../../services/features/orders.all/actions.ts';
-import Orders from '../../components/orders/orders.tsx';
+import OrdersList from '../../components/orders-list/orders-list.tsx';
 import OrdersIds from '../../components/orders-ids/orders-ids.tsx';
 import OrdersTotal from '../../components/orders-total/orders-total.tsx';
 import { LoadingScreen } from '../../components/screens/screens.tsx';
@@ -33,7 +33,7 @@ export default function OrdersPage() {
     <div className={styles.container}>
       <h1 className={styles.header}>Лента заказов</h1>
       <div className={styles.content}>
-        <Orders orders={orders} />
+        <OrdersList orders={orders} />
         <div className={styles.statistics}>
           <div className={styles.orderIds}>
             <OrdersIds title="Готовы:" ids={ordersIds[0]} extraClass="done" />
