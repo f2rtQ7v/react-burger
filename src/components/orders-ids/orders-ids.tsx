@@ -19,7 +19,7 @@ export default function OrdersIds({ title, ids, extraClass = '' }: IOrdersIdsPro
           style={{ columns: Math.ceil(ids.length / 5) }}
         >
           {ids.map(n => (
-            <li className={styles.orderIdsListItem}>
+            <li key={n} className={styles.orderIdsListItem}>
               <Link
                 to={`${location.pathname}/${n}`}
                 state={{ background: location }}

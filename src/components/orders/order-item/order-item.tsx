@@ -32,7 +32,7 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
       <OrderFooter price={price}>
         <div className={styles.ingredients}>
           {uniqueIngredients.slice(0, SHOW_INGREDIENTS).map((n, i) => (
-            <IngredientImage image={n!.image_mobile} style={{ zIndex: 10 - i }}>
+            <IngredientImage key={n!._id} image={n!.image_mobile} style={{ zIndex: 10 - i }}>
               {-~i === SHOW_INGREDIENTS && uniqueIngredients.length > SHOW_INGREDIENTS && (
                 <div className={styles.moreIngredients}>
                   +{uniqueIngredients.length - SHOW_INGREDIENTS}

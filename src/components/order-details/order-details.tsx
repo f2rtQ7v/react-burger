@@ -53,7 +53,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
       <div className={styles.ingredientsHeader}>Состав:</div>
       <div className={styles.ingredients}>
         {Array.from(count).map(([ ingredient, count ]) => (
-          <div className={styles.ingredient}>
+          <div key={ingredient._id} className={styles.ingredient}>
             <IngredientImage image={ingredient.image_mobile} className={styles.ingredientImage} />
             <span>{ingredient.name}</span>
             <Price value={`${count} x ${ingredient.price}`} className={styles.ingredientPrice} />
