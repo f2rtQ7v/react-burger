@@ -33,9 +33,7 @@ export default function OrdersPage() {
     <div className={styles.container}>
       <h1 className={styles.header}>Лента заказов</h1>
       <div className={styles.content}>
-        <div className={styles.ordersWrapper}>
-          <Orders orders={orders} />
-        </div>
+        <Orders orders={orders} />
         <div className={styles.statistics}>
           <div className={styles.orderIds}>
             <OrdersIds title="Готовы:" ids={ordersIds[0]} extraClass="done" />

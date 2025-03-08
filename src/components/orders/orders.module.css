@@ -1,3 +1,9 @@
+.container {
+  composes: pr-2 from global;
+  max-height: 80vh;
+  overflow-y: scroll;
+}
+
 .ordersList {
   list-style: none;
   padding: 0;
