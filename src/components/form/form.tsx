@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useSelector, useDispatch } from '../../services/store.ts';
+import { useSelector, useDispatch } from '@services/store.ts';
+import { formActions, TAuthFormAction } from '@services/features/auth/actions.ts';
+import { getAuthState, resetError } from '@services/features/auth/slice.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { formActions, TAuthFormAction } from '../../services/features/auth/actions.ts';
-import { getAuthState, resetError } from '../../services/features/auth/slice.ts';
-import { LoadingScreen } from '../screens/screens.tsx';
+import { LoadingScreen } from '@components/screens/screens.tsx';
 import styles from './form.module.css';
 
 interface IFormProps {

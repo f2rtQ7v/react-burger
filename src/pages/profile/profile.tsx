@@ -1,5 +1,5 @@
 import { useLocation, Outlet } from 'react-router-dom';
-import Link from '../../components/link/link.tsx';
+import Link from '@components/link/link.tsx';
 import styles from './profile.module.css';
 
 export default function ProfilePage() {

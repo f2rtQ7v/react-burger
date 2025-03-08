@@ -1,6 +1,6 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, Middleware } from '@reduxjs/toolkit';
-import { RootState } from '../store.ts';
-import { refreshToken } from '../../utils/api.ts';
+import { RootState } from '@services/store.ts';
+import { refreshToken } from '@utils/api.ts';
 
 export type TWsActionTypes<R, S> = {
   connect: ActionCreatorWithPayload<string>;

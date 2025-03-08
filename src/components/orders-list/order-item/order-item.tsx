@@ -1,7 +1,7 @@
-import { useSelector } from '../../../services/store.ts';
-import { getIngredientsState } from '../../../services/features/burger-ingredients/slice.ts';
-import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '../../order-elements/order-elements.tsx';
-import IngredientImage from '../../ingredient-image/ingredient-image.tsx';
+import { useSelector } from '@services/store.ts';
+import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '@components/order-elements/order-elements.tsx';
+import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
 import styles from './order-item.module.css';
 
 interface IOrderItemProps {
@@ -20,7 +20,7 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
   }
 
   const uniqueIngredients = [...new Set(orderIngredients)];
-  const price = orderIngredients.reduce((acc, n) => acc + n!.price, 0);
+  const price = orderIngredients.reduce((acc, n) => acc + n.price, 0);
 
   return (
     <div className={styles.container}>
@@ -32,7 +32,7 @@ export default function OrderItem({ order, showStatus }: IOrderItemProps) {
       <OrderFooter price={price}>
         <div className={styles.ingredients}>
           {uniqueIngredients.slice(0, SHOW_INGREDIENTS).map((n, i) => (
-            <IngredientImage key={n!._id} image={n!.image_mobile} style={{ zIndex: 10 - i }}>
+            <IngredientImage key={n._id} image={n.image_mobile} style={{ zIndex: 10 - i }}>
               {-~i === SHOW_INGREDIENTS && uniqueIngredients.length > SHOW_INGREDIENTS && (
                 <div className={styles.moreIngredients}>
                   +{uniqueIngredients.length - SHOW_INGREDIENTS}

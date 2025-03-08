@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDrop } from 'react-dnd';
-import { useSelector, useDispatch } from '../../services/store.ts';
-import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/features/burger-constructor/slice.ts';
-import { getOrderState, resetOrder } from '../../services/features/order/slice.ts';
-import { checkAuth } from '../../services/features/auth/slice.ts';
-import { createOrder } from '../../services/features/order/actions.ts';
+import { useSelector, useDispatch } from '@services/store.ts';
+import { getIngredients, getTotal, addIngredient, resetConstructor } from '@services/features/burger-constructor/slice.ts';
+import { getOrderState, resetOrder } from '@services/features/order/slice.ts';
+import { checkAuth } from '@services/features/auth/slice.ts';
+import { createOrder } from '@services/features/order/actions.ts';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import Price from '../../components/price/price.tsx';
+import Price from '@components/price/price.tsx';
 import IngredientsList from './ingredients-list/ingredients-list.tsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.tsx';
-import Modal from '../modal/modal.tsx';
+import Modal from '@components/modal/modal.tsx';
 import NewOrderDetails from './new-order-details/new-order-details.tsx';
-import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
+import { LoadingScreen, ErrorScreen } from '@components/screens/screens.tsx';
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor() {

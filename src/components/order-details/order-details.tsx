@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useSelector, useDispatch } from '../../services/store.ts';
-import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
-import IngredientImage from '../ingredient-image/ingredient-image.tsx';
-import Price from '../price/price.tsx';
-import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '../order-elements/order-elements.tsx';
-import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
-import { getOrder } from '../../services/features/orders.by-number/actions.ts';
+import { useSelector, useDispatch } from '@services/store.ts';
+import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import { getOrder } from '@services/features/orders.by-number/actions.ts';
+import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
+import Price from '@components/price/price.tsx';
+import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '@components/order-elements/order-elements.tsx';
+import { LoadingScreen, ErrorScreen } from '@components/screens/screens.tsx';
 import styles from './order-details.module.css';
 
 export default function OrderDetails({ showHeader = false }: { showHeader?: boolean }) {
@@ -41,7 +41,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
 
   const [ count, price ] = orderIngredients.reduce((acc, n) => (
     acc[0].set(n, -~acc[0].get(n)),
-    acc[1] += n!.price,
+    acc[1] += n.price,
     acc
   ), [ new Map, 0 ]);
 

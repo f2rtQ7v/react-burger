@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { getOrder } from './actions.ts';
-import createRequestState from '../../../utils/create-request-state.ts';
+import createRequestState from '@utils/create-request-state.ts';
 
 interface IOrdersState extends IRequestState {
   orders: Record<string, IOrder>;

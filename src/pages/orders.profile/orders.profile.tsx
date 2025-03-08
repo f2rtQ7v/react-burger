@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from '../../services/store.ts';
-import actions from '../../services/features/orders.profile/actions.ts';
-import OrdersList from '../../components/orders-list/orders-list.tsx'
-import { LoadingScreen } from '../../components/screens/screens.tsx';
-import { ordersProfileUrl } from '../../utils/orders.ts';
+import { useSelector, useDispatch } from '@services/store.ts';
+import actions from '@services/features/orders.profile/actions.ts';
+import OrdersList from '@components/orders-list/orders-list.tsx'
+import { LoadingScreen } from '@components/screens/screens.tsx';
+import { ordersProfileUrl } from '@utils/orders.ts';
 
 export default function ProfileOrdersPage() {
   const dispatch = useDispatch();

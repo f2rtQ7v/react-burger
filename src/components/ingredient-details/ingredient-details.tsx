@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from '../../services/store.ts';
-import { getIngredientsState } from '../../services/features/burger-ingredients/slice.ts';
-import { ErrorScreen } from '../screens/screens.tsx';
+import { useSelector } from '@services/store.ts';
+import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import { ErrorScreen } from '@components/screens/screens.tsx';
 import styles from './ingredient-details.module.css';
 
 interface IIngredientDetail {

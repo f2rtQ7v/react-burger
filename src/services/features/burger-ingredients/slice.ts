@@ -1,6 +1,6 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from './actions.ts';
-import createRequestState from '../../../utils/create-request-state.ts';
+import createRequestState from '@utils/create-request-state.ts';
 
 interface IBurgerIngredientsState extends IRequestState {
   ingredients: IIngredient[] | null;

@@ -1,8 +1,8 @@
 import { useCallback, useEffect } from 'react';
-import { useSelector } from '../services/store.ts';
-import { getAuthState } from '../services/features/auth/slice.ts';
-import useFormData from '../hooks/use-form-data.ts';
-import Form from '../components/form/form.tsx';
+import { useSelector } from '@services/store.ts';
+import { getAuthState } from '@services/features/auth/slice.ts';
+import useFormData from '@/hooks/use-form-data.ts';
+import Form from '@components/form/form.tsx';
 
 const fields = [
   { type:     'text', name:     'name', placeholder:    'Имя' },

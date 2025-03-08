@@ -1,5 +1,5 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import Link from '../link/link.tsx';
+import Link from '@components/link/link.tsx';
 import styles from './app-header.module.css';
 
 const links = [

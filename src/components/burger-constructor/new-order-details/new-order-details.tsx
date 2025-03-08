@@ -1,5 +1,5 @@
 import styles from './new-order-details.module.css';
-import checkMarkImage from '../../../images/check-mark.png';
+import checkMarkImage from '@/images/check-mark.png';
 
 export default function NewOrderDetails({ orderNumber }: { orderNumber: number }) {
   return (

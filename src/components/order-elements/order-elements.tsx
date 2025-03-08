@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import Price from '../price/price.tsx';
+import Price from '@components/price/price.tsx';
 import styles from './order-elements.module.css';
 
 const statuses: {

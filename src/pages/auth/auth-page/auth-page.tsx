@@ -1,7 +1,7 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import Form from '../../../components/form/form.tsx';
-import useFormData from '../../../hooks/use-form-data.ts';
-import { TAuthFormAction } from '../../../services/features/auth/actions.ts';
+import Form from '@components/form/form.tsx';
+import useFormData from '@/hooks/use-form-data.ts';
+import { TAuthFormAction } from '@services/features/auth/actions.ts';
 import styles from './auth-page.module.css';
 
 interface IAuthPageLink {
