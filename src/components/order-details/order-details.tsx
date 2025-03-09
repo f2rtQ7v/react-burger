@@ -36,7 +36,12 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
 
   const orderIngredients = order.ingredients.map(n => ingredientsMap[n]);
   if (orderIngredients.some(n => !n)) {
-    return null;
+    return (
+      <ErrorScreen>
+        <span>Заказ не может быть отображен</span>
+        <span>Некорректный список ингредиентов</span>
+      </ErrorScreen>
+    );
   }
 
   const [ count, price ] = orderIngredients.reduce((acc, n) => (
