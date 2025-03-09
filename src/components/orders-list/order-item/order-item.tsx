@@ -1,5 +1,4 @@
-import { useSelector } from '@services/store.ts';
-import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import useOrderIngredients from '@/hooks/use-order-ingredients';
 import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '@components/order-elements/order-elements.tsx';
 import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
 import styles from './order-item.module.css';
@@ -12,15 +11,13 @@ interface IOrderItemProps {
 const SHOW_INGREDIENTS = 6;
 
 export default function OrderItem({ order, showStatus }: IOrderItemProps) {
-  const { ingredientsMap } = useSelector(getIngredientsState);
-
-  const orderIngredients = order.ingredients.map(n => ingredientsMap[n]);
-  if (orderIngredients.some(n => !n)) {
+  const ingredients = useOrderIngredients(order);
+  if (!ingredients) {
     return null;
   }
 
-  const uniqueIngredients = [...new Set(orderIngredients)];
-  const price = orderIngredients.reduce((acc, n) => acc + n.price, 0);
+  const uniqueIngredients = [...new Set(ingredients)];
+  const price = ingredients.reduce((acc, n) => acc + n.price, 0);
 
   return (
     <div className={styles.container}>

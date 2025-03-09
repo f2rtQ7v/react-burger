@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '@services/store.ts';
-import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
 import { getOrder } from '@services/features/orders.by-number/actions.ts';
+import useOrderIngredients from '@/hooks/use-order-ingredients';
 import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
 import Price from '@components/price/price.tsx';
 import { OrderStatus, OrderDate, OrderName, OrderHeader, OrderFooter } from '@components/order-elements/order-elements.tsx';
@@ -15,12 +15,13 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
   const { orders: ordersAll } = useSelector(state => state.ordersAll);
   const { orders: ordersProfile } = useSelector(state => state.ordersProfile);
   const { orders: ordersByNumber, error } = useSelector(state => state.ordersByNumber);
-  const { ingredientsMap } = useSelector(getIngredientsState);
 
   const order =
     ordersAll?.find(n => n.number === +number) ??
     ordersProfile?.find(n => n.number === +number) ??
     ordersByNumber[number];
+
+  const ingredients = useOrderIngredients(order);
 
   useEffect(() => {
     if (!order) {
@@ -34,8 +35,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
       : <LoadingScreen />;
   }
 
-  const orderIngredients = order.ingredients.map(n => ingredientsMap[n]);
-  if (orderIngredients.some(n => !n)) {
+  if (!ingredients) {
     return (
       <ErrorScreen>
         <span>Заказ не может быть отображен</span>
@@ -44,7 +44,7 @@ export default function OrderDetails({ showHeader = false }: { showHeader?: bool
     );
   }
 
-  const [ count, price ] = orderIngredients.reduce((acc, n) => (
+  const [ count, price ] = ingredients.reduce((acc, n) => (
     acc[0].set(n, -~acc[0].get(n)),
     acc[1] += n.price,
     acc
