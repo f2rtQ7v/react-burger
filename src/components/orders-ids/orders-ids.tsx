@@ -11,7 +11,7 @@ export default function OrdersIds({ title, ids, extraClass = '' }: IOrdersIdsPro
   const location = useLocation();
 
   return (
-    <div>
+    <div className={styles.container}>
       <div className={styles.title}>{title}</div>
       <div className={styles.orderIdsList}>
         {ids.map(n => (

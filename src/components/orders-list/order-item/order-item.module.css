@@ -14,7 +14,7 @@
 .ingredients {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(6, 48px);
+  grid-template-columns: repeat(6, 45px);
 }
 
 .moreIngredients {

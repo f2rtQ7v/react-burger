@@ -4,12 +4,12 @@
 
 .content {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr 480px;
   gap: calc(var(--offset-base-size) * 15);
 }
 
 .orderIds {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: calc(var(--offset-base-size) * 9);
+  gap: calc(var(--offset-base-size) * 10);
 }
