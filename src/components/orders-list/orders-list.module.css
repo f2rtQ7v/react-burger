@@ -3,9 +3,3 @@
   max-height: 80vh;
   overflow-y: scroll;
 }
-
-.ordersList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}

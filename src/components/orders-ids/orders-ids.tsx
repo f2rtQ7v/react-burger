@@ -13,23 +13,17 @@ export default function OrdersIds({ title, ids, extraClass = '' }: IOrdersIdsPro
   return (
     <div>
       <div className={styles.title}>{title}</div>
-      <div className={styles.orderIdsListWrapper}>
-        <ul
-          className={styles.orderIdsList}
-          style={{ columns: Math.ceil(ids.length / 5) }}
-        >
-          {ids.map(n => (
-            <li key={n} className={styles.orderIdsListItem}>
-              <Link
-                to={`${location.pathname}/${n}`}
-                state={{ background: location }}
-                className={styles.orderIdsListItemLink + ' ' + extraClass}
-              >
-                {n}
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <div className={styles.orderIdsList}>
+        {ids.map(n => (
+          <Link
+            key={n}
+            to={`${location.pathname}/${n}`}
+            state={{ background: location }}
+            className={`${styles.orderIdsListItem} ${extraClass}`}
+          >
+            {n}
+          </Link>
+        ))}
       </div>
     </div>
   );

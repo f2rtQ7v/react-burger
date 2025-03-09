@@ -12,18 +12,15 @@ export default function OrdersList({ orders, showStatus = false }: IOrdersListPr
 
   return (
     <div className={styles.container}>
-      <ul className={styles.ordersList}>
-        {orders.map(n => (
-          <li key={n._id} className={styles.ordersListItem}>
-            <Link
-              to={`${location.pathname}/${n.number}`}
-              state={{ background: location }}
-            >
-              <OrderItem order={n} showStatus={showStatus} />
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {orders.map(n => (
+        <Link
+          key={n._id}
+          to={`${location.pathname}/${n.number}`}
+          state={{ background: location }}
+        >
+          <OrderItem order={n} showStatus={showStatus} />
+        </Link>
+      ))}
     </div>
   );
 }
