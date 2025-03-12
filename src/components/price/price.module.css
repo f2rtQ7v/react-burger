@@ -1,0 +1,6 @@
+.price {
+  composes: text from global;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--offset-base-size) * 2);
+}

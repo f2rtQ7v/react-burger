@@ -1,12 +1,16 @@
 .container {
   composes: pt-20 from global;
-  display: flex;
+  display: grid;
   width: 100%;
+  grid-template-columns: 340px 1fr;
 }
 
 .sidebar {
   composes: pr-15 from global;
-  width: 340px;
+}
+
+.content {
+  display: flex;
 }
 
 .nav {

@@ -1,6 +1,6 @@
 import { createSlice, ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit';
 import { actions, TAuthAction } from './actions.ts';
-import createRequestState from '../../utils/create-request-state.ts';
+import createRequestState from '@utils/create-request-state.ts';
 
 const SLICE_NAME = 'auth';
 

@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: center;
   cursor: grab;
+  border-radius: var(--common-border-radius-s);
 }
 
 .ingredient:hover {
@@ -12,13 +13,6 @@
 
 .image {
   position: relative;
-}
-
-.price {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  gap: 10px;
 }
 
 .name {

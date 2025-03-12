@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useDrop } from 'react-dnd';
-import useDispatch from '../../hooks/use-app-dispatch.ts';
-import { getIngredients, getTotal, addIngredient, resetConstructor } from '../../services/burger-constructor/slice.ts';
-import { getOrderState, resetOrder } from '../../services/order/slice.ts';
-import { checkAuth } from '../../services/auth/slice.ts';
-import { createOrder } from '../../services/order/actions.ts';
-import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from '@services/store.ts';
+import { getIngredients, getTotal, addIngredient, resetConstructor } from '@services/features/burger-constructor/slice.ts';
+import { getOrderState, resetOrder } from '@services/features/order/slice.ts';
+import { checkAuth } from '@services/features/auth/slice.ts';
+import { createOrder } from '@services/features/order/actions.ts';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from '@components/price/price.tsx';
 import IngredientsList from './ingredients-list/ingredients-list.tsx';
 import IngredientItemBun from './ingredient-item/ingredient-item-bun.tsx';
 import IngredientItemFilling from './ingredient-item/ingredient-item-filling.tsx';
-import Modal from '../modal/modal.tsx';
-import OrderDetails from '../order-details/order-details.tsx';
-import { LoadingScreen, ErrorScreen } from '../screens/screens.tsx';
+import Modal from '@components/modal/modal.tsx';
+import NewOrderDetails from './new-order-details/new-order-details.tsx';
+import { LoadingScreen, ErrorScreen } from '@components/screens/screens.tsx';
 import styles from './burger-constructor.module.css';
 
 export default function BurgerConstructor() {
@@ -73,10 +73,7 @@ export default function BurgerConstructor() {
       </IngredientsList>
 
       <div className={styles.footer}>
-        <span className={styles.total}>
-          {total}
-          <CurrencyIcon type="primary" />
-        </span>
+        <Price value={total} size="medium" />
         <Button
           htmlType="button"
           type="primary"
@@ -96,7 +93,7 @@ export default function BurgerConstructor() {
               <span>{orderCreateError}</span>
             </ErrorScreen>
           )}
-          {order && <OrderDetails orderId={order.id} />}
+          {order && <NewOrderDetails orderNumber={order.number} />}
         </Modal>
       )}
       {orderCreateRequest && (

@@ -1,12 +1,16 @@
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from './actions.ts';
-import createRequestState from '../../utils/create-request-state.ts';
+import createRequestState from '@utils/create-request-state.ts';
 
 interface IBurgerIngredientsState extends IRequestState {
   ingredients: IIngredient[] | null;
+  ingredientsMap: Record<string, IIngredient>;
 }
 
-const initialState = createRequestState<IBurgerIngredientsState>({ ingredients: null });
+const initialState = createRequestState<IBurgerIngredientsState>({
+  ingredients: null,
+  ingredientsMap: {},
+});
 
 const slice = createSlice({
   name: 'burgerIngredients',
@@ -31,9 +35,10 @@ const slice = createSlice({
       state.request = false;
       state.error = action.error?.message || 'Неизвестная ошибка при загрузке списка ингредиентов';
     })
-    .addCase(getIngredients.fulfilled, (state, action) => {
+    .addCase(getIngredients.fulfilled, (state, { payload: { data } }) => {
       state.request = false;
-      state.ingredients = action.payload.data;
+      state.ingredients = data;
+      state.ingredientsMap = Object.fromEntries(data.map((n: IIngredient) => [ n._id, n ]));
     }),
 });
 

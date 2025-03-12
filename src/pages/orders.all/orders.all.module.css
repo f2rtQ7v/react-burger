@@ -1,0 +1,15 @@
+.header {
+  composes: text text_type_main-large mb-5 mt-10 from global;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 480px;
+  gap: calc(var(--offset-base-size) * 15);
+}
+
+.orderIds {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: calc(var(--offset-base-size) * 10);
+}

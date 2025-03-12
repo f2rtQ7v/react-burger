@@ -1,7 +1,8 @@
 import { HTMLAttributes } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDrag } from 'react-dnd';
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import Price from '@components/price/price.tsx';
 import styles from './ingredient-item.module.css';
 
 interface IIngredientItemProps extends HTMLAttributes<HTMLDivElement> {
@@ -32,10 +33,7 @@ export default function IngredientItem({
           {count ? <Counter count={count} /> : null}
           <img src={ingredient.image} />
         </div>
-        <span className={styles.price}>
-          {ingredient.price}
-          <CurrencyIcon type="primary" />
-        </span>
+        <Price value={ingredient.price} />
         <span className={styles.name}>{ingredient.name}</span>
       </div>
     </Link>

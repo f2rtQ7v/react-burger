@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { getIngredientsState } from '../../services/burger-ingredients/slice.ts';
+import { useSelector } from '@services/store.ts';
+import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import { ErrorScreen } from '@components/screens/screens.tsx';
 import styles from './ingredient-details.module.css';
 
 interface IIngredientDetail {
@@ -17,12 +18,12 @@ const details: IIngredientDetail[] = [
 ];
 
 export default function IngredientDetails() {
-  const { id } = useParams();
-  const { ingredients } = useSelector(getIngredientsState);
-  const ingredient = ingredients?.find(n => n._id === id);
+  const { id = '' } = useParams();
+  const { ingredientsMap } = useSelector(getIngredientsState);
+  const ingredient = ingredientsMap[id];
 
   if (!ingredient) {
-    return null;
+    return <ErrorScreen>Описание ингредиента не найдено</ErrorScreen>;
   }
 
   return (

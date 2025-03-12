@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   min-width: 300px;
   grid-area: burgerIngredients;
 }
 
 .header {
+  composes: mb-6 from global;
   display: flex;
   flex-direction: row;
 }

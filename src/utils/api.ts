@@ -46,7 +46,7 @@ async function requestWithAccess(route: string, options: IRequestOptions = {}) {
   } catch (err) {
     const message = err instanceof Error ? err.message : `${err}`;
     if (message === 'jwt expired') {
-      await requestWithRefresh('/auth/token').then(token.update);
+      await refreshToken();
       token.addAccess(options);
       return await request(route, options);
     } else {
@@ -74,6 +74,9 @@ const token = {
 };
 
 
+export const refreshToken = () =>
+  requestWithRefresh('/auth/token').then(token.update);
+
 export const getIngredientsRequest = () =>
   request('/ingredients');
 
@@ -81,6 +84,11 @@ export const createOrderRequest = (ingredients: TOrderIngredients) =>
   requestWithAccess('/orders', {
     method: 'POST',
     body: { ingredients },
+  });
+
+export const getOrderRequest = (orderNumber: number) =>
+  requestWithAccess(`/orders/${orderNumber}`, {
+    method: 'GET',
   });
 
 export const auth = {

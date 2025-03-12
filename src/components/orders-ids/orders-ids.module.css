@@ -1,0 +1,20 @@
+.container {
+  width: 220px;
+}
+
+.title {
+  composes: text text_type_main-medium from global;
+}
+
+.orderIdsList {
+  composes: text text_type_digits-default pt-6 pb-2 from global;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  grid-auto-columns: 50%;
+  grid-auto-flow: column;
+  overflow-x: auto;
+}
+
+.orderIdsListItem {
+  composes: text text_type_digits-default text_color_primary pb-2 from global;
+}

@@ -1,0 +1,32 @@
+.container {
+  composes: text_color_primary mb-4 p-6 from global;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background: var(--background);
+  border-radius: var(--common-border-radius-s);
+}
+
+.container:hover {
+  background: #2c2c32;
+}
+
+.ingredients {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 45px);
+}
+
+.moreIngredients {
+  composes: text text_type_digits-default from global;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 2px;
+  top: 2px;
+  width: 60px;
+  height: 60px;
+  background: rgba(1, 1, 1, 0.6);
+  border-radius: 50%;
+}

@@ -39,16 +39,27 @@ interface IIngredient {
   price: number;
   image: string;
   image_large: string;
+  image_mobile: string;
   id?: string;
 }
 
 
-interface IOrder {
-  id: number;
+type TOrderIngredients = string[];
+
+type TOrderStatus = 'created' | 'pending' | 'done';
+
+interface INewOrder {
   name: string;
+  number: number;
 }
 
-type TOrderIngredients = string[];
+interface IOrder extends INewOrder {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  status: TOrderStatus;
+  ingredients: TOrderIngredients;
+}
 
 
 type TFormItem = {

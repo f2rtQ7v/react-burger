@@ -1,6 +1,33 @@
 .container {
+  width: 600px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+}
+
+.ingredientsHeader {
+  composes: text text_type_main-medium pt-15 pb-6 from global;
+}
+
+.ingredients {
+  composes: pr-6 from global;
+  max-height: 320px;
+  overflow-x: auto;
+}
+
+.ingredient {
+  composes: text text_type_main-default pb-4 from global;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
+}
+
+.ingredientImage {
+  composes: mr-4 from global;
+}
+
+.ingredientPrice {
+  composes: pl-10 from global;
+  white-space: nowrap;
+  margin-left: auto;
 }

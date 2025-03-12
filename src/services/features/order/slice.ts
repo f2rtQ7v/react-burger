@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { createOrder } from './actions.ts';
-import createRequestState from '../../utils/create-request-state.ts';
+import createRequestState from '@utils/create-request-state.ts';
 
 interface IOrderState extends IRequestState {
-  order: IOrder | null;
+  order: INewOrder | null;
 }
 
 const initialState = createRequestState<IOrderState>({ order: null });
@@ -29,7 +29,7 @@ const slice = createSlice({
     .addCase(createOrder.fulfilled, (state, action) => {
       state.request = false;
       state.order = {
-        id: action.payload.order.number,
+        number: action.payload.order.number,
         name: action.payload.name,
       };
     }),
