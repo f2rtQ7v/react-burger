@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '@services/store.ts';
-import { getOrder } from '@services/features/orders.by-number/actions.ts';
+import { getOrder } from '@services/features/orders.by-number/slice.ts';
 import useOrderIngredients from '@/hooks/use-order-ingredients';
 import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
 import Price from '@components/price/price.tsx';

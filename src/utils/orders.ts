@@ -45,15 +45,20 @@ export function createOrdersActions(key: string) {
   };
 }
 
-export function createOrdersReducer(actions: ReturnType<typeof createOrdersActions>) {
-  const initialState: TOrdersState = {
+export function createState(): TOrdersState {
+  return {
     status: WebsocketStatus.OFFLINE,
     orders: null,
     total: 0,
     totalToday: 0,
     error: null,
   };
+}
 
+export function createOrdersReducer(
+  initialState: TOrdersState,
+  actions: ReturnType<typeof createOrdersActions>
+) {
   return createReducer(initialState, builder => builder
     .addCase(actions.onConnecting, (state) => {
       state.status = WebsocketStatus.CONNECTING;

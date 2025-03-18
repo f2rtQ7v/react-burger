@@ -1,8 +1,26 @@
-import { createSlice, ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit';
-import { actions, TAuthAction } from './actions.ts';
-import createRequestState from '@utils/create-request-state.ts';
+import { createAsyncThunk, createSlice, ActionReducerMapBuilder, PayloadAction } from '@reduxjs/toolkit';
+import createRequestState from '../../../utils/create-request-state.ts';
+import { auth } from '../../../utils/api.ts';
 
 const SLICE_NAME = 'auth';
+
+export const formActions = {
+  createUser: createAsyncThunk(`${SLICE_NAME}/register`, auth.createUser),
+  updateUser: createAsyncThunk(`${SLICE_NAME}/updateUser`, auth.updateUser),
+  login: createAsyncThunk(`${SLICE_NAME}/login`, auth.login),
+  forgotPassword: createAsyncThunk(`${SLICE_NAME}/forgotPassword`, auth.forgotPassword),
+  resetPassword: createAsyncThunk(`${SLICE_NAME}/resetPassword`, auth.resetPassword),
+};
+
+export const actions = {
+  ...formActions,
+  getUser: createAsyncThunk(`${SLICE_NAME}/getUser`, auth.getUser),
+  deleteUser: createAsyncThunk(`${SLICE_NAME}/deleteUser`, auth.deleteUser),
+  logout: createAsyncThunk(`${SLICE_NAME}/logout`, auth.logout),
+};
+
+export type TAuthFormAction = keyof typeof formActions;
+export type TAuthAction = keyof typeof actions;
 
 type TAuthRequestStates = {
   [k in TAuthAction]: IRequestState;
@@ -25,7 +43,7 @@ type TActionCallbacks = {
   };
 };
 
-const initialState: TAuthState = {
+export const initialState: TAuthState = {
   user: null,
   isAuthChecked: false,
   passwordResetRequired: false,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from '@services/store.ts';
-import actions from '@services/features/orders.all/actions.ts';
+import { actions } from '@services/features/orders.all/slice.ts';
 import OrdersList from '@components/orders-list/orders-list.tsx';
 import OrdersIds from '@components/orders-ids/orders-ids.tsx';
 import OrdersTotal from '@components/orders-total/orders-total.tsx';

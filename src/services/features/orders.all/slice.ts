@@ -1,4 +1,5 @@
-import { createOrdersReducer } from '@utils/orders.ts';
-import actions from './actions';
+import { createOrdersActions, createState, createOrdersReducer } from '../../../utils/orders.ts';
 
-export default createOrdersReducer(actions);
+export const actions = createOrdersActions('ORDERS-ALL');
+export const initialState = createState();
+export default createOrdersReducer(initialState, actions);
