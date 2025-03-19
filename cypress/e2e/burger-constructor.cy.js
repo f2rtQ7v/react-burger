@@ -39,7 +39,7 @@ describe('burger constructor', () => {
   });
 
   it('should create order', () => {
-    cy.visit('http://localhost:5173/login');
+    cy.visit('http://localhost:5173/#/login');
     cy.intercept('POST', `${baseApiUrl}/auth/login`, {
       fixture: 'login.json',
     });
