@@ -1,4 +1,4 @@
-const baseApiUrl = 'https://norma.nomoreparties.space/api';
+export const baseApiUrl = 'https://norma.nomoreparties.space/api';
 
 const errors: {
   [key: string]: string;

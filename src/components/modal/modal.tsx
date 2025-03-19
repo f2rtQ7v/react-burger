@@ -25,10 +25,16 @@ export default function Modal({ title = '', onClose, children }: IModalProps) {
 
   return createPortal(
     <ModalOverlay onClick={onClose}>
-      <div className={styles.modal} onClick={e => e.stopPropagation()}>
+      <div
+        className={styles.modal}
+        onClick={e => e.stopPropagation()}
+        data-test-id="modal"
+      >
         <div className={styles.header}>
           <span>{title}</span>
-          <CloseIcon type="primary" className={styles.close} onClick={onClose} />
+          <span data-test-id="modal-close">
+            <CloseIcon type="primary" className={styles.close} onClick={onClose} />
+          </span>
         </div>
         <div className={styles.body}>
           {children}

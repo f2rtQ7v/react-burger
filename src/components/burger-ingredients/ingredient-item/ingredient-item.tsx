@@ -27,6 +27,7 @@ export default function IngredientItem({
       to={`/ingredient/${ingredient._id}`}
       state={{ background: location }}
       ref={dragRef}
+      data-test-id={`ingredient-${ingredient._id}`}
     >
       <div className={styles.ingredient} {...props}>
         <div className={styles.image}>

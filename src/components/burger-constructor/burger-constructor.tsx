@@ -58,7 +58,11 @@ export default function BurgerConstructor() {
   }, [ dispatch ]);
 
   return (
-    <section className={`${styles.container} ${canDrop ? styles.drop : ''}`} ref={dropRef}>
+    <section
+      className={`${styles.container} ${canDrop ? styles.drop : ''}`}
+      ref={dropRef}
+      data-test-id="constructor"
+    >
 
       <IngredientsList>
         <IngredientItemBun ingredient={bun} type="top" />
@@ -79,6 +83,7 @@ export default function BurgerConstructor() {
           size="medium"
           disabled={!bun}
           onClick={onCreateOrderClick}
+          data-test-id="create-order"
         >
           Оформить заказ
         </Button>

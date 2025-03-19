@@ -92,6 +92,7 @@ export default function Form({
                 onChange={onChange}
                 error={showErrors && !!error}
                 errorText={showErrors ? error : ''}
+                data-test-id={n.name}
               />
             </div>
           );
@@ -102,12 +103,14 @@ export default function Form({
               htmlType="submit"
               type="primary"
               size="medium"
+              data-test-id="submit"
             >{submitLabel}</Button>
             {onReset && (
               <Button
                 htmlType="reset"
                 type="secondary"
                 size="medium"
+                data-test-id="reset"
               >Отмена</Button>
             )}
           </div>
