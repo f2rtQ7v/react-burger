@@ -21,7 +21,7 @@ const selectors = {
 describe('burger constructor', () => {
 
   beforeEach(() => {
-    cy.visit('http://localhost:5173/');
+    cy.visit('/');
     cy.intercept('GET', `${baseApiUrl}/ingredients`, {
       fixture: 'ingredients.json',
     });
@@ -76,7 +76,7 @@ describe('burger constructor', () => {
   });
 
   it('should create order', () => {
-    cy.visit('http://localhost:5173/#/login');
+    cy.visit('/login');
     cy.intercept('POST', `${baseApiUrl}/auth/login`, {
       fixture: 'login.json',
     });
