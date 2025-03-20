@@ -31,7 +31,7 @@ export default function Modal({ title = '', onClose, children }: IModalProps) {
         data-test-id="modal"
       >
         <div className={styles.header}>
-          <span>{title}</span>
+          <span data-test-id="modal-title">{title}</span>
           <span data-test-id="modal-close">
             <CloseIcon type="primary" className={styles.close} onClick={onClose} />
           </span>

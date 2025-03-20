@@ -8,11 +8,30 @@ describe('burger constructor', () => {
       fixture: 'ingredients.json',
     });
 
-    cy.get('[data-test-id^="ingredient"]').as('ingredients');
+    cy.get('[data-test-id^="ingredient-item"]').as('ingredients');
     cy.get('[data-test-id="constructor"]').as('constructor');
 
     cy.get('@ingredients').eq(0).as('bun');
     cy.get('@ingredients').eq(2).as('filling');
+  });
+
+  it('should show ingredient details', () => {
+    let ingredientName = null;
+
+    cy.get('@bun').find('[data-test-id^="ingredient-name"]').then($el => {
+      ingredientName = $el.text();
+    });
+
+    cy.get('@bun').click();
+    cy.get('[data-test-id="modal"]').should('exist');
+
+    cy.get('[data-test-id="modal-title"]').should('have.text', 'Детали ингредиента');
+    cy.get('[data-test-id="ingredient-details"]').find('h2').should($el => {
+      expect($el.text()).to.equal(ingredientName);
+    });
+
+    cy.get('body').type('{esc}');
+    cy.get('[data-test-id="modal"]').should('not.exist');
   });
 
   it('should add and remove ingredients', () => {
@@ -56,10 +75,10 @@ describe('burger constructor', () => {
       fixture: 'order.json',
     });
     cy.get('[data-test-id="create-order"]').click();
-    cy.get('[data-test-id="modal"]').should('have.length', 1);
+    cy.get('[data-test-id="modal"]').should('exist');
 
     cy.get('[data-test-id="modal-close"]').click();
-    cy.get('[data-test-id="modal"]').should('have.length', 0);
+    cy.get('[data-test-id="modal"]').should('not.exist');
   });
 
 });

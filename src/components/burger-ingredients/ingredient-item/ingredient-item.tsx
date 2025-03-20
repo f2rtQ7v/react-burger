@@ -27,7 +27,7 @@ export default function IngredientItem({
       to={`/ingredient/${ingredient._id}`}
       state={{ background: location }}
       ref={dragRef}
-      data-test-id={`ingredient-${ingredient._id}`}
+      data-test-id={`ingredient-item-${ingredient._id}`}
     >
       <div className={styles.ingredient} {...props}>
         <div className={styles.image}>
@@ -35,7 +35,12 @@ export default function IngredientItem({
           <img src={ingredient.image} />
         </div>
         <Price value={ingredient.price} />
-        <span className={styles.name}>{ingredient.name}</span>
+        <span
+          className={styles.name}
+          data-test-id={`ingredient-name-${ingredient._id}`}
+        >
+          {ingredient.name}
+        </span>
       </div>
     </Link>
   );
