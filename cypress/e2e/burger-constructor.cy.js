@@ -55,16 +55,10 @@ describe('burger constructor', () => {
   it('should add and remove ingredients', () => {
     cy.get(selectors.ingredientPlaceholder).should('have.length', 3);
 
-    cy.get('@bun').trigger('dragstart');
-    cy.wait(500);
-    cy.get('@constructor').trigger('drop');
-    cy.wait(500);
+    cy.get('@bun').dragTo('@constructor');
     cy.get('@bun').find(selectors.counter).should('have.text', 2);
 
-    cy.get('@filling').trigger('dragstart');
-    cy.wait(500);
-    cy.get('@constructor').trigger('drop');
-    cy.wait(500);
+    cy.get('@filling').dragTo('@constructor');
     cy.get('@filling').find(selectors.counter).should('have.text', 1);
 
     cy.get(selectors.ingredientPlaceholder).should('have.length', 0);
@@ -84,10 +78,7 @@ describe('burger constructor', () => {
     cy.get(selectors.inputPassword).type('ccc');
     cy.get(selectors.buttonSubmit).click();
 
-    cy.get('@bun').trigger('dragstart');
-    cy.wait(500);
-    cy.get('@constructor').trigger('drop');
-    cy.wait(500);
+    cy.get('@bun').dragTo('@constructor');
 
     cy.intercept('POST', `${baseApiUrl}/orders`, {
       fixture: 'order.json',
