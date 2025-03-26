@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from '@services/store.ts';
-import { getOrder } from '@services/features/orders.by-number/slice.ts';
+import * as slices from '@services/features/orders.list/slices.ts';
+import { getOrdersState, getOrder } from '@services/features/orders.by-number/slice.ts';
 import useOrderIngredients from '@/hooks/use-order-ingredients';
 import IngredientImage from '@components/ingredient-image/ingredient-image.tsx';
 import Price from '@components/price/price.tsx';
@@ -12,9 +13,9 @@ import styles from './order-details.module.css';
 export default function OrderDetails({ showHeader = false }: { showHeader?: boolean }) {
   const dispatch = useDispatch();
   const { number = -1 } = useParams();
-  const { orders: ordersAll } = useSelector(state => state.ordersAll);
-  const { orders: ordersProfile } = useSelector(state => state.ordersProfile);
-  const { orders: ordersByNumber, error } = useSelector(state => state.ordersByNumber);
+  const { orders: ordersAll } = useSelector(slices.ordersAll.getState);
+  const { orders: ordersProfile } = useSelector(slices.ordersProfile.getState);
+  const { orders: ordersByNumber, error } = useSelector(getOrdersState);
 
   const order =
     ordersAll?.find(n => n.number === +number) ??

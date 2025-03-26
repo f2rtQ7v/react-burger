@@ -11,11 +11,11 @@ export const getOrder = createAsyncThunk('order/get', getOrderRequest);
 export const initialState = createRequestState<IOrdersState>({ orders: {} });
 
 const slice = createSlice({
-  name: 'order',
+  name: 'ordersByNumber',
   initialState,
   reducers: {},
   selectors: {
-    getOrderState: state => state,
+    getOrdersState: state => state,
   },
   extraReducers: builder => builder
     .addCase(getOrder.pending, (state) => {
@@ -37,5 +37,5 @@ const slice = createSlice({
     }),
 });
 
-export const { getOrderState } = slice.selectors;
+export const { getOrdersState } = slice.selectors;
 export default slice.reducer;

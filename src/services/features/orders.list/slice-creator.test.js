@@ -1,5 +1,6 @@
-import reducer, { actions, initialState } from './slice.ts';
-import { WebsocketStatus } from '../../../utils/orders.ts';
+import { WebsocketStatus, createOrdersSlice } from './slice-creator.ts';
+
+const { reducer, actions, initialState } = createOrdersSlice('testSlice', '');
 
 describe('all orders test', () => {
 
