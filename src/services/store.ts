@@ -5,10 +5,7 @@ import burgerConstructor from './features/burger-constructor/slice.ts';
 import auth from './features/auth/slice.ts';
 import order from './features/order/slice.ts';
 import ordersByNumber from './features/orders.by-number/slice.ts';
-import ordersAllActions from './features/orders.all/actions.ts';
-import ordersAll from './features/orders.all/slice.ts';
-import ordersProfileActions from './features/orders.profile/actions.ts';
-import ordersProfile from './features/orders.profile/slice.ts';
+import { ordersAll, ordersProfile } from './features/orders.list/slices.ts';
 import { socketMiddleware } from './middlewares/ws.ts';
 
 const reducer = combineReducers({
@@ -17,16 +14,16 @@ const reducer = combineReducers({
   auth,
   order,
   ordersByNumber,
-  ordersAll,
-  ordersProfile,
+  [ordersAll.name]: ordersAll.reducer,
+  [ordersProfile.name]: ordersProfile.reducer,
 });
 
 const store = configureStore({
   reducer,
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(
-      socketMiddleware(ordersAllActions),
-      socketMiddleware(ordersProfileActions, true)
+      socketMiddleware(ordersAll.actions),
+      socketMiddleware(ordersProfile.actions, true)
     ),
 });
 

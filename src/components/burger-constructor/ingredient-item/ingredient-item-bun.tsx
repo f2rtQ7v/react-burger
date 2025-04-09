@@ -27,7 +27,10 @@ export default function IngredientItemBun({
   , [ ingredient, type ]);
 
   return (
-    <li className={styles.ingredientItem}>
+    <li
+      className={styles.ingredientItem}
+      data-test-id={ingredient ? `order-ingredient-${ingredient.id}` : `ingredient-placeholder-${type}`}
+    >
       <ConstructorElement {...constructorElementProps} type={type} />
     </li>
   );

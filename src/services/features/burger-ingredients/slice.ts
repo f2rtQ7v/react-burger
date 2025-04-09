@@ -1,13 +1,15 @@
-import { createSlice, createSelector } from '@reduxjs/toolkit';
-import { getIngredients } from './actions.ts';
-import createRequestState from '@utils/create-request-state.ts';
+import { createAsyncThunk, createSlice, createSelector } from '@reduxjs/toolkit';
+import createRequestState from '../../../utils/create-request-state.ts';
+import { getIngredientsRequest } from '../../../utils/api.ts';
 
 interface IBurgerIngredientsState extends IRequestState {
   ingredients: IIngredient[] | null;
   ingredientsMap: Record<string, IIngredient>;
 }
 
-const initialState = createRequestState<IBurgerIngredientsState>({
+export const getIngredients = createAsyncThunk('burgerIngredients/get', getIngredientsRequest);
+
+export const initialState = createRequestState<IBurgerIngredientsState>({
   ingredients: null,
   ingredientsMap: {},
 });

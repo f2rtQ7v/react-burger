@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '@services/store.ts';
-import { actions } from '@services/features/auth/actions.ts';
+import { actions } from '@services/features/auth/slice.ts';
 import { getAuthState } from '@services/features/auth/slice.ts';
-import { getIngredients } from '@services/features/burger-ingredients/actions.ts';
-import { getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
+import { getIngredients, getIngredientsState } from '@services/features/burger-ingredients/slice.ts';
 import { OnlyAuth, OnlyUnAuth } from '@components/protected-route/protected-route.tsx';
 import AppHeader from '@components/app-header/app-header.tsx';
 import ConstructorPage from '@pages/constructor/constructor.tsx';

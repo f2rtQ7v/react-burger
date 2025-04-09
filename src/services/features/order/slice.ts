@@ -1,12 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { createOrder } from './actions.ts';
-import createRequestState from '@utils/create-request-state.ts';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import createRequestState from '../../../utils/create-request-state.ts';
+import { createOrderRequest } from '../../../utils/api.ts';
 
 interface IOrderState extends IRequestState {
   order: INewOrder | null;
 }
 
-const initialState = createRequestState<IOrderState>({ order: null });
+export const createOrder = createAsyncThunk('order/create', createOrderRequest);
+
+export const initialState = createRequestState<IOrderState>({ order: null });
 
 const slice = createSlice({
   name: 'order',

@@ -65,6 +65,7 @@ export default function IngredientItemFilling({
       className={styles[sortable ? 'ingredientItemSortable' : 'ingredientItem']}
       ref={ref}
       style={{ opacity: +!isDragging }}
+      data-test-id={ingredient ? `order-ingredient-${ingredient.id}` : 'ingredient-placeholder-filling'}
     >
       {sortable && <DragIcon type="primary" />}
       <ConstructorElement {...constructorElementProps} />

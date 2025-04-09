@@ -1,19 +1,21 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { getOrder } from './actions.ts';
-import createRequestState from '@utils/create-request-state.ts';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import createRequestState from '../../../utils/create-request-state.ts';
+import { getOrderRequest } from '../../../utils/api.ts';
 
 interface IOrdersState extends IRequestState {
   orders: Record<string, IOrder>;
 }
 
-const initialState = createRequestState<IOrdersState>({ orders: {} });
+export const getOrder = createAsyncThunk('order/get', getOrderRequest);
+
+export const initialState = createRequestState<IOrdersState>({ orders: {} });
 
 const slice = createSlice({
-  name: 'order',
+  name: 'ordersByNumber',
   initialState,
   reducers: {},
   selectors: {
-    getOrderState: state => state,
+    getOrdersState: state => state,
   },
   extraReducers: builder => builder
     .addCase(getOrder.pending, (state) => {
@@ -35,5 +37,5 @@ const slice = createSlice({
     }),
 });
 
-export const { getOrderState } = slice.selectors;
+export const { getOrdersState } = slice.selectors;
 export default slice.reducer;

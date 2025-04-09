@@ -1,24 +1,13 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from '@services/store.ts';
-import actions from '@services/features/orders.all/actions.ts';
+import { ordersAll } from '@services/features/orders.list/slices.ts';
+import useOrdersData from '@/hooks/use-orders-data';
 import OrdersList from '@components/orders-list/orders-list.tsx';
 import OrdersIds from '@components/orders-ids/orders-ids.tsx';
 import OrdersTotal from '@components/orders-total/orders-total.tsx';
 import { LoadingScreen } from '@components/screens/screens.tsx';
-import { ordersAllUrl } from '@utils/orders.ts';
 import styles from './orders.all.module.css';
 
 export default function OrdersPage() {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(actions.connect(ordersAllUrl()));
-    return () => {
-      dispatch(actions.disconnect());
-    };
-  }, [ dispatch ]);
-
-  const { orders, total, totalToday } = useSelector(state => state.ordersAll);
+  const { orders, total, totalToday } = useOrdersData(ordersAll);
 
   if (!orders) {
     return <LoadingScreen />;

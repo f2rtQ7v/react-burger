@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from '@services/store.ts';
-import { formActions, TAuthFormAction } from '@services/features/auth/actions.ts';
+import { formActions, TAuthFormAction } from '@services/features/auth/slice.ts';
 import { getAuthState, resetError } from '@services/features/auth/slice.ts';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { LoadingScreen } from '@components/screens/screens.tsx';
@@ -92,6 +92,7 @@ export default function Form({
                 onChange={onChange}
                 error={showErrors && !!error}
                 errorText={showErrors ? error : ''}
+                data-test-id={n.name}
               />
             </div>
           );
@@ -102,12 +103,14 @@ export default function Form({
               htmlType="submit"
               type="primary"
               size="medium"
+              data-test-id="submit"
             >{submitLabel}</Button>
             {onReset && (
               <Button
                 htmlType="reset"
                 type="secondary"
                 size="medium"
+                data-test-id="reset"
               >Отмена</Button>
             )}
           </div>

@@ -13,8 +13,12 @@
 
 .ingredients {
   position: relative;
-  display: grid;
-  grid-template-columns: repeat(6, 45px);
+  display: flex;
+  padding-left: 16px;
+}
+
+.ingredients > * {
+  margin-left: -16px;
 }
 
 .moreIngredients {

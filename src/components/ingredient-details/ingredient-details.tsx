@@ -27,7 +27,7 @@ export default function IngredientDetails() {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-test-id="ingredient-details">
       <img className={styles.image} src={ingredient.image_large} />
       <h2 className={styles.name}>{ingredient.name}</h2>
       <div className={styles.details}>
